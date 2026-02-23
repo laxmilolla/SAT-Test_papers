@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { saveSubmission } from "./firebase";
 
 export default function App() {
-  // Reading and Writing Questions - Module 1 (27 questions)
+  // Reading and Writing Questions - Module 1 (27 questions) — Digital SAT aligned
   const readingWritingModule1 = [
     {
       id: "rw1-1",
@@ -13,7 +13,7 @@ export default function App() {
       options: ["A) pivotal", "B) suspicious", "C) reluctant", "D) arbitrary"],
       correct: "A",
       explanation:
-        '"Pivotal" means crucial or important, which fits the context of significant research.',
+        '"Pivotal" means crucial; it fits the context of significant research.',
     },
     {
       id: "rw1-2",
@@ -29,7 +29,7 @@ export default function App() {
       ],
       correct: "A",
       explanation:
-        'Passive voice "was founded" is correct; singular subject "city" requires "was."',
+        'Singular subject "city" takes "was founded"; passive voice is correct here.',
     },
     {
       id: "rw1-3",
@@ -39,7 +39,7 @@ export default function App() {
         "Which choice completes the text so that it conforms to the conventions of Standard English?",
       options: ["A) shaped", "B) shapes", "C) will shape", "D) is shaping"],
       correct: "A",
-      explanation: 'Past tense "shaped" is correct for events in the 1920s.',
+      explanation: 'Past tense "shaped" is correct for a completed past action.',
     },
     {
       id: "rw1-4",
@@ -55,7 +55,7 @@ export default function App() {
       ],
       correct: "B",
       explanation:
-        "Text 2 presents problem-solving as an additional function beyond emotional processing.",
+        "Text 2 adds problem-solving as another function; it does not reject Text 1.",
     },
     {
       id: "rw1-5",
@@ -66,7 +66,7 @@ export default function App() {
       options: ["A) were having", "B) have had", "C) had", "D) will have"],
       correct: "A",
       explanation:
-        'Past progressive "were having" indicates ongoing effects during Carson\'s documentation.',
+        'Past progressive "were having" fits ongoing effects at the time of documentation.',
     },
     {
       id: "rw1-6",
@@ -77,7 +77,7 @@ export default function App() {
       options: ["A) palpable", "B) indifferent", "C) redundant", "D) obsolete"],
       correct: "A",
       explanation:
-        '"Palpable" means tangible or intense, accurately describing dramatic tension.',
+        '"Palpable" means tangible or keenly felt, fitting dramatic tension.',
     },
     {
       id: "rw1-7",
@@ -87,8 +87,7 @@ export default function App() {
         "Which choice completes the text with the most logical transition?",
       options: ["A) Despite", "B) During", "C) Instead of", "D) Without"],
       correct: "B",
-      explanation:
-        '"During" correctly indicates when oxygen production occurs.',
+      explanation: '"During" correctly indicates when oxygen is produced.',
     },
     {
       id: "rw1-8",
@@ -104,7 +103,7 @@ export default function App() {
       ],
       correct: "B",
       explanation:
-        '"However" correctly shows contrast between support and need for more research.',
+        '"However" signals contrast between support and need for more research.',
     },
     {
       id: "rw1-9",
@@ -120,7 +119,7 @@ export default function App() {
       ],
       correct: "B",
       explanation:
-        'No punctuation is needed before a list introduced by "including."',
+        'No punctuation is required after "including" before the list.',
     },
     {
       id: "rw1-10",
@@ -136,7 +135,7 @@ export default function App() {
       ],
       correct: "A",
       explanation:
-        '"Persists" means continues, fitting the context that it lasts throughout life.',
+        '"Persists" means continues to exist, fitting the idea that the capacity lasts throughout life.',
     },
     {
       id: "rw1-11",
@@ -152,7 +151,7 @@ export default function App() {
       ],
       correct: "B",
       explanation:
-        'Plural subject "windows" requires plural verb "were positioned."',
+        'Plural subject "windows" requires the plural verb "were positioned."',
     },
     {
       id: "rw1-12",
@@ -168,17 +167,17 @@ export default function App() {
       ],
       correct: "A",
       explanation:
-        'Present perfect progressive "has been melting" indicates ongoing action continuing to present.',
+        'Present perfect progressive "has been melting" shows ongoing action up to the present.',
     },
     {
       id: "rw1-13",
       passage:
         "The novel's protagonist faces a moral _____ she must choose between loyalty to her family and adherence to her personal principles.",
       question:
-        "Which choice completes the text with the most logical and precise word?",
+        "Which choice completes the text with the most logical and precise punctuation?",
       options: ["A) dilemma:", "B) dilemma;", "C) dilemma,", "D) dilemma"],
       correct: "A",
-      explanation: "A colon introduces the explanation of what the dilemma is.",
+      explanation: "A colon correctly introduces the explanation of the dilemma.",
     },
     {
       id: "rw1-14",
@@ -194,7 +193,7 @@ export default function App() {
       ],
       correct: "A",
       explanation:
-        'Past tense "earned her" correctly describes the completed action.',
+        'Past tense "earned her" is correct for a completed past achievement.',
     },
     {
       id: "rw1-15",
@@ -204,7 +203,7 @@ export default function App() {
         "Which choice completes the text so that it conforms to the conventions of Standard English?",
       options: ["A) and", "B) but", "C) so", "D) or"],
       correct: "A",
-      explanation: '"And" connects two sequential actions by the committee.',
+      explanation: '"And" links two sequential actions by the same subject.',
     },
     {
       id: "rw1-16",
@@ -215,7 +214,7 @@ export default function App() {
       options: ["A) extensive", "B) limited", "C) primitive", "D) isolated"],
       correct: "A",
       explanation:
-        '"Extensive" means widespread, contrasting with previous beliefs.',
+        '"Extensive" means wide in scope, contrasting with "previously believed."',
     },
     {
       id: "rw1-17",
@@ -226,7 +225,7 @@ export default function App() {
       options: ["A) that", "B) which", "C) who", "D) where"],
       correct: "B",
       explanation:
-        '"Which" is correct for non-essential clauses set off by commas.',
+        '"Which" is used for nonrestrictive clauses referring to things; commas set it off.',
     },
     {
       id: "rw1-18",
@@ -237,7 +236,7 @@ export default function App() {
       options: ["A) prompted", "B) prompting", "C) prompts", "D) to prompt"],
       correct: "B",
       explanation:
-        'Present participle "prompting" correctly shows the consequence of the results.',
+        'The participle "prompting" correctly introduces a result of the main clause.',
     },
     {
       id: "rw1-19",
@@ -252,7 +251,7 @@ export default function App() {
         "D) flourishing",
       ],
       correct: "A",
-      explanation: "Semicolon correctly joins two related independent clauses.",
+      explanation: "A semicolon correctly links two related independent clauses.",
     },
     {
       id: "rw1-20",
@@ -268,7 +267,7 @@ export default function App() {
       ],
       correct: "B",
       explanation:
-        '"Display of" maintains parallel structure with "use of" and "social structures."',
+        '"Display of" is parallel to "use of" and "social structures."',
     },
     {
       id: "rw1-21",
@@ -284,7 +283,7 @@ export default function App() {
       ],
       correct: "A",
       explanation:
-        '"Persuasive" fits the context of compelling evidence supporting claims.',
+        '"Persuasive" fits the context of strong evidence supporting the argument.',
     },
     {
       id: "rw1-22",
@@ -295,7 +294,7 @@ export default function App() {
       options: ["A) occur", "B) occurs", "C) occurring", "D) to occur"],
       correct: "B",
       explanation:
-        'Singular subject "Bioluminescence" requires singular verb "occurs."',
+        'The subject "Bioluminescence" (singular) takes the singular verb "occurs."',
     },
     {
       id: "rw1-23",
@@ -306,7 +305,7 @@ export default function App() {
       options: ["A) found", "B) finding", "C) finds", "D) to find"],
       correct: "B",
       explanation:
-        'Present participle "finding" shows the result of the examination.',
+        'The participle "finding" introduces the result of the examination.',
     },
     {
       id: "rw1-24",
@@ -316,7 +315,8 @@ export default function App() {
         "Which choice completes the text so that it conforms to the conventions of Standard English?",
       options: ["A) that", "B) which", "C) who", "D) where"],
       correct: "B",
-      explanation: '"Which" is correct for non-essential clauses about things.',
+      explanation:
+        '"Which" is used for nonrestrictive clauses referring to things.',
     },
     {
       id: "rw1-25",
@@ -327,7 +327,7 @@ export default function App() {
       options: ["A) accurate", "B) inaccurate", "C) prescient", "D) prophetic"],
       correct: "B",
       explanation:
-        '"Inaccurate" fits the context of unexpected changes making predictions wrong.',
+        '"Inaccurate" fits the idea that predictions were wrong when conditions changed.',
     },
     {
       id: "rw1-26",
@@ -343,7 +343,7 @@ export default function App() {
       ],
       correct: "B",
       explanation:
-        'Plural subject "Astronomers" requires plural verb "have discovered."',
+        'Plural subject "Astronomers" takes the plural verb "have discovered."',
     },
     {
       id: "rw1-27",
@@ -359,11 +359,11 @@ export default function App() {
       ],
       correct: "A",
       explanation:
-        '"However" shows contrast between compelling and needing replication.',
+        '"However" signals contrast between compelling findings and the need for replication.',
     },
   ];
 
-  // Reading and Writing Questions - Module 2 (27 questions)
+  // Reading and Writing Questions - Module 2 (27 questions) — Digital SAT aligned
   const readingWritingModule2 = [
     {
       id: "rw2-1",
@@ -374,7 +374,7 @@ export default function App() {
       options: ["A) rhetorical", "B) empirical", "C) technical", "D) literal"],
       correct: "A",
       explanation:
-        '"Rhetorical" refers to language designed to persuade through emotion.',
+        '"Rhetorical" describes language meant to persuade, often through emotion.',
     },
     {
       id: "rw2-2",
@@ -475,7 +475,7 @@ export default function App() {
       ],
       correct: "C",
       explanation:
-        '"Consequently" shows that deforestation is a result of its importance.',
+        '"Consequently" indicates that deforestation follows from the rainforest\'s importance.',
     },
     {
       id: "rw2-9",
@@ -718,7 +718,7 @@ export default function App() {
     },
   ];
 
-  // Math Questions - Module 1 (22 questions)
+  // Math Questions - Module 1 (22 questions) — Digital SAT aligned
   const mathModule1 = [
     {
       id: "m1-1",
@@ -753,7 +753,7 @@ export default function App() {
     },
     {
       id: "m1-5",
-      question: "Which expression is equivalent to 4(x + 3) - 2x?",
+      question: "Which of the following is equivalent to 4(x + 3) - 2x?",
       options: ["A) 2x + 3", "B) 2x + 12", "C) 6x + 3", "D) 6x + 12"],
       correct: "B",
       explanation: "4x + 12 - 2x = 2x + 12.",
@@ -761,7 +761,7 @@ export default function App() {
     {
       id: "m1-6",
       question:
-        "If a store sells notebooks for $3 each and Sarah buys n notebooks, which expression represents the total cost?",
+        "A store sells notebooks for $3 each. If Sarah buys n notebooks, which expression represents the total cost, in dollars?",
       options: ["A) 3 + n", "B) 3n", "C) n/3", "D) n - 3"],
       correct: "B",
       explanation: "Total cost = price × quantity = 3n.",
@@ -799,7 +799,7 @@ export default function App() {
     },
     {
       id: "m1-11",
-      question: "If 5x - 3 = 2x + 9, what is x?",
+      question: "If 5x - 3 = 2x + 9, what is the value of x?",
       options: ["A) 2", "B) 3", "C) 4", "D) 6"],
       correct: "C",
       explanation: "5x - 2x = 9 + 3, so 3x = 12, x = 4.",
@@ -878,7 +878,7 @@ export default function App() {
     },
     {
       id: "m1-21",
-      question: "If 3(x - 2) = 15, what is x?",
+      question: "If 3(x - 2) = 15, what is the value of x?",
       options: ["A) 5", "B) 7", "C) 9", "D) 11"],
       correct: "B",
       explanation: "3x - 6 = 15, so 3x = 21, x = 7.",
@@ -893,7 +893,7 @@ export default function App() {
     },
   ];
 
-  // Math Questions - Module 2 (22 questions) - Due to character limit, I'll continue with remaining code
+  // Math Questions - Module 2 (22 questions) — Digital SAT aligned
   const mathModule2 = [
     {
       id: "m2-1",
