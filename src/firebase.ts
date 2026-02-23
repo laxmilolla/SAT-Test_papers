@@ -1,5 +1,5 @@
 import { initializeApp, FirebaseApp } from "firebase/app";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, query, where, getDocs } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -19,9 +19,19 @@ if (firebaseConfig.apiKey && firebaseConfig.projectId) {
   db = getFirestore(app);
 }
 
+export interface SubmissionScores {
+  rwRaw: number;
+  rwTotal: number;
+  rwPercentage: number;
+  mathRaw: number;
+  mathTotal: number;
+  mathPercentage: number;
+}
+
 export async function saveSubmission(
   userId: string,
-  answers: Record<string, string>
+  answers: Record<string, string>,
+  options: { testId: string; testLabel?: string; scores: SubmissionScores }
 ): Promise<void> {
   if (!db) {
     throw new Error("Firebase is not configured. Set REACT_APP_FIREBASE_* env variables.");
@@ -29,8 +39,35 @@ export async function saveSubmission(
   await addDoc(collection(db, "submissions"), {
     userId: userId.trim() || "Anonymous",
     answers,
+    testId: options.testId,
+    testLabel: options.testLabel ?? null,
+    rwRaw: options.scores.rwRaw,
+    rwTotal: options.scores.rwTotal,
+    rwPercentage: options.scores.rwPercentage,
+    mathRaw: options.scores.mathRaw,
+    mathTotal: options.scores.mathTotal,
+    mathPercentage: options.scores.mathPercentage,
     submittedAt: new Date().toISOString(),
   });
+}
+
+/** Returns the list of testIds this user has already submitted. */
+export async function getSubmissionHistory(userId: string): Promise<string[]> {
+  if (!db) {
+    return [];
+  }
+  const uid = userId.trim() || "Anonymous";
+  const q = query(
+    collection(db, "submissions"),
+    where("userId", "==", uid)
+  );
+  const snap = await getDocs(q);
+  const testIds: string[] = [];
+  snap.docs.forEach((d) => {
+    const testId = d.data().testId;
+    if (testId && !testIds.includes(testId)) testIds.push(testId);
+  });
+  return testIds;
 }
 
 export { db };
