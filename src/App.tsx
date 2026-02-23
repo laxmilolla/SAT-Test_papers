@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { saveSubmission } from "./firebase";
 
 export default function App() {
   // Reading and Writing Questions - Module 1 (27 questions)
@@ -1079,6 +1080,9 @@ export default function App() {
   const [answers, setAnswers] = React.useState<Record<string, string>>({});
   const [timeLeft, setTimeLeft] = React.useState(32 * 60);
 
+  const [studentId, setStudentId] = React.useState("");
+  const [saveStatus, setSaveStatus] = React.useState<"idle" | "saving" | "done" | "error">("idle");
+
   React.useEffect(() => {
     let timer: ReturnType<typeof setInterval> | undefined;
     if (view === "test" && timeLeft > 0) {
@@ -1127,6 +1131,26 @@ export default function App() {
         }}
       >
         <h1>Digital SAT Practice Test</h1>
+        <div style={{ margin: "20px 0" }}>
+          <label htmlFor="student-id" style={{ display: "block", marginBottom: "8px", fontWeight: "bold" }}>
+            Student ID or name (optional)
+          </label>
+          <input
+            id="student-id"
+            type="text"
+            value={studentId}
+            onChange={(e) => setStudentId(e.target.value)}
+            placeholder="e.g. John D. or 12345"
+            style={{
+              padding: "10px 15px",
+              fontSize: "16px",
+              width: "280px",
+              maxWidth: "90%",
+              border: "1px solid #ccc",
+              borderRadius: "8px",
+            }}
+          />
+        </div>
         <button
           onClick={() => setView("test")}
           style={{
@@ -1154,21 +1178,52 @@ export default function App() {
         }}
       >
         <h2>Test Complete!</h2>
-        <button
-          onClick={() =>
-            (window.location.href = `mailto:YOUR_EMAIL@gmail.com?subject=Results`)
-          }
-          style={{
-            padding: "20px",
-            background: "green",
-            color: "white",
-            border: "none",
-            borderRadius: "10px",
-            cursor: "pointer",
-          }}
-        >
-          SUBMIT TO TEACHER
-        </button>
+        <p style={{ margin: "10px 0", color: "#555" }}>
+          {studentId ? `Results for: ${studentId}` : "Anonymous submission"}
+        </p>
+        <div style={{ marginTop: "20px" }}>
+          <button
+            onClick={async () => {
+              setSaveStatus("saving");
+              try {
+                await saveSubmission(studentId, answers);
+                setSaveStatus("done");
+              } catch (err) {
+                setSaveStatus("error");
+              }
+            }}
+            disabled={saveStatus === "saving"}
+            style={{
+              padding: "20px",
+              background: saveStatus === "done" ? "#2e7d32" : saveStatus === "error" ? "#c62828" : "green",
+              color: "white",
+              border: "none",
+              borderRadius: "10px",
+              cursor: saveStatus === "saving" ? "wait" : "pointer",
+              marginRight: "10px",
+            }}
+          >
+            {saveStatus === "idle" && "Save results"}
+            {saveStatus === "saving" && "Saving…"}
+            {saveStatus === "done" && "Saved!"}
+            {saveStatus === "error" && "Save failed — try again"}
+          </button>
+          <button
+            onClick={() =>
+              (window.location.href = `mailto:YOUR_EMAIL@gmail.com?subject=SAT Results${studentId ? ` - ${studentId}` : ""}&body=${encodeURIComponent(JSON.stringify({ studentId: studentId || "Anonymous", answers }, null, 2))}`)
+            }
+            style={{
+              padding: "20px",
+              background: "#1565c0",
+              color: "white",
+              border: "none",
+              borderRadius: "10px",
+              cursor: "pointer",
+            }}
+          >
+            Email results to teacher
+          </button>
+        </div>
       </div>
     );
 
