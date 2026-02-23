@@ -743,10 +743,12 @@ export default function App() {
     },
     {
       id: "m1-4",
-      question: "What is 30% of 80?",
-      options: ["A) 24", "B) 26", "C) 28", "D) 30"],
-      correct: "A",
-      explanation: "0.30 × 80 = 24.",
+      question:
+        "The figure above shows a triangle with two angles labeled. What is the value of x?",
+      options: ["A) 45°", "B) 65°", "C) 70°", "D) 110°"],
+      correct: "C",
+      explanation: "The angles of a triangle sum to 180°. So x = 180° - 45° - 65° = 70°.",
+      image: "/m1_4_triangle.png",
     },
     {
       id: "m1-5",
@@ -825,10 +827,13 @@ export default function App() {
     },
     {
       id: "m1-15",
-      question: "What is the value of 3² + 4²?",
-      options: ["A) 7", "B) 14", "C) 25", "D) 49"],
-      correct: "C",
-      explanation: "9 + 16 = 25.",
+      question:
+        "In the figure above, two parallel lines are cut by a transversal. If one angle measures 110°, what is the value of y?",
+      options: ["A) 70°", "B) 80°", "C) 90°", "D) 110°"],
+      correct: "A",
+      explanation:
+        "Corresponding angles are equal; the angle adjacent to 110° on the same line is 70°, and y corresponds to it.",
+      image: "/m1_15_parallel.png",
     },
     {
       id: "m1-16",
@@ -855,10 +860,13 @@ export default function App() {
     },
     {
       id: "m1-19",
-      question: "If x/4 = 7, what is x?",
-      options: ["A) 3", "B) 11", "C) 28", "D) 32"],
-      correct: "C",
-      explanation: "Multiply both sides by 4: x = 28.",
+      question:
+        "The scatterplot above shows study hours and test scores with a line of best fit. Based on the line, a student who studied 5 hours would get a score closest to which of the following?",
+      options: ["A) 70", "B) 80", "C) 90", "D) 100"],
+      correct: "B",
+      explanation:
+        "The line of best fit runs from about (1, 40) to (8, 110). At 5 hours, the predicted score is approximately 80.",
+      image: "/m1_19_scatterplot.png",
     },
     {
       id: "m1-20",
@@ -896,10 +904,12 @@ export default function App() {
     {
       id: "m2-2",
       question:
-        "In a right triangle, one leg is 6 and the hypotenuse is 10. What is the other leg?",
-      options: ["A) 4", "B) 6", "C) 8", "D) 12"],
+        "The figure shows a circle in the xy-plane with center (3, -2). The point (3, 1) lies on the circle. What is the radius of the circle?",
+      options: ["A) 1", "B) 2", "C) 3", "D) 4"],
       correct: "C",
-      explanation: "6² + b² = 10², so 36 + b² = 100, b² = 64, b = 8.",
+      explanation:
+        "The radius is the distance from center (3, -2) to (3, 1): |1 - (-2)| = 3.",
+      image: "/m2_2_circle_graph.png",
     },
     {
       id: "m2-3",
@@ -910,10 +920,12 @@ export default function App() {
     },
     {
       id: "m2-4",
-      question: "A line passes through (2, 5) and (4, 11). What is its slope?",
-      options: ["A) 2", "B) 3", "C) 4", "D) 6"],
-      correct: "B",
-      explanation: "Slope = (11-5)/(4-2) = 6/2 = 3.",
+      question:
+        "The figure above shows a right triangle with legs of length 6 and 8. What is the length of the hypotenuse?",
+      options: ["A) 10", "B) 12", "C) 14", "D) 9"],
+      correct: "A",
+      explanation: "By the Pythagorean theorem: 6² + 8² = 36 + 64 = 100, so hypotenuse = √100 = 10.",
+      image: "/m2_4_right_triangle.png",
     },
     {
       id: "m2-5",
