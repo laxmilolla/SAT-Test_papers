@@ -439,8 +439,15 @@ export default function App() {
           ← Back to start
         </button>
 
+        <div style={{ marginBottom: "20px", padding: "12px 16px", background: "#f0f4ff", borderRadius: "8px", fontSize: "14px" }}>
+          <strong>Jump to:</strong>{" "}
+          <a href="#assignments" style={{ marginRight: "12px" }}>Assignments</a>
+          <a href="#available-tests" style={{ marginRight: "12px" }}>Available tests</a>
+          <a href="#module-pool">All modules (Module Pool)</a>
+        </div>
+
         {/* ── Assignments ── */}
-        <h2 style={{ marginBottom: "4px" }}>Student Assignments</h2>
+        <h2 id="assignments" style={{ marginBottom: "4px" }}>Student Assignments</h2>
         <p style={{ color: "#555", marginBottom: "16px", fontSize: "14px" }}>
           To add or change assignments, use Firebase Console → Firestore → <code>assignments</code> collection (document ID = student ID).
         </p>
@@ -478,7 +485,7 @@ export default function App() {
         )}
 
         {/* ── Available Tests ── */}
-        <h2 style={{ marginTop: "48px", marginBottom: "4px" }}>Available Tests</h2>
+        <h2 id="available-tests" style={{ marginTop: "48px", marginBottom: "4px" }}>Available Tests</h2>
         <p style={{ color: "#555", marginBottom: "12px", fontSize: "14px" }}>
           Fixed tests (assign via <code>testId</code> field in Firestore).
         </p>
@@ -500,7 +507,7 @@ export default function App() {
         </table>
 
         {/* ── Module Pool ── */}
-        <h2 style={{ marginTop: "48px", marginBottom: "4px" }}>Module Pool</h2>
+        <h2 id="module-pool" style={{ marginTop: "48px", marginBottom: "4px" }}>Module Pool (all {allPoolModules.length} modules)</h2>
         <p style={{ color: "#555", marginBottom: "4px", fontSize: "14px" }}>
           Individual modules for adaptive testing. Assign via <code>rwM1ModuleId</code> + <code>mathM1ModuleId</code> in Firestore.
           The system auto-picks the linked M2 (easier or harder) based on M1 score.
