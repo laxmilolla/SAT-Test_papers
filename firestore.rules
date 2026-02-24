@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow read so Teacher view can list assignments and students can load their assigned test
+    match /assignments/{document} {
+      allow read: if true;
+      allow write: if true;
+    }
+    // Allow read for submission history (no-repeat); allow create for saving results
+    match /submissions/{document} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if true;
+    }
+  }
+}

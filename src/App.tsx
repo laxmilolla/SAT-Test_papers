@@ -65,6 +65,7 @@ export default function App() {
   const [saveStatus, setSaveStatus] = React.useState<"idle" | "saving" | "done" | "error">("idle");
   const [teacherAssignments, setTeacherAssignments] = React.useState<AssignmentRow[]>([]);
   const [teacherStatus, setTeacherStatus] = React.useState<"idle" | "loading" | "error">("idle");
+  const [teacherError, setTeacherError] = React.useState<string>("");
 
   /** Adaptive Module 2: set after scoring Module 1. Above threshold → harder M2. */
   const [rwModule2Variant, setRwModule2Variant] = React.useState<"easier" | "harder" | null>(null);
@@ -231,12 +232,17 @@ export default function App() {
             onClick={() => {
               setView("teacher");
               setTeacherStatus("loading");
+              setTeacherError("");
               getAllAssignments()
                 .then((rows) => {
                   setTeacherAssignments(rows);
                   setTeacherStatus("idle");
                 })
-                .catch(() => setTeacherStatus("error"));
+                .catch((err: unknown) => {
+                  setTeacherStatus("error");
+                  const msg = err && typeof err === "object" && "message" in err ? String((err as { message: string }).message) : "Unknown error";
+                  setTeacherError(msg);
+                });
             }}
             style={{
               background: "none",
@@ -285,7 +291,13 @@ export default function App() {
           ← Back to start
         </button>
         {teacherStatus === "loading" && <p>Loading…</p>}
-        {teacherStatus === "error" && <p style={{ color: "#c62828" }}>Failed to load assignments.</p>}
+        {teacherStatus === "error" && (
+          <p style={{ color: "#c62828" }}>
+            Failed to load assignments. {teacherError && <span style={{ fontSize: "14px" }}>({teacherError})</span>}
+            <br />
+            <strong>Check Firestore rules:</strong> allow <code>read</code> on <code>assignments</code> (see README or Firebase Console → Firestore → Rules).
+          </p>
+        )}
         {teacherStatus === "idle" && (
           <>
             {teacherAssignments.length === 0 ? (
