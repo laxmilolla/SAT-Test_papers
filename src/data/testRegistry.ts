@@ -19,4 +19,15 @@ export const testRegistry: Array<{
         mathModule2: m.mathModule2,
       })),
   },
+  {
+    id: "test2",
+    label: "Practice Test 2",
+    load: () =>
+      import("./tests/test2").then((m) => ({
+        readingWritingModule1: m.readingWritingModule1,
+        readingWritingModule2: m.readingWritingModule2,
+        mathModule1: m.mathModule1,
+        mathModule2: m.mathModule2,
+      })),
+  },
 ];

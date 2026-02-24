@@ -156,6 +156,9 @@ export default function App() {
         >
           {startStatus === "loading" ? "Loading…" : "START TEST"}
         </button>
+        <p style={{ marginTop: "24px", fontSize: "12px", color: "#888" }}>
+          v2 · multi-test, grading, no-repeat
+        </p>
       </div>
     );
 
