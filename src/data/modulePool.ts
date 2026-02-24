@@ -2,9 +2,11 @@ import type { PoolModule, PoolTestData, RWQuestion, MathQuestion } from "./poolT
 import { rwM1A } from "./pool/rwM1A";
 import { rwM1B } from "./pool/rwM1B";
 import { rwM1C } from "./pool/rwM1C";
+import { rwM1D } from "./pool/rwM1D";
 import { mathM1A } from "./pool/mathM1A";
 import { mathM1B } from "./pool/mathM1B";
 import { mathM1C } from "./pool/mathM1C";
+import { mathM1D } from "./pool/mathM1D";
 import { rwM2Easier, rwM2Harder } from "./pool/sharedRwM2";
 import { mathM2Easier, mathM2Harder } from "./pool/sharedMathM2";
 
@@ -18,9 +20,11 @@ function initPool(): void {
   register(rwM1A);
   register(rwM1B);
   register(rwM1C);
+  register(rwM1D);
   register(mathM1A);
   register(mathM1B);
   register(mathM1C);
+  register(mathM1D);
   register(rwM2Easier);
   register(rwM2Harder);
   register(mathM2Easier);
