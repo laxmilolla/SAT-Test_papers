@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { saveSubmission, getSubmissionHistory, getAssignment, getAllAssignments, AssignmentRow } from "./firebase";
 import { testRegistry } from "./data/testRegistry";
-import { getPoolTestData } from "./data/modulePool";
+import { getPoolTestData, getAllPoolModules } from "./data/modulePool";
 import { scoreSection } from "./utils/scoring";
 
 export interface TestData {
@@ -270,12 +270,69 @@ export default function App() {
       }
       return "—";
     };
+
+    const allPoolModules = getAllPoolModules();
+    const rwM1Modules = allPoolModules.filter((m) => m.type === "rw-m1");
+    const rwM2Modules = allPoolModules.filter((m) => m.type === "rw-m2-easier" || m.type === "rw-m2-harder");
+    const mathM1Modules = allPoolModules.filter((m) => m.type === "math-m1");
+    const mathM2Modules = allPoolModules.filter((m) => m.type === "math-m2-easier" || m.type === "math-m2-harder");
+
+    const thStyle: React.CSSProperties = { padding: "10px 12px", textAlign: "left", border: "1px solid #ddd", whiteSpace: "nowrap" };
+    const tdStyle: React.CSSProperties = { padding: "10px 12px", border: "1px solid #ddd" };
+    const sectionHead: React.CSSProperties = { marginTop: "36px", marginBottom: "8px", fontSize: "18px", fontWeight: 600 };
+    const chipBase: React.CSSProperties = { display: "inline-block", padding: "2px 8px", borderRadius: "4px", fontSize: "12px", fontWeight: 600 };
+
+    const typeChip = (type: string) => {
+      const colors: Record<string, { bg: string; fg: string }> = {
+        "rw-m1": { bg: "#e3f2fd", fg: "#1565c0" },
+        "rw-m2-easier": { bg: "#e8f5e9", fg: "#2e7d32" },
+        "rw-m2-harder": { bg: "#fce4ec", fg: "#c62828" },
+        "math-m1": { bg: "#fff3e0", fg: "#e65100" },
+        "math-m2-easier": { bg: "#e8f5e9", fg: "#2e7d32" },
+        "math-m2-harder": { bg: "#fce4ec", fg: "#c62828" },
+      };
+      const c = colors[type] ?? { bg: "#eee", fg: "#333" };
+      return <span style={{ ...chipBase, background: c.bg, color: c.fg }}>{type}</span>;
+    };
+
+    const moduleTable = (title: string, modules: typeof allPoolModules) => (
+      <>
+        <h4 style={sectionHead}>{title}</h4>
+        {modules.length === 0 ? (
+          <p style={{ color: "#999", fontSize: "14px" }}>None registered.</p>
+        ) : (
+          <table style={{ width: "100%", borderCollapse: "collapse", border: "1px solid #ddd", marginBottom: "8px" }}>
+            <thead>
+              <tr style={{ background: "#f5f5f5" }}>
+                <th style={thStyle}>Module ID</th>
+                <th style={thStyle}>Type</th>
+                <th style={thStyle}>Label</th>
+                <th style={thStyle}>Questions</th>
+                <th style={thStyle}>Linked M2</th>
+              </tr>
+            </thead>
+            <tbody>
+              {modules.map((m) => (
+                <tr key={m.id}>
+                  <td style={{ ...tdStyle, fontFamily: "monospace", fontSize: "13px" }}>{m.id}</td>
+                  <td style={tdStyle}>{typeChip(m.type)}</td>
+                  <td style={tdStyle}>{m.label ?? "—"}</td>
+                  <td style={{ ...tdStyle, textAlign: "center" }}>{m.questions.length}</td>
+                  <td style={{ ...tdStyle, fontFamily: "monospace", fontSize: "13px" }}>
+                    {m.m2EasierModuleId && <div>easier → {m.m2EasierModuleId}</div>}
+                    {m.m2HarderModuleId && <div>harder → {m.m2HarderModuleId}</div>}
+                    {!m.m2EasierModuleId && !m.m2HarderModuleId && "—"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </>
+    );
+
     return (
-      <div style={{ padding: "40px", fontFamily: "sans-serif", maxWidth: "800px", margin: "0 auto" }}>
-        <h2>Assignments by student</h2>
-        <p style={{ color: "#555", marginBottom: "16px" }}>
-          Students with an assignment get this test when they enter their ID. To add or change assignments, use Firebase Console → Firestore → assignments.
-        </p>
+      <div style={{ padding: "40px", fontFamily: "sans-serif", maxWidth: "960px", margin: "0 auto" }}>
         <button
           type="button"
           onClick={() => setView("start")}
@@ -290,31 +347,37 @@ export default function App() {
         >
           ← Back to start
         </button>
+
+        {/* ── Assignments ── */}
+        <h2 style={{ marginBottom: "4px" }}>Student Assignments</h2>
+        <p style={{ color: "#555", marginBottom: "16px", fontSize: "14px" }}>
+          To add or change assignments, use Firebase Console → Firestore → <code>assignments</code> collection (document ID = student ID).
+        </p>
         {teacherStatus === "loading" && <p>Loading…</p>}
         {teacherStatus === "error" && (
           <p style={{ color: "#c62828" }}>
             Failed to load assignments. {teacherError && <span style={{ fontSize: "14px" }}>({teacherError})</span>}
             <br />
-            <strong>Check Firestore rules:</strong> allow <code>read</code> on <code>assignments</code> (see README or Firebase Console → Firestore → Rules).
+            <strong>Check Firestore rules:</strong> allow <code>read</code> on <code>assignments</code>.
           </p>
         )}
         {teacherStatus === "idle" && (
           <>
             {teacherAssignments.length === 0 ? (
-              <p style={{ color: "#666" }}>No assignments yet. Add documents in Firestore under the &quot;assignments&quot; collection (document ID = student ID).</p>
+              <p style={{ color: "#666" }}>No assignments yet.</p>
             ) : (
               <table style={{ width: "100%", borderCollapse: "collapse", border: "1px solid #ddd" }}>
                 <thead>
                   <tr style={{ background: "#f5f5f5" }}>
-                    <th style={{ padding: "10px", textAlign: "left", border: "1px solid #ddd" }}>Student ID</th>
-                    <th style={{ padding: "10px", textAlign: "left", border: "1px solid #ddd" }}>Assigned test</th>
+                    <th style={thStyle}>Student ID</th>
+                    <th style={thStyle}>Assigned Test</th>
                   </tr>
                 </thead>
                 <tbody>
                   {teacherAssignments.map((row) => (
                     <tr key={row.studentId}>
-                      <td style={{ padding: "10px", border: "1px solid #ddd" }}>{row.studentId}</td>
-                      <td style={{ padding: "10px", border: "1px solid #ddd" }}>{assignmentLabel(row)}</td>
+                      <td style={tdStyle}>{row.studentId}</td>
+                      <td style={tdStyle}>{assignmentLabel(row)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -322,6 +385,50 @@ export default function App() {
             )}
           </>
         )}
+
+        {/* ── Available Tests ── */}
+        <h2 style={{ marginTop: "48px", marginBottom: "4px" }}>Available Tests</h2>
+        <p style={{ color: "#555", marginBottom: "12px", fontSize: "14px" }}>
+          Fixed tests (assign via <code>testId</code> field in Firestore).
+        </p>
+        <table style={{ width: "100%", borderCollapse: "collapse", border: "1px solid #ddd", marginBottom: "8px" }}>
+          <thead>
+            <tr style={{ background: "#f5f5f5" }}>
+              <th style={thStyle}>Test ID</th>
+              <th style={thStyle}>Label</th>
+            </tr>
+          </thead>
+          <tbody>
+            {combinedRegistry.map((t) => (
+              <tr key={t.id}>
+                <td style={{ ...tdStyle, fontFamily: "monospace", fontSize: "13px" }}>{t.id}</td>
+                <td style={tdStyle}>{t.label}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {/* ── Module Pool ── */}
+        <h2 style={{ marginTop: "48px", marginBottom: "4px" }}>Module Pool</h2>
+        <p style={{ color: "#555", marginBottom: "4px", fontSize: "14px" }}>
+          Individual modules for adaptive testing. Assign via <code>rwM1ModuleId</code> + <code>mathM1ModuleId</code> in Firestore.
+          The system auto-picks the linked M2 (easier or harder) based on M1 score.
+        </p>
+
+        {moduleTable("R&W — Module 1", rwM1Modules)}
+        {moduleTable("R&W — Module 2 variants", rwM2Modules)}
+        {moduleTable("Math — Module 1", mathM1Modules)}
+        {moduleTable("Math — Module 2 variants", mathM2Modules)}
+
+        <div style={{ marginTop: "40px", padding: "16px", background: "#f0f4ff", borderRadius: "8px", fontSize: "14px", color: "#333" }}>
+          <strong>How to assign a pool test in Firestore:</strong>
+          <ol style={{ margin: "8px 0 0 0", paddingLeft: "20px", lineHeight: "1.8" }}>
+            <li>Go to Firebase Console → Firestore → <code>assignments</code></li>
+            <li>Create a document with <strong>document ID = student ID</strong></li>
+            <li>Add field <code>rwM1ModuleId</code> (string) → e.g. <code>rw-m1-a</code></li>
+            <li>Add field <code>mathM1ModuleId</code> (string) → e.g. <code>math-m1-a</code></li>
+          </ol>
+        </div>
       </div>
     );
   }

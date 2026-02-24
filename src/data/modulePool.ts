@@ -33,6 +33,10 @@ export function getPoolModule(id: string): PoolModule | null {
   return poolModulesById.get(id) ?? null;
 }
 
+export function getAllPoolModules(): PoolModule[] {
+  return Array.from(poolModulesById.values());
+}
+
 /**
  * Build TestData from two M1 pool modules (R&W and Math). Uses each M1's
  * m2EasierModuleId and m2HarderModuleId for adaptive M2.
