@@ -81,6 +81,19 @@ export default function App() {
   const [mathModule2Variant, setMathModule2Variant] = React.useState<"easier" | "harder" | null>(null);
   const MODULE1_HARDER_THRESHOLD = 0.5; // >50% correct → harder Module 2
 
+  /** Pool test: which M1 modules were given (saved on submission for "what was given"). */
+  const [assignedRwM1ModuleId, setAssignedRwM1ModuleId] = React.useState<string | null>(null);
+  const [assignedMathM1ModuleId, setAssignedMathM1ModuleId] = React.useState<string | null>(null);
+
+  /** Teacher access: code-gated; persisted in sessionStorage. */
+  const [isTeacherMode, setIsTeacherMode] = React.useState(
+    () => typeof window !== "undefined" && sessionStorage.getItem("sat_teacher_mode") === "1"
+  );
+  const [showTeacherCodeForm, setShowTeacherCodeForm] = React.useState(false);
+  const [teacherCodeInput, setTeacherCodeInput] = React.useState("");
+  const [teacherCodeError, setTeacherCodeError] = React.useState(false);
+  const TEACHER_CODE = process.env.REACT_APP_TEACHER_CODE || "1116";
+
   React.useEffect(() => {
     let timer: ReturnType<typeof setInterval> | undefined;
     if (view === "test" && timeLeft > 0) {
@@ -88,6 +101,10 @@ export default function App() {
     }
     return () => clearInterval(timer);
   }, [view, timeLeft]);
+
+  React.useEffect(() => {
+    if (view === "teacher" && !isTeacherMode) setView("start");
+  }, [view, isTeacherMode]);
 
   // Point to the correct list of questions based on where the student is (and adaptive M2 if present)
   let currentQuestions: Array<{ id: string; question?: string; options?: string[]; passage?: string; image?: string }> = [];
@@ -144,6 +161,8 @@ export default function App() {
         const data = (await getPoolTestData(assignment.rwM1ModuleId, assignment.mathM1ModuleId)) as TestData;
         setTestData(data);
         setSelectedTestId("pool");
+        setAssignedRwM1ModuleId(assignment.rwM1ModuleId);
+        setAssignedMathM1ModuleId(assignment.mathM1ModuleId);
         setRwModule2Variant(null);
         setMathModule2Variant(null);
         setView("test");
@@ -170,6 +189,8 @@ export default function App() {
       if (!entry) throw new Error("Unknown test");
       const data = (await loadTestData(entry)) as TestData;
       setTestData(data);
+      setAssignedRwM1ModuleId(null);
+      setAssignedMathM1ModuleId(null);
       setRwModule2Variant(null);
       setMathModule2Variant(null);
       setView("test");
@@ -235,39 +256,108 @@ export default function App() {
         <p style={{ marginTop: "24px", fontSize: "12px", color: "#888" }}>
           Your test is chosen by your teacher or assigned automatically.
         </p>
-        <p style={{ marginTop: "16px" }}>
-          <button
-            type="button"
-            onClick={() => {
-              setView("teacher");
-              setTeacherStatus("loading");
-              setTeacherError("");
-              getAllAssignments()
-                .then((rows) => {
-                  setTeacherAssignments(rows);
-                  setTeacherStatus("idle");
-                })
-                .catch((err: unknown) => {
-                  setTeacherStatus("error");
-                  const msg = err && typeof err === "object" && "message" in err ? String((err as { message: string }).message) : "Unknown error";
-                  setTeacherError(msg);
-                });
-            }}
-            style={{
-              background: "none",
-              border: "none",
-              color: "#0052cc",
-              textDecoration: "underline",
-              cursor: "pointer",
-              fontSize: "14px",
-            }}
-          >
-            Teacher: view assignments
-          </button>
-        </p>
+        {showTeacherCodeForm ? (
+          <div style={{ marginTop: "24px", padding: "16px", background: "#f5f5f5", borderRadius: "8px", maxWidth: "320px", marginLeft: "auto", marginRight: "auto" }}>
+            <label htmlFor="teacher-code" style={{ display: "block", marginBottom: "6px", fontSize: "14px", fontWeight: 600 }}>Teacher code</label>
+            <input
+              id="teacher-code"
+              type="password"
+              value={teacherCodeInput}
+              onChange={(e) => {
+                setTeacherCodeInput(e.target.value);
+                setTeacherCodeError(false);
+              }}
+              placeholder="Enter code"
+              style={{ padding: "8px 12px", fontSize: "14px", width: "100%", boxSizing: "border-box", border: "1px solid #ccc", borderRadius: "6px", marginBottom: "8px" }}
+            />
+            {teacherCodeError && <p style={{ color: "#c62828", fontSize: "13px", marginBottom: "8px" }}>Incorrect code.</p>}
+            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+              <button
+                type="button"
+                onClick={() => {
+                  const ok = teacherCodeInput.trim() === TEACHER_CODE;
+                  if (ok) {
+                    setIsTeacherMode(true);
+                    if (typeof window !== "undefined") sessionStorage.setItem("sat_teacher_mode", "1");
+                    setShowTeacherCodeForm(false);
+                    setTeacherCodeInput("");
+                    setTeacherCodeError(false);
+                    setView("teacher");
+                    setTeacherStatus("loading");
+                    setTeacherError("");
+                    getAllAssignments()
+                      .then((rows) => {
+                        setTeacherAssignments(rows);
+                        setTeacherStatus("idle");
+                      })
+                      .catch((err: unknown) => {
+                        setTeacherStatus("error");
+                        const msg = err && typeof err === "object" && "message" in err ? String((err as { message: string }).message) : "Unknown error";
+                        setTeacherError(msg);
+                      });
+                  } else {
+                    setTeacherCodeError(true);
+                  }
+                }}
+                style={{ padding: "8px 16px", fontSize: "14px", fontWeight: 600, background: "#0052cc", color: "white", border: "none", borderRadius: "6px", cursor: "pointer" }}
+              >
+                Submit
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowTeacherCodeForm(false);
+                  setTeacherCodeInput("");
+                  setTeacherCodeError(false);
+                }}
+                style={{ padding: "8px 16px", fontSize: "14px", background: "#eee", border: "1px solid #ccc", borderRadius: "6px", cursor: "pointer" }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        ) : (
+          <p style={{ marginTop: "16px", fontSize: "12px", color: "#999" }}>
+            <button
+              type="button"
+              onClick={() => {
+                if (isTeacherMode) {
+                  setView("teacher");
+                  setTeacherStatus("loading");
+                  setTeacherError("");
+                  getAllAssignments()
+                    .then((rows) => {
+                      setTeacherAssignments(rows);
+                      setTeacherStatus("idle");
+                    })
+                    .catch((err: unknown) => {
+                      setTeacherStatus("error");
+                      const msg = err && typeof err === "object" && "message" in err ? String((err as { message: string }).message) : "Unknown error";
+                      setTeacherError(msg);
+                    });
+                } else {
+                  setShowTeacherCodeForm(true);
+                }
+              }}
+              style={{
+                background: "none",
+                border: "none",
+                color: "#999",
+                textDecoration: "underline",
+                cursor: "pointer",
+                fontSize: "12px",
+              }}
+            >
+              Teacher
+            </button>
+          </p>
+        )}
       </div>
     );
 
+  if (view === "teacher" && !isTeacherMode) {
+    return null;
+  }
   if (view === "teacher") {
     const assignmentLabel = (row: AssignmentRow) => {
       if (row.rwM1ModuleId && row.mathM1ModuleId) {
@@ -432,20 +522,40 @@ export default function App() {
 
     return (
       <div style={{ padding: "40px", fontFamily: "sans-serif", maxWidth: "960px", margin: "0 auto" }}>
-        <button
-          type="button"
-          onClick={() => setView("start")}
-          style={{
-            marginBottom: "20px",
-            padding: "8px 16px",
-            background: "#eee",
-            border: "1px solid #ccc",
-            borderRadius: "6px",
-            cursor: "pointer",
-          }}
-        >
-          ← Back to start
-        </button>
+        <div style={{ marginBottom: "20px", display: "flex", gap: "12px", flexWrap: "wrap" }}>
+          <button
+            type="button"
+            onClick={() => setView("start")}
+            style={{
+              padding: "8px 16px",
+              background: "#eee",
+              border: "1px solid #ccc",
+              borderRadius: "6px",
+              cursor: "pointer",
+            }}
+          >
+            ← Back to start
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setIsTeacherMode(false);
+              if (typeof window !== "undefined") sessionStorage.removeItem("sat_teacher_mode");
+              setView("start");
+            }}
+            style={{
+              padding: "8px 16px",
+              background: "transparent",
+              border: "1px solid #999",
+              borderRadius: "6px",
+              cursor: "pointer",
+              color: "#666",
+              fontSize: "13px",
+            }}
+          >
+            Log out (teacher)
+          </button>
+        </div>
 
         <div style={{ marginBottom: "20px", padding: "12px 16px", background: "#f0f4ff", borderRadius: "8px", fontSize: "14px" }}>
           <strong>Jump to:</strong>{" "}
@@ -589,6 +699,7 @@ export default function App() {
                   <th style={thStyle}>Student ID</th>
                   <th style={thStyle}>Date</th>
                   <th style={thStyle}>Test</th>
+                  <th style={thStyle}>What was given</th>
                   <th style={thStyle}>R&W</th>
                   <th style={thStyle}>Math</th>
                   <th style={thStyle}>M2 difficulty</th>
@@ -603,6 +714,11 @@ export default function App() {
                       {row.submittedAt ? new Date(row.submittedAt).toLocaleString(undefined, { dateStyle: "short", timeStyle: "short" }) : "—"}
                     </td>
                     <td style={tdStyle}>{row.testLabel || row.testId || "—"}</td>
+                    <td style={tdStyle}>
+                      {row.rwM1ModuleId && row.mathM1ModuleId
+                        ? `R&W: ${row.rwM1ModuleId}, Math: ${row.mathM1ModuleId}`
+                        : "—"}
+                    </td>
                     <td style={tdStyle}>{row.rwRaw}/{row.rwTotal} ({row.rwPercentage}%)</td>
                     <td style={tdStyle}>{row.mathRaw}/{row.mathTotal} ({row.mathPercentage}%)</td>
                     <td style={tdStyle}>
@@ -802,6 +918,9 @@ export default function App() {
                   rwModule2Difficulty: rwModule2Variant ?? undefined,
                   mathModule2Difficulty: mathModule2Variant ?? undefined,
                   conceptScores,
+                  ...(selectedTestId === "pool" && assignedRwM1ModuleId && assignedMathM1ModuleId
+                    ? { rwM1ModuleId: assignedRwM1ModuleId, mathM1ModuleId: assignedMathM1ModuleId }
+                    : {}),
                 });
                 setSaveStatus("done");
               } catch (err) {

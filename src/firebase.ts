@@ -41,6 +41,9 @@ export async function saveSubmission(
     rwModule2Difficulty?: "easier" | "harder";
     mathModule2Difficulty?: "easier" | "harder";
     conceptScores?: ConceptScores;
+    /** When pool test: which R&W M1 and Math M1 were given (for teacher "what was given" view). */
+    rwM1ModuleId?: string;
+    mathM1ModuleId?: string;
   }
 ): Promise<void> {
   if (!db) {
@@ -63,6 +66,12 @@ export async function saveSubmission(
   };
   if (options.conceptScores && Object.keys(options.conceptScores).length > 0) {
     doc.conceptScores = options.conceptScores;
+  }
+  if (options.rwM1ModuleId != null && options.rwM1ModuleId !== "") {
+    doc.rwM1ModuleId = options.rwM1ModuleId;
+  }
+  if (options.mathM1ModuleId != null && options.mathM1ModuleId !== "") {
+    doc.mathM1ModuleId = options.mathM1ModuleId;
   }
   await addDoc(collection(db, "submissions"), doc);
 }
@@ -175,6 +184,9 @@ export interface SubmissionRow {
   mathModule2Difficulty: string | null;
   submittedAt: string;
   conceptScores?: ConceptScores;
+  /** Pool test: which modules were given (for "what was given to which student"). */
+  rwM1ModuleId?: string;
+  mathM1ModuleId?: string;
 }
 
 /**
@@ -209,6 +221,8 @@ export async function getSubmissions(userId?: string): Promise<SubmissionRow[]> 
       mathModule2Difficulty: data.mathModule2Difficulty ?? null,
       submittedAt: typeof data.submittedAt === "string" ? data.submittedAt : "",
       conceptScores: data.conceptScores && typeof data.conceptScores === "object" ? (data.conceptScores as ConceptScores) : undefined,
+      rwM1ModuleId: typeof data.rwM1ModuleId === "string" ? data.rwM1ModuleId : undefined,
+      mathM1ModuleId: typeof data.mathM1ModuleId === "string" ? data.mathM1ModuleId : undefined,
     };
   });
 }
