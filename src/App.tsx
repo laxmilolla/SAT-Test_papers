@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { saveSubmission, getSubmissionHistory } from "./firebase";
+import { saveSubmission, getSubmissionHistory, getAssignment } from "./firebase";
 import { testRegistry } from "./data/testRegistry";
+import { getPoolTestData } from "./data/modulePool";
 import { scoreSection } from "./utils/scoring";
 
 export interface TestData {
@@ -8,6 +9,11 @@ export interface TestData {
   readingWritingModule2: Array<{ id: string; question?: string; options?: string[]; passage?: string; correct: string; explanation?: string }>;
   mathModule1: Array<{ id: string; question?: string; options?: string[]; image?: string; correct: string; explanation?: string }>;
   mathModule2: Array<{ id: string; question?: string; options?: string[]; image?: string; correct: string; explanation?: string }>;
+  /** Optional: use for adaptive Module 2. If both present, M1 score picks easier vs harder. */
+  readingWritingModule2Easier?: Array<{ id: string; question?: string; options?: string[]; passage?: string; correct: string; explanation?: string }>;
+  readingWritingModule2Harder?: Array<{ id: string; question?: string; options?: string[]; passage?: string; correct: string; explanation?: string }>;
+  mathModule2Easier?: Array<{ id: string; question?: string; options?: string[]; image?: string; correct: string; explanation?: string }>;
+  mathModule2Harder?: Array<{ id: string; question?: string; options?: string[]; image?: string; correct: string; explanation?: string }>;
 }
 
 /** Registry entry: either code-loaded (load) or JSON-loaded (url). */
@@ -58,6 +64,11 @@ export default function App() {
   const [studentId, setStudentId] = React.useState("");
   const [saveStatus, setSaveStatus] = React.useState<"idle" | "saving" | "done" | "error">("idle");
 
+  /** Adaptive Module 2: set after scoring Module 1. Above threshold → harder M2. */
+  const [rwModule2Variant, setRwModule2Variant] = React.useState<"easier" | "harder" | null>(null);
+  const [mathModule2Variant, setMathModule2Variant] = React.useState<"easier" | "harder" | null>(null);
+  const MODULE1_HARDER_THRESHOLD = 0.5; // >50% correct → harder Module 2
+
   React.useEffect(() => {
     let timer: ReturnType<typeof setInterval> | undefined;
     if (view === "test" && timeLeft > 0) {
@@ -66,13 +77,20 @@ export default function App() {
     return () => clearInterval(timer);
   }, [view, timeLeft]);
 
-  // Point to the correct list of questions based on where the student is
+  // Point to the correct list of questions based on where the student is (and adaptive M2 if present)
   let currentQuestions: Array<{ id: string; question?: string; options?: string[]; passage?: string; image?: string }> = [];
   if (testData) {
     if (section === "reading" && module === 1) currentQuestions = testData.readingWritingModule1;
-    else if (section === "reading" && module === 2) currentQuestions = testData.readingWritingModule2;
-    else if (section === "math" && module === 1) currentQuestions = testData.mathModule1;
-    else if (section === "math" && module === 2) currentQuestions = testData.mathModule2;
+    else if (section === "reading" && module === 2) {
+      if (rwModule2Variant === "harder" && testData.readingWritingModule2Harder?.length) currentQuestions = testData.readingWritingModule2Harder;
+      else if (rwModule2Variant === "easier" && testData.readingWritingModule2Easier?.length) currentQuestions = testData.readingWritingModule2Easier;
+      else currentQuestions = testData.readingWritingModule2;
+    } else if (section === "math" && module === 1) currentQuestions = testData.mathModule1;
+    else if (section === "math" && module === 2) {
+      if (mathModule2Variant === "harder" && testData.mathModule2Harder?.length) currentQuestions = testData.mathModule2Harder;
+      else if (mathModule2Variant === "easier" && testData.mathModule2Easier?.length) currentQuestions = testData.mathModule2Easier;
+      else currentQuestions = testData.mathModule2;
+    }
   }
 
   const q = currentQuestions[qIdx];
@@ -82,6 +100,14 @@ export default function App() {
       setQIdx(qIdx + 1);
     } else {
       if (module === 1) {
+        if (testData && section === "reading") {
+          const rw1 = scoreSection(answers, testData.readingWritingModule1);
+          setRwModule2Variant(rw1.total > 0 && rw1.rawScore / rw1.total > MODULE1_HARDER_THRESHOLD ? "harder" : "easier");
+        }
+        if (testData && section === "math") {
+          const m1 = scoreSection(answers, testData.mathModule1);
+          setMathModule2Variant(m1.total > 0 && m1.rawScore / m1.total > MODULE1_HARDER_THRESHOLD ? "harder" : "easier");
+        }
         setModule(2);
         setQIdx(0);
         setTimeLeft(section === "reading" ? 32 * 60 : 35 * 60);
@@ -97,26 +123,51 @@ export default function App() {
   };
 
   const handleStart = async () => {
-    const testIdToUse = combinedRegistry.length === 1 ? combinedRegistry[0].id : selectedTestId;
-    if (!testIdToUse) return;
+    const uid = studentId.trim() || "Anonymous";
     setStartStatus("loading");
     try {
-      const uid = studentId.trim() || "Anonymous";
-      const taken = await getSubmissionHistory(uid);
-      let assignTestId = testIdToUse;
-      if (taken.includes(testIdToUse)) {
-        const available = combinedRegistry.filter((t) => !taken.includes(t.id));
-        if (available.length === 0) {
-          setStartStatus("all_taken");
+      const assignment = await getAssignment(uid);
+
+      if (assignment?.rwM1ModuleId && assignment?.mathM1ModuleId) {
+        const data = (await getPoolTestData(assignment.rwM1ModuleId, assignment.mathM1ModuleId)) as TestData;
+        setTestData(data);
+        setSelectedTestId("pool");
+        setRwModule2Variant(null);
+        setMathModule2Variant(null);
+        setView("test");
+        setStartStatus("idle");
+        return;
+      }
+
+      let assignTestId: string | null = null;
+      if (assignment?.testId && combinedRegistry.some((t) => t.id === assignment.testId)) {
+        assignTestId = assignment.testId;
+        setSelectedTestId(assignment.testId);
+      }
+      if (!assignTestId) {
+        const testIdToUse = combinedRegistry.length === 1 ? combinedRegistry[0].id : selectedTestId;
+        if (!testIdToUse) {
+          setStartStatus("idle");
           return;
         }
-        assignTestId = available[0].id;
-        setSelectedTestId(assignTestId);
+        const taken = await getSubmissionHistory(uid);
+        assignTestId = testIdToUse;
+        if (taken.includes(testIdToUse)) {
+          const available = combinedRegistry.filter((t) => !taken.includes(t.id));
+          if (available.length === 0) {
+            setStartStatus("all_taken");
+            return;
+          }
+          assignTestId = available[0].id;
+          setSelectedTestId(assignTestId);
+        }
       }
       const entry = combinedRegistry.find((t) => t.id === assignTestId);
       if (!entry) throw new Error("Unknown test");
       const data = (await loadTestData(entry)) as TestData;
       setTestData(data);
+      setRwModule2Variant(null);
+      setMathModule2Variant(null);
       setView("test");
       setStartStatus("idle");
     } catch (err) {
@@ -198,9 +249,21 @@ export default function App() {
 
   if (view === "results" && testData && selectedTestId) {
     const rw1 = scoreSection(answers, testData.readingWritingModule1);
-    const rw2 = scoreSection(answers, testData.readingWritingModule2);
+    const rw2Questions =
+      rwModule2Variant === "harder" && testData.readingWritingModule2Harder?.length
+        ? testData.readingWritingModule2Harder
+        : rwModule2Variant === "easier" && testData.readingWritingModule2Easier?.length
+          ? testData.readingWritingModule2Easier
+          : testData.readingWritingModule2;
+    const rw2 = scoreSection(answers, rw2Questions);
     const m1 = scoreSection(answers, testData.mathModule1);
-    const m2 = scoreSection(answers, testData.mathModule2);
+    const m2Questions =
+      mathModule2Variant === "harder" && testData.mathModule2Harder?.length
+        ? testData.mathModule2Harder
+        : mathModule2Variant === "easier" && testData.mathModule2Easier?.length
+          ? testData.mathModule2Easier
+          : testData.mathModule2;
+    const m2 = scoreSection(answers, m2Questions);
     const scores = {
       rwRaw: rw1.rawScore + rw2.rawScore,
       rwTotal: rw1.total + rw2.total,
@@ -209,7 +272,7 @@ export default function App() {
       mathTotal: m1.total + m2.total,
       mathPercentage: m1.total + m2.total > 0 ? Math.round(((m1.rawScore + m2.rawScore) / (m1.total + m2.total)) * 100) : 0,
     };
-    const testLabel = combinedRegistry.find((t) => t.id === selectedTestId)?.label;
+    const testLabel = selectedTestId === "pool" ? "Pool" : combinedRegistry.find((t) => t.id === selectedTestId)?.label;
 
     return (
       <div
@@ -231,7 +294,13 @@ export default function App() {
             onClick={async () => {
               setSaveStatus("saving");
               try {
-                await saveSubmission(studentId, answers, { testId: selectedTestId, testLabel, scores });
+                await saveSubmission(studentId, answers, {
+                  testId: selectedTestId,
+                  testLabel,
+                  scores,
+                  rwModule2Difficulty: rwModule2Variant ?? undefined,
+                  mathModule2Difficulty: mathModule2Variant ?? undefined,
+                });
                 setSaveStatus("done");
               } catch (err) {
                 setSaveStatus("error");

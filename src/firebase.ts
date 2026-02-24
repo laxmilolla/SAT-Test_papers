@@ -1,5 +1,5 @@
 import { initializeApp, FirebaseApp } from "firebase/app";
-import { getFirestore, collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import { getFirestore, collection, addDoc, doc, getDoc, query, where, getDocs } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -31,7 +31,13 @@ export interface SubmissionScores {
 export async function saveSubmission(
   userId: string,
   answers: Record<string, string>,
-  options: { testId: string; testLabel?: string; scores: SubmissionScores }
+  options: {
+    testId: string;
+    testLabel?: string;
+    scores: SubmissionScores;
+    rwModule2Difficulty?: "easier" | "harder";
+    mathModule2Difficulty?: "easier" | "harder";
+  }
 ): Promise<void> {
   if (!db) {
     throw new Error("Firebase is not configured. Set REACT_APP_FIREBASE_* env variables.");
@@ -47,6 +53,8 @@ export async function saveSubmission(
     mathRaw: options.scores.mathRaw,
     mathTotal: options.scores.mathTotal,
     mathPercentage: options.scores.mathPercentage,
+    rwModule2Difficulty: options.rwModule2Difficulty ?? null,
+    mathModule2Difficulty: options.mathModule2Difficulty ?? null,
     submittedAt: new Date().toISOString(),
   });
 }
@@ -68,6 +76,40 @@ export async function getSubmissionHistory(userId: string): Promise<string[]> {
     if (testId && !testIds.includes(testId)) testIds.push(testId);
   });
   return testIds;
+}
+
+/** Assignment (manual in Firebase). If present, student gets this test when they start. */
+export interface StudentAssignment {
+  /** When set, load full test from registry. */
+  testId?: string;
+  /** When both set, load from module pool (takes precedence over testId). */
+  rwM1ModuleId?: string;
+  mathM1ModuleId?: string;
+}
+
+/**
+ * Get the assigned test for a student. Set in Firebase: collection "assignments",
+ * document ID = student ID (or "Anonymous").
+ * - testId = "test1" etc. → load full test from registry.
+ * - rwM1ModuleId + mathM1ModuleId → load from module pool (e.g. "rw-m1-a", "math-m1-a").
+ */
+export async function getAssignment(userId: string): Promise<StudentAssignment | null> {
+  if (!db) return null;
+  const uid = userId.trim() || "Anonymous";
+  const ref = doc(db, "assignments", uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return null;
+  const data = snap.data();
+  const testId = data?.testId;
+  const rwM1ModuleId = data?.rwM1ModuleId;
+  const mathM1ModuleId = data?.mathM1ModuleId;
+  if (typeof rwM1ModuleId === "string" && typeof mathM1ModuleId === "string" && rwM1ModuleId && mathM1ModuleId) {
+    return { rwM1ModuleId, mathM1ModuleId, testId: typeof testId === "string" ? testId : undefined };
+  }
+  if (typeof testId === "string" && testId) {
+    return { testId };
+  }
+  return null;
 }
 
 export { db };
