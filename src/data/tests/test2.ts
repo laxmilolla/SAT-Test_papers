@@ -722,6 +722,7 @@ export const mathModule1 = [
       options: ["A) 4", "B) 9", "C) 18", "D) 36"],
       correct: "B",
       explanation: "Add 5: 2y = 18. Divide by 2: y = 9.",
+      domain: "algebra",
     },
     {
       id: "m1-2",
@@ -730,6 +731,7 @@ export const mathModule1 = [
       options: ["A) 17 inches", "B) 34 inches", "C) 60 inches", "D) 68 inches"],
       correct: "B",
       explanation: "Perimeter = 2(12 + 5) = 2(17) = 34 inches.",
+      domain: "geometry_trig",
     },
     {
       id: "m1-3",
@@ -737,6 +739,7 @@ export const mathModule1 = [
       options: ["A) 1", "B) 5", "C) 8", "D) 11"],
       correct: "B",
       explanation: "y = 2(4) - 3 = 8 - 3 = 5.",
+      domain: "algebra",
     },
     {
       id: "m1-4",
@@ -746,6 +749,7 @@ export const mathModule1 = [
       correct: "C",
       explanation: "The angles of a triangle sum to 180°. So x = 180° - 45° - 65° = 70°.",
       image: "/m1_4_triangle.png",
+      domain: "geometry_trig",
     },
     {
       id: "m1-5",
@@ -753,6 +757,7 @@ export const mathModule1 = [
       options: ["A) 2x + 3", "B) 2x + 12", "C) 6x + 3", "D) 6x + 12"],
       correct: "B",
       explanation: "4x + 12 - 2x = 2x + 12.",
+      domain: "algebra",
     },
     {
       id: "m1-6",
@@ -761,6 +766,7 @@ export const mathModule1 = [
       options: ["A) 3 + n", "B) 3n", "C) n/3", "D) n - 3"],
       correct: "B",
       explanation: "Total cost = price × quantity = 3n.",
+      domain: "algebra",
     },
     {
       id: "m1-7",
@@ -769,6 +775,7 @@ export const mathModule1 = [
       options: ["A) 50", "B) 55", "C) 60", "D) 65"],
       correct: "C",
       explanation: "1.25x = 75, so x = 60.",
+      domain: "problem_solving_data",
     },
     {
       id: "m1-8",
@@ -777,6 +784,7 @@ export const mathModule1 = [
       options: ["A) 1", "B) 2", "C) 4", "D) 8"],
       correct: "B",
       explanation: "Slope = (11-3)/(6-2) = 8/4 = 2.",
+      domain: "algebra",
     },
     {
       id: "m1-9",
@@ -784,6 +792,7 @@ export const mathModule1 = [
       options: ["A) 7 only", "B) -7 only", "C) 7 and -7", "D) 49"],
       correct: "C",
       explanation: "x² = 49 means x = ±7.",
+      domain: "advanced_math",
     },
     {
       id: "m1-10",
@@ -792,6 +801,7 @@ export const mathModule1 = [
       options: ["A) 15.7 cm", "B) 31.4 cm", "C) 78.5 cm", "D) 157 cm"],
       correct: "B",
       explanation: "C = 2πr = 2(3.14)(5) = 31.4 cm.",
+      domain: "geometry_trig",
     },
     {
       id: "m1-11",
@@ -799,6 +809,7 @@ export const mathModule1 = [
       options: ["A) 2", "B) 3", "C) 4", "D) 6"],
       correct: "C",
       explanation: "5x - 2x = 9 + 3, so 3x = 12, x = 4.",
+      domain: "algebra",
     },
     {
       id: "m1-12",
@@ -806,6 +817,7 @@ export const mathModule1 = [
       options: ["A) 4", "B) 25", "C) 100", "D) 120"],
       correct: "C",
       explanation: "Sum = average × count = 20 × 5 = 100.",
+      domain: "problem_solving_data",
     },
     {
       id: "m1-13",
@@ -814,6 +826,7 @@ export const mathModule1 = [
       options: ["A) 65°", "B) 70°", "C) 75°", "D) 80°"],
       correct: "C",
       explanation: "180° - 45° - 60° = 75°.",
+      domain: "geometry_trig",
     },
     {
       id: "m1-14",
@@ -821,6 +834,7 @@ export const mathModule1 = [
       options: ["A) 2", "B) 4", "C) 6", "D) 7"],
       correct: "B",
       explanation: "2(3) + y = 10, so 6 + y = 10, y = 4.",
+      domain: "algebra",
     },
     {
       id: "m1-15",
@@ -831,6 +845,7 @@ export const mathModule1 = [
       explanation:
         "Corresponding angles are equal; the angle adjacent to 110° on the same line is 70°, and y corresponds to it.",
       image: "/m1_15_parallel.png",
+      domain: "geometry_trig",
     },
     {
       id: "m1-16",
@@ -839,6 +854,7 @@ export const mathModule1 = [
       options: ["A) $8", "B) $20", "C) $32", "D) $38"],
       correct: "C",
       explanation: "20% off means pay 80%: 0.80 × $40 = $32.",
+      domain: "problem_solving_data",
     },
     {
       id: "m1-17",
@@ -846,6 +862,7 @@ export const mathModule1 = [
       options: ["A) 8", "B) 10", "C) 11", "D) 13"],
       correct: "C",
       explanation: "f(3) = 2(3) + 5 = 6 + 5 = 11.",
+      domain: "algebra",
     },
     {
       id: "m1-18",
@@ -854,6 +871,7 @@ export const mathModule1 = [
       options: ["A) 14 cm²", "B) 24 cm²", "C) 28 cm²", "D) 48 cm²"],
       correct: "B",
       explanation: "Area = ½ × base × height = ½ × 8 × 6 = 24 cm².",
+      domain: "geometry_trig",
     },
     {
       id: "m1-19",
@@ -864,6 +882,7 @@ export const mathModule1 = [
       explanation:
         "The line of best fit runs from about (1, 40) to (8, 110). At 5 hours, the predicted score is approximately 80.",
       image: "/m1_19_scatterplot.png",
+      domain: "problem_solving_data",
     },
     {
       id: "m1-20",
@@ -871,6 +890,7 @@ export const mathModule1 = [
       options: ["A) 3", "B) 5", "C) 6", "D) 7"],
       correct: "B",
       explanation: "Ordered: {2, 3, 5, 7, 9}. Middle value is 5.",
+      domain: "problem_solving_data",
     },
     {
       id: "m1-21",
@@ -878,6 +898,7 @@ export const mathModule1 = [
       options: ["A) 5", "B) 7", "C) 9", "D) 11"],
       correct: "B",
       explanation: "3x - 6 = 15, so 3x = 21, x = 7.",
+      domain: "algebra",
     },
     {
       id: "m1-22",
@@ -886,6 +907,7 @@ export const mathModule1 = [
       options: ["A) 6 m", "B) 8 m", "C) 10 m", "D) 12 m"],
       correct: "B",
       explanation: "Area = length × width, so 48 = length × 6, length = 8 m.",
+      domain: "geometry_trig",
     },
   ];
 
@@ -897,6 +919,7 @@ export const mathModule2 = [
       options: ["A) 4", "B) 8", "C) 12", "D) 18"],
       correct: "B",
       explanation: "f(5) = 25 - 20 + 3 = 8.",
+      domain: "advanced_math",
     },
     {
       id: "m2-2",
@@ -907,6 +930,7 @@ export const mathModule2 = [
       explanation:
         "The radius is the distance from center (3, -2) to (3, 1): |1 - (-2)| = 3.",
       image: "/m2_2_circle_graph.png",
+      domain: "geometry_trig",
     },
     {
       id: "m2-3",
@@ -914,6 +938,7 @@ export const mathModule2 = [
       options: ["A) -3 and 2", "B) 3 and -2", "C) -3 and -2", "D) 3 and 2"],
       correct: "B",
       explanation: "x - 3 = 0 gives x = 3; x + 2 = 0 gives x = -2.",
+      domain: "advanced_math",
     },
     {
       id: "m2-4",
@@ -923,6 +948,7 @@ export const mathModule2 = [
       correct: "A",
       explanation: "By the Pythagorean theorem: 6² + 8² = 36 + 64 = 100, so hypotenuse = √100 = 10.",
       image: "/m2_4_right_triangle.png",
+      domain: "geometry_trig",
     },
     {
       id: "m2-5",
@@ -930,6 +956,7 @@ export const mathModule2 = [
       options: ["A) 4", "B) 5", "C) 6", "D) 16"],
       correct: "B",
       explanation: "2⁵ = 32, so x = 5.",
+      domain: "advanced_math",
     },
     {
       id: "m2-6",
@@ -942,6 +969,7 @@ export const mathModule2 = [
       ],
       correct: "C",
       explanation: "x - 3 = 7 gives x = 10; x - 3 = -7 gives x = -4.",
+      domain: "algebra",
     },
     {
       id: "m2-7",
@@ -949,6 +977,7 @@ export const mathModule2 = [
       options: ["A) -3", "B) 3", "C) -9", "D) 9"],
       correct: "A",
       explanation: "(x + 3)² = 0, so x = -3.",
+      domain: "advanced_math",
     },
     {
       id: "m2-8",
@@ -957,6 +986,7 @@ export const mathModule2 = [
       options: ["A) 47.1 cm³", "B) 94.2 cm³", "C) 141.3 cm³", "D) 188.4 cm³"],
       correct: "C",
       explanation: "V = πr²h = 3.14 × 9 × 5 = 141.3 cm³.",
+      domain: "geometry_trig",
     },
     {
       id: "m2-9",
@@ -964,6 +994,7 @@ export const mathModule2 = [
       options: ["A) 2", "B) 8", "C) 16", "D) 32"],
       correct: "C",
       explanation: "2⁴ = 16, so x = 16.",
+      domain: "advanced_math",
     },
     {
       id: "m2-10",
@@ -971,6 +1002,7 @@ export const mathModule2 = [
       options: ["A) 3", "B) 4", "C) 5", "D) 7"],
       correct: "C",
       explanation: "d = √[(4-1)² + (6-2)²] = √[9+16] = √25 = 5.",
+      domain: "geometry_trig",
     },
     {
       id: "m2-11",
@@ -978,6 +1010,7 @@ export const mathModule2 = [
       options: ["A) 15°", "B) 30°", "C) 45°", "D) 60°"],
       correct: "B",
       explanation: "sin(30°) = 0.5.",
+      domain: "geometry_trig",
     },
     {
       id: "m2-12",
@@ -985,6 +1018,7 @@ export const mathModule2 = [
       options: ["A) 45", "B) 50", "C) 55", "D) 60"],
       correct: "C",
       explanation: "Sum = n(n+1)/2 = 10(11)/2 = 55.",
+      domain: "algebra",
     },
     {
       id: "m2-13",
@@ -992,6 +1026,7 @@ export const mathModule2 = [
       options: ["A) 1", "B) 2", "C) 3", "D) 4"],
       correct: "B",
       explanation: "2(3) + 3y = 12, so 6 + 3y = 12, 3y = 6, y = 2.",
+      domain: "algebra",
     },
     {
       id: "m2-14",
@@ -1000,6 +1035,7 @@ export const mathModule2 = [
       options: ["A) 108", "B) 126", "C) 162", "D) 216"],
       correct: "C",
       explanation: "Each term is multiplied by 3: 54 × 3 = 162.",
+      domain: "advanced_math",
     },
     {
       id: "m2-15",
@@ -1007,6 +1043,7 @@ export const mathModule2 = [
       options: ["A) 2", "B) 3", "C) 9", "D) 27"],
       correct: "B",
       explanation: "3⁴ = 81, so x = 3.",
+      domain: "advanced_math",
     },
     {
       id: "m2-16",
@@ -1015,6 +1052,7 @@ export const mathModule2 = [
       options: ["A) 9", "B) 18", "C) 20", "D) 25"],
       correct: "D",
       explanation: "3/5 = 15/x, so 3x = 75, x = 25.",
+      domain: "problem_solving_data",
     },
     {
       id: "m2-17",
@@ -1022,6 +1060,7 @@ export const mathModule2 = [
       options: ["A) 2", "B) 4", "C) 5", "D) 16"],
       correct: "B",
       explanation: "9 + b² = 25, so b² = 16, b = 4.",
+      domain: "geometry_trig",
     },
     {
       id: "m2-18",
@@ -1029,6 +1068,7 @@ export const mathModule2 = [
       options: ["A) 3", "B) 4", "C) 12", "D) -3"],
       correct: "A",
       explanation: "When x = 0: 4y = 12, so y = 3.",
+      domain: "algebra",
     },
     {
       id: "m2-19",
@@ -1037,6 +1077,7 @@ export const mathModule2 = [
       options: ["A) 2", "B) 3", "C) 5", "D) 6"],
       correct: "B",
       explanation: "xy = k, so 4×6 = 24. When y = 8: x×8 = 24, x = 3.",
+      domain: "algebra",
     },
     {
       id: "m2-20",
@@ -1050,6 +1091,7 @@ export const mathModule2 = [
       ],
       correct: "C",
       explanation: "Surface area = 4πr² = 4 × 3.14 × 9 = 113.04 cm².",
+      domain: "geometry_trig",
     },
     {
       id: "m2-21",
@@ -1057,6 +1099,7 @@ export const mathModule2 = [
       options: ["A) 10", "B) 12", "C) 14", "D) 16"],
       correct: "D",
       explanation: "g(2) = 6, then f(6) = 3(6) - 2 = 16.",
+      domain: "algebra",
     },
     {
       id: "m2-22",
@@ -1065,5 +1108,6 @@ export const mathModule2 = [
       options: ["A) 20", "B) 30", "C) 40", "D) 50"],
       correct: "C",
       explanation: "4th term = 5 × 2³ = 5 × 8 = 40.",
+      domain: "advanced_math",
     },
   ];

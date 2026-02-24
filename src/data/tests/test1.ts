@@ -722,6 +722,7 @@ export const mathModule1 = [
       options: ["A) 3", "B) 5", "C) 7", "D) 15"],
       correct: "B",
       explanation: "Subtract 7: 3x = 15. Divide by 3: x = 5.",
+      domain: "algebra",
     },
     {
       id: "m1-2",
@@ -730,6 +731,7 @@ export const mathModule1 = [
       options: ["A) 17 inches", "B) 34 inches", "C) 60 inches", "D) 68 inches"],
       correct: "B",
       explanation: "Perimeter = 2(12 + 5) = 2(17) = 34 inches.",
+      domain: "geometry_trig",
     },
     {
       id: "m1-3",
@@ -737,6 +739,7 @@ export const mathModule1 = [
       options: ["A) 1", "B) 5", "C) 8", "D) 11"],
       correct: "B",
       explanation: "y = 2(4) - 3 = 8 - 3 = 5.",
+      domain: "algebra",
     },
     {
       id: "m1-4",
@@ -746,6 +749,7 @@ export const mathModule1 = [
       correct: "C",
       explanation: "The angles of a triangle sum to 180°. So x = 180° - 45° - 65° = 70°.",
       image: "/m1_4_triangle.png",
+      domain: "geometry_trig",
     },
     {
       id: "m1-5",
@@ -753,6 +757,7 @@ export const mathModule1 = [
       options: ["A) 2x + 3", "B) 2x + 12", "C) 6x + 3", "D) 6x + 12"],
       correct: "B",
       explanation: "4x + 12 - 2x = 2x + 12.",
+      domain: "algebra",
     },
     {
       id: "m1-6",
@@ -761,6 +766,7 @@ export const mathModule1 = [
       options: ["A) 3 + n", "B) 3n", "C) n/3", "D) n - 3"],
       correct: "B",
       explanation: "Total cost = price × quantity = 3n.",
+      domain: "algebra",
     },
     {
       id: "m1-7",
@@ -769,6 +775,7 @@ export const mathModule1 = [
       options: ["A) 50", "B) 55", "C) 60", "D) 65"],
       correct: "C",
       explanation: "1.25x = 75, so x = 60.",
+      domain: "problem_solving_data",
     },
     {
       id: "m1-8",
@@ -777,6 +784,7 @@ export const mathModule1 = [
       options: ["A) 1", "B) 2", "C) 4", "D) 8"],
       correct: "B",
       explanation: "Slope = (11-3)/(6-2) = 8/4 = 2.",
+      domain: "algebra",
     },
     {
       id: "m1-9",
@@ -784,6 +792,7 @@ export const mathModule1 = [
       options: ["A) 7 only", "B) -7 only", "C) 7 and -7", "D) 49"],
       correct: "C",
       explanation: "x² = 49 means x = ±7.",
+      domain: "advanced_math",
     },
     {
       id: "m1-10",
@@ -792,6 +801,7 @@ export const mathModule1 = [
       options: ["A) 15.7 cm", "B) 31.4 cm", "C) 78.5 cm", "D) 157 cm"],
       correct: "B",
       explanation: "C = 2πr = 2(3.14)(5) = 31.4 cm.",
+      domain: "geometry_trig",
     },
     {
       id: "m1-11",
@@ -799,6 +809,7 @@ export const mathModule1 = [
       options: ["A) 2", "B) 3", "C) 4", "D) 6"],
       correct: "C",
       explanation: "5x - 2x = 9 + 3, so 3x = 12, x = 4.",
+      domain: "algebra",
     },
     {
       id: "m1-12",
@@ -806,6 +817,7 @@ export const mathModule1 = [
       options: ["A) 4", "B) 25", "C) 100", "D) 120"],
       correct: "C",
       explanation: "Sum = average × count = 20 × 5 = 100.",
+      domain: "problem_solving_data",
     },
     {
       id: "m1-13",
@@ -814,6 +826,7 @@ export const mathModule1 = [
       options: ["A) 65°", "B) 70°", "C) 75°", "D) 80°"],
       correct: "C",
       explanation: "180° - 45° - 60° = 75°.",
+      domain: "geometry_trig",
     },
     {
       id: "m1-14",
@@ -821,6 +834,7 @@ export const mathModule1 = [
       options: ["A) 2", "B) 4", "C) 6", "D) 7"],
       correct: "B",
       explanation: "2(3) + y = 10, so 6 + y = 10, y = 4.",
+      domain: "algebra",
     },
     {
       id: "m1-15",
@@ -831,6 +845,7 @@ export const mathModule1 = [
       explanation:
         "Corresponding angles are equal; the angle adjacent to 110° on the same line is 70°, and y corresponds to it.",
       image: "/m1_15_parallel.png",
+      domain: "geometry_trig",
     },
     {
       id: "m1-16",
@@ -839,6 +854,7 @@ export const mathModule1 = [
       options: ["A) $8", "B) $20", "C) $32", "D) $38"],
       correct: "C",
       explanation: "20% off means pay 80%: 0.80 × $40 = $32.",
+      domain: "problem_solving_data",
     },
     {
       id: "m1-17",
@@ -846,6 +862,7 @@ export const mathModule1 = [
       options: ["A) 8", "B) 10", "C) 11", "D) 13"],
       correct: "C",
       explanation: "f(3) = 2(3) + 5 = 6 + 5 = 11.",
+      domain: "algebra",
     },
     {
       id: "m1-18",
@@ -854,6 +871,7 @@ export const mathModule1 = [
       options: ["A) 14 cm²", "B) 24 cm²", "C) 28 cm²", "D) 48 cm²"],
       correct: "B",
       explanation: "Area = ½ × base × height = ½ × 8 × 6 = 24 cm².",
+      domain: "geometry_trig",
     },
     {
       id: "m1-19",
@@ -864,6 +882,7 @@ export const mathModule1 = [
       explanation:
         "The line of best fit runs from about (1, 40) to (8, 110). At 5 hours, the predicted score is approximately 80.",
       image: "/m1_19_scatterplot.png",
+      domain: "problem_solving_data",
     },
     {
       id: "m1-20",
@@ -871,6 +890,7 @@ export const mathModule1 = [
       options: ["A) 3", "B) 5", "C) 6", "D) 7"],
       correct: "B",
       explanation: "Ordered: {2, 3, 5, 7, 9}. Middle value is 5.",
+      domain: "problem_solving_data",
     },
     {
       id: "m1-21",
@@ -878,6 +898,7 @@ export const mathModule1 = [
       options: ["A) 5", "B) 7", "C) 9", "D) 11"],
       correct: "B",
       explanation: "3x - 6 = 15, so 3x = 21, x = 7.",
+      domain: "algebra",
     },
     {
       id: "m1-22",
@@ -886,184 +907,32 @@ export const mathModule1 = [
       options: ["A) 6 m", "B) 8 m", "C) 10 m", "D) 12 m"],
       correct: "B",
       explanation: "Area = length × width, so 48 = length × 6, length = 8 m.",
+      domain: "geometry_trig",
     },
   ];
 
   // Math Questions - Module 2 (22 questions) — Digital SAT aligned
 export const mathModule2 = [
-    {
-      id: "m2-1",
-      question: "If f(x) = x² - 4x + 3, what is f(5)?",
-      options: ["A) 4", "B) 8", "C) 12", "D) 18"],
-      correct: "B",
-      explanation: "f(5) = 25 - 20 + 3 = 8.",
-    },
-    {
-      id: "m2-2",
-      question:
-        "The figure shows a circle in the xy-plane with center (3, -2). The point (3, 1) lies on the circle. What is the radius of the circle?",
-      options: ["A) 1", "B) 2", "C) 3", "D) 4"],
-      correct: "C",
-      explanation:
-        "The radius is the distance from center (3, -2) to (3, 1): |1 - (-2)| = 3.",
-      image: "/m2_2_circle_graph.png",
-    },
-    {
-      id: "m2-3",
-      question: "If (x - 3)(x + 2) = 0, what are all possible values of x?",
-      options: ["A) -3 and 2", "B) 3 and -2", "C) -3 and -2", "D) 3 and 2"],
-      correct: "B",
-      explanation: "x - 3 = 0 gives x = 3; x + 2 = 0 gives x = -2.",
-    },
-    {
-      id: "m2-4",
-      question:
-        "The figure above shows a right triangle with legs of length 6 and 8. What is the length of the hypotenuse?",
-      options: ["A) 10", "B) 12", "C) 14", "D) 9"],
-      correct: "A",
-      explanation: "By the Pythagorean theorem: 6² + 8² = 36 + 64 = 100, so hypotenuse = √100 = 10.",
-      image: "/m2_4_right_triangle.png",
-    },
-    {
-      id: "m2-5",
-      question: "If 2ˣ = 32, what is x?",
-      options: ["A) 4", "B) 5", "C) 6", "D) 16"],
-      correct: "B",
-      explanation: "2⁵ = 32, so x = 5.",
-    },
-    {
-      id: "m2-6",
-      question: "What is the solution to |x - 3| = 7?",
-      options: [
-        "A) x = 10 only",
-        "B) x = -4 only",
-        "C) x = 10 or x = -4",
-        "D) x = 4 or x = -10",
-      ],
-      correct: "C",
-      explanation: "x - 3 = 7 gives x = 10; x - 3 = -7 gives x = -4.",
-    },
-    {
-      id: "m2-7",
-      question: "If x² + 6x + 9 = 0, what is x?",
-      options: ["A) -3", "B) 3", "C) -9", "D) 9"],
-      correct: "A",
-      explanation: "(x + 3)² = 0, so x = -3.",
-    },
-    {
-      id: "m2-8",
-      question:
-        "A cylinder has radius 3 cm and height 5 cm. What is its volume? (Use π ≈ 3.14)",
-      options: ["A) 47.1 cm³", "B) 94.2 cm³", "C) 141.3 cm³", "D) 188.4 cm³"],
-      correct: "C",
-      explanation: "V = πr²h = 3.14 × 9 × 5 = 141.3 cm³.",
-    },
-    {
-      id: "m2-9",
-      question: "If log₂(x) = 4, what is x?",
-      options: ["A) 2", "B) 8", "C) 16", "D) 32"],
-      correct: "C",
-      explanation: "2⁴ = 16, so x = 16.",
-    },
-    {
-      id: "m2-10",
-      question: "What is the distance between points (1, 2) and (4, 6)?",
-      options: ["A) 3", "B) 4", "C) 5", "D) 7"],
-      correct: "C",
-      explanation: "d = √[(4-1)² + (6-2)²] = √[9+16] = √25 = 5.",
-    },
-    {
-      id: "m2-11",
-      question: "If sin(θ) = 0.5 and 0° < θ < 90°, what is θ?",
-      options: ["A) 15°", "B) 30°", "C) 45°", "D) 60°"],
-      correct: "B",
-      explanation: "sin(30°) = 0.5.",
-    },
-    {
-      id: "m2-12",
-      question: "What is the sum of the first 10 positive integers?",
-      options: ["A) 45", "B) 50", "C) 55", "D) 60"],
-      correct: "C",
-      explanation: "Sum = n(n+1)/2 = 10(11)/2 = 55.",
-    },
-    {
-      id: "m2-13",
-      question: "If 2x + 3y = 12 and x = 3, what is y?",
-      options: ["A) 1", "B) 2", "C) 3", "D) 4"],
-      correct: "B",
-      explanation: "2(3) + 3y = 12, so 6 + 3y = 12, 3y = 6, y = 2.",
-    },
-    {
-      id: "m2-14",
-      question:
-        "A sequence follows the pattern: 2, 6, 18, 54, ... What is the next term?",
-      options: ["A) 108", "B) 126", "C) 162", "D) 216"],
-      correct: "C",
-      explanation: "Each term is multiplied by 3: 54 × 3 = 162.",
-    },
-    {
-      id: "m2-15",
-      question: "If x⁴ = 81, what is x (considering only positive values)?",
-      options: ["A) 2", "B) 3", "C) 9", "D) 27"],
-      correct: "B",
-      explanation: "3⁴ = 81, so x = 3.",
-    },
-    {
-      id: "m2-16",
-      question:
-        "The ratio of boys to girls in a class is 3:5. If there are 15 boys, how many girls are there?",
-      options: ["A) 9", "B) 18", "C) 20", "D) 25"],
-      correct: "D",
-      explanation: "3/5 = 15/x, so 3x = 75, x = 25.",
-    },
-    {
-      id: "m2-17",
-      question: "If a² + b² = 25 and a = 3, what is b (positive value)?",
-      options: ["A) 2", "B) 4", "C) 5", "D) 16"],
-      correct: "B",
-      explanation: "9 + b² = 25, so b² = 16, b = 4.",
-    },
-    {
-      id: "m2-18",
-      question: "What is the y-intercept of the line 3x + 4y = 12?",
-      options: ["A) 3", "B) 4", "C) 12", "D) -3"],
-      correct: "A",
-      explanation: "When x = 0: 4y = 12, so y = 3.",
-    },
-    {
-      id: "m2-19",
-      question:
-        "If x varies inversely with y and x = 4 when y = 6, what is x when y = 8?",
-      options: ["A) 2", "B) 3", "C) 5", "D) 6"],
-      correct: "B",
-      explanation: "xy = k, so 4×6 = 24. When y = 8: x×8 = 24, x = 3.",
-    },
-    {
-      id: "m2-20",
-      question:
-        "A sphere has a radius of 3 cm. What is its surface area? (Use π ≈ 3.14)",
-      options: [
-        "A) 28.26 cm²",
-        "B) 56.52 cm²",
-        "C) 113.04 cm²",
-        "D) 226.08 cm²",
-      ],
-      correct: "C",
-      explanation: "Surface area = 4πr² = 4 × 3.14 × 9 = 113.04 cm².",
-    },
-    {
-      id: "m2-21",
-      question: "If f(x) = 3x - 2 and g(x) = x + 4, what is f(g(2))?",
-      options: ["A) 10", "B) 12", "C) 14", "D) 16"],
-      correct: "D",
-      explanation: "g(2) = 6, then f(6) = 3(6) - 2 = 16.",
-    },
-    {
-      id: "m2-22",
-      question:
-        "In a geometric sequence, the first term is 5 and the common ratio is 2. What is the 4th term?",
-      options: ["A) 20", "B) 30", "C) 40", "D) 50"],
-      correct: "C",
-      explanation: "4th term = 5 × 2³ = 5 × 8 = 40.",
-    },
+    { id: "m2-1", question: "If f(x) = x² - 4x + 3, what is f(5)?", options: ["A) 4", "B) 8", "C) 12", "D) 18"], correct: "B", explanation: "f(5) = 25 - 20 + 3 = 8.", domain: "advanced_math" },
+    { id: "m2-2", question: "The figure shows a circle in the xy-plane with center (3, -2). The point (3, 1) lies on the circle. What is the radius of the circle?", options: ["A) 1", "B) 2", "C) 3", "D) 4"], correct: "C", explanation: "The radius is the distance from center (3, -2) to (3, 1): |1 - (-2)| = 3.", image: "/m2_2_circle_graph.png", domain: "geometry_trig" },
+    { id: "m2-3", question: "If (x - 3)(x + 2) = 0, what are all possible values of x?", options: ["A) -3 and 2", "B) 3 and -2", "C) -3 and -2", "D) 3 and 2"], correct: "B", explanation: "x - 3 = 0 gives x = 3; x + 2 = 0 gives x = -2.", domain: "advanced_math" },
+    { id: "m2-4", question: "The figure above shows a right triangle with legs of length 6 and 8. What is the length of the hypotenuse?", options: ["A) 10", "B) 12", "C) 14", "D) 9"], correct: "A", explanation: "By the Pythagorean theorem: 6² + 8² = 36 + 64 = 100, so hypotenuse = √100 = 10.", image: "/m2_4_right_triangle.png", domain: "geometry_trig" },
+    { id: "m2-5", question: "If 2ˣ = 32, what is x?", options: ["A) 4", "B) 5", "C) 6", "D) 16"], correct: "B", explanation: "2⁵ = 32, so x = 5.", domain: "advanced_math" },
+    { id: "m2-6", question: "What is the solution to |x - 3| = 7?", options: ["A) x = 10 only", "B) x = -4 only", "C) x = 10 or x = -4", "D) x = 4 or x = -10"], correct: "C", explanation: "x - 3 = 7 gives x = 10; x - 3 = -7 gives x = -4.", domain: "algebra" },
+    { id: "m2-7", question: "If x² + 6x + 9 = 0, what is x?", options: ["A) -3", "B) 3", "C) -9", "D) 9"], correct: "A", explanation: "(x + 3)² = 0, so x = -3.", domain: "advanced_math" },
+    { id: "m2-8", question: "A cylinder has radius 3 cm and height 5 cm. What is its volume? (Use π ≈ 3.14)", options: ["A) 47.1 cm³", "B) 94.2 cm³", "C) 141.3 cm³", "D) 188.4 cm³"], correct: "C", explanation: "V = πr²h = 3.14 × 9 × 5 = 141.3 cm³.", domain: "geometry_trig" },
+    { id: "m2-9", question: "If log₂(x) = 4, what is x?", options: ["A) 2", "B) 8", "C) 16", "D) 32"], correct: "C", explanation: "2⁴ = 16, so x = 16.", domain: "advanced_math" },
+    { id: "m2-10", question: "What is the distance between points (1, 2) and (4, 6)?", options: ["A) 3", "B) 4", "C) 5", "D) 7"], correct: "C", explanation: "d = √[(4-1)² + (6-2)²] = √[9+16] = √25 = 5.", domain: "geometry_trig" },
+    { id: "m2-11", question: "If sin(θ) = 0.5 and 0° < θ < 90°, what is θ?", options: ["A) 15°", "B) 30°", "C) 45°", "D) 60°"], correct: "B", explanation: "sin(30°) = 0.5.", domain: "geometry_trig" },
+    { id: "m2-12", question: "What is the sum of the first 10 positive integers?", options: ["A) 45", "B) 50", "C) 55", "D) 60"], correct: "C", explanation: "Sum = n(n+1)/2 = 10(11)/2 = 55.", domain: "algebra" },
+    { id: "m2-13", question: "If 2x + 3y = 12 and x = 3, what is y?", options: ["A) 1", "B) 2", "C) 3", "D) 4"], correct: "B", explanation: "2(3) + 3y = 12, so 6 + 3y = 12, 3y = 6, y = 2.", domain: "algebra" },
+    { id: "m2-14", question: "A sequence follows the pattern: 2, 6, 18, 54, ... What is the next term?", options: ["A) 108", "B) 126", "C) 162", "D) 216"], correct: "C", explanation: "Each term is multiplied by 3: 54 × 3 = 162.", domain: "advanced_math" },
+    { id: "m2-15", question: "If x⁴ = 81, what is x (considering only positive values)?", options: ["A) 2", "B) 3", "C) 9", "D) 27"], correct: "B", explanation: "3⁴ = 81, so x = 3.", domain: "advanced_math" },
+    { id: "m2-16", question: "The ratio of boys to girls in a class is 3:5. If there are 15 boys, how many girls are there?", options: ["A) 9", "B) 18", "C) 20", "D) 25"], correct: "D", explanation: "3/5 = 15/x, so 3x = 75, x = 25.", domain: "problem_solving_data" },
+    { id: "m2-17", question: "If a² + b² = 25 and a = 3, what is b (positive value)?", options: ["A) 2", "B) 4", "C) 5", "D) 16"], correct: "B", explanation: "9 + b² = 25, so b² = 16, b = 4.", domain: "geometry_trig" },
+    { id: "m2-18", question: "What is the y-intercept of the line 3x + 4y = 12?", options: ["A) 3", "B) 4", "C) 12", "D) -3"], correct: "A", explanation: "When x = 0: 4y = 12, so y = 3.", domain: "algebra" },
+    { id: "m2-19", question: "If x varies inversely with y and x = 4 when y = 6, what is x when y = 8?", options: ["A) 2", "B) 3", "C) 5", "D) 6"], correct: "B", explanation: "xy = k, so 4×6 = 24. When y = 8: x×8 = 24, x = 3.", domain: "algebra" },
+    { id: "m2-20", question: "A sphere has a radius of 3 cm. What is its surface area? (Use π ≈ 3.14)", options: ["A) 28.26 cm²", "B) 56.52 cm²", "C) 113.04 cm²", "D) 226.08 cm²"], correct: "C", explanation: "Surface area = 4πr² = 4 × 3.14 × 9 = 113.04 cm².", domain: "geometry_trig" },
+    { id: "m2-21", question: "If f(x) = 3x - 2 and g(x) = x + 4, what is f(g(2))?", options: ["A) 10", "B) 12", "C) 14", "D) 16"], correct: "D", explanation: "g(2) = 6, then f(6) = 3(6) - 2 = 16.", domain: "algebra" },
+    { id: "m2-22", question: "In a geometric sequence, the first term is 5 and the common ratio is 2. What is the 4th term?", options: ["A) 20", "B) 30", "C) 40", "D) 50"], correct: "C", explanation: "4th term = 5 × 2³ = 5 × 8 = 40.", domain: "advanced_math" },
   ];

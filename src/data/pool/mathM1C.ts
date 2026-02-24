@@ -5,201 +5,28 @@ export const mathM1C: PoolModule = {
   type: "math-m1",
   label: "Math Module 1 (Set C)",
   questions: [
-    {
-      id: "m1c-1",
-      question: "If x/3 + 5 = 9, what is the value of x?",
-      options: ["A) 8", "B) 12", "C) 15", "D) 6"],
-      correct: "B",
-      explanation:
-        "Subtract 5 from both sides: x/3 = 4. Multiply both sides by 3: x = 12.",
-    },
-    {
-      id: "m1c-2",
-      question: "What is the y-intercept of the line y = −5x + 8?",
-      options: ["A) −5", "B) 5", "C) 8", "D) −8"],
-      correct: "C",
-      explanation:
-        "In y = mx + b, the y-intercept is b. Here b = 8.",
-    },
-    {
-      id: "m1c-3",
-      question: "If 4x + 9 = 2x + 21, what is the value of x?",
-      options: ["A) 6", "B) 3", "C) 9", "D) 12"],
-      correct: "A",
-      explanation:
-        "Subtract 2x: 2x + 9 = 21. Subtract 9: 2x = 12. Divide by 2: x = 6.",
-    },
-    {
-      id: "m1c-4",
-      question:
-        "The equation of a line is y = (2/3)x − 4. What is the value of y when x = 9?",
-      options: ["A) 3", "B) −2", "C) 2", "D) 6"],
-      correct: "C",
-      explanation:
-        "y = (2/3)(9) − 4 = 6 − 4 = 2.",
-    },
-    {
-      id: "m1c-5",
-      question:
-        "Given the system 2x + y = 11 and x − y = 1, what is the value of y?",
-      options: ["A) 4", "B) 5", "C) 7", "D) 3"],
-      correct: "D",
-      explanation:
-        "Add the equations: 3x = 12, so x = 4. Substitute: 2(4) + y = 11, y = 3.",
-    },
-    {
-      id: "m1c-6",
-      question:
-        "Which of the following values of x satisfies the inequality −3x + 15 ≥ 0?",
-      options: ["A) 5", "B) 7", "C) 6", "D) 8"],
-      correct: "A",
-      explanation:
-        "Solve: −3x ≥ −15, so x ≤ 5. Of the choices, only x = 5 satisfies the inequality.",
-    },
-    {
-      id: "m1c-7",
-      question:
-        "A recipe that serves 4 people requires 3 cups of flour. How many cups of flour are needed to serve 10 people?",
-      options: ["A) 6", "B) 7.5", "C) 8", "D) 9"],
-      correct: "B",
-      explanation:
-        "Set up a proportion: 3/4 = x/10. Cross-multiply: 4x = 30, so x = 7.5.",
-    },
-    {
-      id: "m1c-8",
-      question:
-        "A town's population increases by 15% from 2,000. What is the new population?",
-      options: ["A) 2,150", "B) 2,200", "C) 2,300", "D) 2,350"],
-      correct: "C",
-      explanation:
-        "Increase = 0.15 × 2,000 = 300. New population = 2,000 + 300 = 2,300.",
-    },
-    {
-      id: "m1c-9",
-      question:
-        "A student scored 78, 85, 92, and 89 on four tests. What score does the student need on the fifth test to achieve an overall average of 86?",
-      options: ["A) 88", "B) 82", "C) 90", "D) 86"],
-      correct: "D",
-      explanation:
-        "Total needed: 86 × 5 = 430. Current total: 78 + 85 + 92 + 89 = 344. Fifth score = 430 − 344 = 86.",
-    },
-    {
-      id: "m1c-10",
-      question:
-        "A bag contains 3 red, 5 blue, and 2 yellow balls. If two balls are drawn without replacement, what is the probability that both are blue?",
-      options: ["A) 1/4", "B) 2/9", "C) 1/5", "D) 5/18"],
-      correct: "B",
-      explanation:
-        "P(1st blue) = 5/10 = 1/2. P(2nd blue | 1st blue) = 4/9. P(both) = (1/2)(4/9) = 4/18 = 2/9.",
-    },
-    {
-      id: "m1c-11",
-      question:
-        "A store sells Item A for $12, Item B for $18, and Item C for $24. A customer buys 2 of Item A, 1 of Item B, and 3 of Item C. What is the total cost?",
-      options: ["A) $108", "B) $120", "C) $96", "D) $114"],
-      correct: "D",
-      explanation:
-        "2(12) + 1(18) + 3(24) = 24 + 18 + 72 = $114.",
-    },
-    {
-      id: "m1c-12",
-      question:
-        "A histogram shows the following frequencies: 0–10: 4, 10–20: 8, 20–30: 12, 30–40: 6. What percentage of the data falls in the 20–30 range?",
-      options: ["A) 40%", "B) 30%", "C) 35%", "D) 45%"],
-      correct: "A",
-      explanation:
-        "Total frequency = 4 + 8 + 12 + 6 = 30. Percentage = 12/30 = 0.40 = 40%.",
-    },
-    {
-      id: "m1c-13",
-      question: "What are the solutions to x² − 9x + 20 = 0?",
-      options: [
-        "A) x = 4 and x = −5",
-        "B) x = −4 and x = 5",
-        "C) x = −4 and x = −5",
-        "D) x = 4 and x = 5",
-      ],
-      correct: "D",
-      explanation:
-        "Factor: (x − 4)(x − 5) = 0, so x = 4 or x = 5.",
-    },
-    {
-      id: "m1c-14",
-      question: "If h(x) = 2x² − 3x + 1, what is h(−1)?",
-      options: ["A) 0", "B) 6", "C) −4", "D) 2"],
-      correct: "B",
-      explanation:
-        "h(−1) = 2(−1)² − 3(−1) + 1 = 2(1) + 3 + 1 = 6.",
-    },
-    {
-      id: "m1c-15",
-      question: "Which expression is equivalent to (x³ · x⁴) / x²?",
-      options: ["A) x⁵", "B) x⁹", "C) x⁶", "D) x³"],
-      correct: "A",
-      explanation:
-        "x³ · x⁴ = x⁷. Then x⁷ / x² = x⁵.",
-    },
-    {
-      id: "m1c-16",
-      question: "What is the sum of the solutions of 2x² + 8x − 10 = 0?",
-      options: ["A) 4", "B) −4", "C) −5", "D) 8"],
-      correct: "B",
-      explanation:
-        "By Vieta's formulas, the sum of the roots = −b/a = −8/2 = −4.",
-    },
-    {
-      id: "m1c-17",
-      question:
-        "If f(x) = x² + 2x, for what positive value of x does f(x) = 15?",
-      options: ["A) 5", "B) −3", "C) −5", "D) 3"],
-      correct: "D",
-      explanation:
-        "Set x² + 2x = 15. Then x² + 2x − 15 = 0. Factor: (x + 5)(x − 3) = 0. The positive solution is x = 3.",
-    },
-    {
-      id: "m1c-18",
-      question: "Which expression is equivalent to (x + 3)² − 9?",
-      options: ["A) x² + 6", "B) x(x + 6)", "C) (x + 3)(x − 3)", "D) x² + 9"],
-      correct: "B",
-      explanation:
-        "Expand: (x + 3)² − 9 = x² + 6x + 9 − 9 = x² + 6x = x(x + 6).",
-    },
-    {
-      id: "m1c-19",
-      question:
-        "A cone has a radius of 4 and a height of 9. What is the volume of the cone?",
-      options: ["A) 36π", "B) 108π", "C) 48π", "D) 144π"],
-      correct: "C",
-      explanation:
-        "V = (1/3)πr²h = (1/3)π(16)(9) = (1/3)(144π) = 48π.",
-    },
-    {
-      id: "m1c-20",
-      question:
-        "What is the midpoint of the segment with endpoints (2, 8) and (10, 4)?",
-      options: ["A) (6, 6)", "B) (5, 5)", "C) (8, 6)", "D) (6, 12)"],
-      correct: "A",
-      explanation:
-        "Midpoint = ((2 + 10)/2, (8 + 4)/2) = (12/2, 12/2) = (6, 6).",
-    },
-    {
-      id: "m1c-21",
-      question:
-        "Two sides of a triangle measure 7 and 10. Which of the following could be the length of the third side?",
-      options: ["A) 2", "B) 17", "C) 3", "D) 12"],
-      correct: "D",
-      explanation:
-        "The third side must be greater than |10 − 7| = 3 and less than 10 + 7 = 17. Only 12 satisfies 3 < 12 < 17.",
-    },
-    {
-      id: "m1c-22",
-      question:
-        "A sector of a circle has a radius of 10 and a central angle of 72°. What is the area of the sector?",
-      options: ["A) 10π", "B) 25π", "C) 20π", "D) 36π"],
-      correct: "C",
-      explanation:
-        "Area = (72/360) × π × r² = (1/5) × 100π = 20π.",
-    },
+    { id: "m1c-1", question: "If x/3 + 5 = 9, what is the value of x?", options: ["A) 8", "B) 12", "C) 15", "D) 6"], correct: "B", explanation: "Subtract 5 from both sides: x/3 = 4. Multiply both sides by 3: x = 12.", domain: "algebra" },
+    { id: "m1c-2", question: "What is the y-intercept of the line y = −5x + 8?", options: ["A) −5", "B) 5", "C) 8", "D) −8"], correct: "C", explanation: "In y = mx + b, the y-intercept is b. Here b = 8.", domain: "algebra" },
+    { id: "m1c-3", question: "If 4x + 9 = 2x + 21, what is the value of x?", options: ["A) 6", "B) 3", "C) 9", "D) 12"], correct: "A", explanation: "Subtract 2x: 2x + 9 = 21. Subtract 9: 2x = 12. Divide by 2: x = 6.", domain: "algebra" },
+    { id: "m1c-4", question: "The equation of a line is y = (2/3)x − 4. What is the value of y when x = 9?", options: ["A) 3", "B) −2", "C) 2", "D) 6"], correct: "C", explanation: "y = (2/3)(9) − 4 = 6 − 4 = 2.", domain: "algebra" },
+    { id: "m1c-5", question: "Given the system 2x + y = 11 and x − y = 1, what is the value of y?", options: ["A) 4", "B) 5", "C) 7", "D) 3"], correct: "D", explanation: "Add the equations: 3x = 12, so x = 4. Substitute: 2(4) + y = 11, y = 3.", domain: "algebra" },
+    { id: "m1c-6", question: "Which of the following values of x satisfies the inequality −3x + 15 ≥ 0?", options: ["A) 5", "B) 7", "C) 6", "D) 8"], correct: "A", explanation: "Solve: −3x ≥ −15, so x ≤ 5. Of the choices, only x = 5 satisfies the inequality.", domain: "algebra" },
+    { id: "m1c-7", question: "A recipe that serves 4 people requires 3 cups of flour. How many cups of flour are needed to serve 10 people?", options: ["A) 6", "B) 7.5", "C) 8", "D) 9"], correct: "B", explanation: "Set up a proportion: 3/4 = x/10. Cross-multiply: 4x = 30, so x = 7.5.", domain: "problem_solving_data" },
+    { id: "m1c-8", question: "A town's population increases by 15% from 2,000. What is the new population?", options: ["A) 2,150", "B) 2,200", "C) 2,300", "D) 2,350"], correct: "C", explanation: "Increase = 0.15 × 2,000 = 300. New population = 2,000 + 300 = 2,300.", domain: "problem_solving_data" },
+    { id: "m1c-9", question: "A student scored 78, 85, 92, and 89 on four tests. What score does the student need on the fifth test to achieve an overall average of 86?", options: ["A) 88", "B) 82", "C) 90", "D) 86"], correct: "D", explanation: "Total needed: 86 × 5 = 430. Current total: 78 + 85 + 92 + 89 = 344. Fifth score = 430 − 344 = 86.", domain: "problem_solving_data" },
+    { id: "m1c-10", question: "A bag contains 3 red, 5 blue, and 2 yellow balls. If two balls are drawn without replacement, what is the probability that both are blue?", options: ["A) 1/4", "B) 2/9", "C) 1/5", "D) 5/18"], correct: "B", explanation: "P(1st blue) = 5/10 = 1/2. P(2nd blue | 1st blue) = 4/9. P(both) = (1/2)(4/9) = 4/18 = 2/9.", domain: "problem_solving_data" },
+    { id: "m1c-11", question: "A store sells Item A for $12, Item B for $18, and Item C for $24. A customer buys 2 of Item A, 1 of Item B, and 3 of Item C. What is the total cost?", options: ["A) $108", "B) $120", "C) $96", "D) $114"], correct: "D", explanation: "2(12) + 1(18) + 3(24) = 24 + 18 + 72 = $114.", domain: "problem_solving_data" },
+    { id: "m1c-12", question: "A histogram shows the following frequencies: 0–10: 4, 10–20: 8, 20–30: 12, 30–40: 6. What percentage of the data falls in the 20–30 range?", options: ["A) 40%", "B) 30%", "C) 35%", "D) 45%"], correct: "A", explanation: "Total frequency = 4 + 8 + 12 + 6 = 30. Percentage = 12/30 = 0.40 = 40%.", domain: "problem_solving_data" },
+    { id: "m1c-13", question: "What are the solutions to x² − 9x + 20 = 0?", options: ["A) x = 4 and x = −5", "B) x = −4 and x = 5", "C) x = −4 and x = −5", "D) x = 4 and x = 5"], correct: "D", explanation: "Factor: (x − 4)(x − 5) = 0, so x = 4 or x = 5.", domain: "advanced_math" },
+    { id: "m1c-14", question: "If h(x) = 2x² − 3x + 1, what is h(−1)?", options: ["A) 0", "B) 6", "C) −4", "D) 2"], correct: "B", explanation: "h(−1) = 2(−1)² − 3(−1) + 1 = 2(1) + 3 + 1 = 6.", domain: "advanced_math" },
+    { id: "m1c-15", question: "Which expression is equivalent to (x³ · x⁴) / x²?", options: ["A) x⁵", "B) x⁹", "C) x⁶", "D) x³"], correct: "A", explanation: "x³ · x⁴ = x⁷. Then x⁷ / x² = x⁵.", domain: "advanced_math" },
+    { id: "m1c-16", question: "What is the sum of the solutions of 2x² + 8x − 10 = 0?", options: ["A) 4", "B) −4", "C) −5", "D) 8"], correct: "B", explanation: "By Vieta's formulas, the sum of the roots = −b/a = −8/2 = −4.", domain: "advanced_math" },
+    { id: "m1c-17", question: "If f(x) = x² + 2x, for what positive value of x does f(x) = 15?", options: ["A) 5", "B) −3", "C) −5", "D) 3"], correct: "D", explanation: "Set x² + 2x = 15. Then x² + 2x − 15 = 0. Factor: (x + 5)(x − 3) = 0. The positive solution is x = 3.", domain: "advanced_math" },
+    { id: "m1c-18", question: "Which expression is equivalent to (x + 3)² − 9?", options: ["A) x² + 6", "B) x(x + 6)", "C) (x + 3)(x − 3)", "D) x² + 9"], correct: "B", explanation: "Expand: (x + 3)² − 9 = x² + 6x + 9 − 9 = x² + 6x = x(x + 6).", domain: "advanced_math" },
+    { id: "m1c-19", question: "A cone has a radius of 4 and a height of 9. What is the volume of the cone?", options: ["A) 36π", "B) 108π", "C) 48π", "D) 144π"], correct: "C", explanation: "V = (1/3)πr²h = (1/3)π(16)(9) = (1/3)(144π) = 48π.", domain: "geometry_trig" },
+    { id: "m1c-20", question: "What is the midpoint of the segment with endpoints (2, 8) and (10, 4)?", options: ["A) (6, 6)", "B) (5, 5)", "C) (8, 6)", "D) (6, 12)"], correct: "A", explanation: "Midpoint = ((2 + 10)/2, (8 + 4)/2) = (12/2, 12/2) = (6, 6).", domain: "algebra" },
+    { id: "m1c-21", question: "Two sides of a triangle measure 7 and 10. Which of the following could be the length of the third side?", options: ["A) 2", "B) 17", "C) 3", "D) 12"], correct: "D", explanation: "The third side must be greater than |10 − 7| = 3 and less than 10 + 7 = 17. Only 12 satisfies 3 < 12 < 17.", domain: "geometry_trig" },
+    { id: "m1c-22", question: "A sector of a circle has a radius of 10 and a central angle of 72°. What is the area of the sector?", options: ["A) 10π", "B) 25π", "C) 20π", "D) 36π"], correct: "C", explanation: "Area = (72/360) × π × r² = (1/5) × 100π = 20π.", domain: "geometry_trig" },
   ],
   m2EasierModuleId: "math-m2-easier",
   m2HarderModuleId: "math-m2-harder",

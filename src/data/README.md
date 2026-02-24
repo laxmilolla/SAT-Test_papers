@@ -1,90 +1,63 @@
-# Test data
+# Question bank and concept tagging
 
-This folder holds the **test registry** and **per-test question data** for the Digital SAT practice app.
+## Question shape
 
----
+All questions use the types in `poolTypes.ts`.
 
-## Easiest: Add a test via JSON (no code changes)
-
-You can add new tests **without touching any code** by adding JSON files and one registry entry.
-
-### 1. Create the test JSON file
-
-Add a file in **`public/tests/<id>.json`** (e.g. `public/tests/test4.json`). It must be valid JSON with exactly these four keys (arrays of questions):
-
-- `readingWritingModule1`
-- `readingWritingModule2`
-- `mathModule1`
-- `mathModule2`
-
-**Question shape (each item in the arrays):**
-
-- **R&W:** `{ "id": "...", "passage": "...", "question": "...", "options": ["A) ...", ...], "correct": "A", "explanation": "..." }`
-- **Math:** `{ "id": "...", "question": "...", "options": ["A) ...", ...], "correct": "A", "explanation": "...", "image": "/figure.png" }` — `image` is optional.
-
-Use **27 + 27** questions for R&W and **22 + 22** for Math to match the Digital SAT (or fewer for a short sample test). See `public/tests/test3.json` for a minimal example.
-
-### 2. Register the test
-
-Edit **`public/tests/registry.json`**. Add one object to the array:
-
-```json
-{
-  "id": "test4",
-  "label": "Practice Test 4",
-  "url": "/tests/test4.json"
-}
-```
-
-Save the file. No code changes, no deploy step beyond pushing the new/edited files. The app loads `registry.json` at startup and merges these tests with the built-in ones. Students will see the new test in the dropdown.
-
----
-
-## Alternative: Add a test via TypeScript (code)
-
-One test = **one file** in `tests/` + **one entry** in `testRegistry.ts`.
-
-### 1. Create the test file
-
-Add `src/data/tests/<id>.ts` (e.g. `test3.ts`). The file must **export** these four arrays (exact names):
-
-- `readingWritingModule1`
-- `readingWritingModule2`
-- `mathModule1`
-- `mathModule2`
-
-**Question shape:**
-
-- **R&W:** `{ id, passage?, question, options, correct, explanation }`
-- **Math:** `{ id, question, options, correct, explanation, image? }` — `image` is optional (e.g. `"/m1_4_triangle.png"`).
-
-Use **27 + 27** questions for R&W (Module 1 + Module 2) and **22 + 22** for Math to match the Digital SAT. Question IDs can be per-test (e.g. `rw1-1`, `m2-3`).
-
-### 2. Register the test
-
-In `src/data/testRegistry.ts`, add one entry:
+### R&W question (RWQuestion)
 
 ```ts
 {
-  id: "test3",
-  label: "Practice Test 3",
-  load: () =>
-    import("./tests/test3").then((m) => ({
-      readingWritingModule1: m.readingWritingModule1,
-      readingWritingModule2: m.readingWritingModule2,
-      mathModule1: m.mathModule1,
-      mathModule2: m.mathModule2,
-    })),
-},
+  id: string;           // unique, e.g. "rw1-1"
+  question?: string;
+  options?: string[];  // first character = key, e.g. "A) choice text"
+  passage?: string;
+  correct: string;     // "A" | "B" | "C" | "D"
+  explanation?: string;
+  domain?: string;     // optional: information_ideas | craft_structure | expression_ideas | standard_english
+  subdomain?: string;
+}
 ```
 
-Use your test’s `id` and file name in `import("./tests/<id>")`.
+### Math question (MathQuestion)
 
-### 3. Deploy
+```ts
+{
+  id: string;
+  question?: string;
+  options?: string[];
+  image?: string;      // path in public/, e.g. "/m1_4_triangle.png"
+  correct: string;
+  explanation?: string;
+  domain?: string;     // optional, see below
+  subdomain?: string;
+}
+```
 
-Push to GitHub. Vercel will redeploy and the new test appears in the test selector. The no-repeat logic will assign it to students who haven’t taken it yet.
+## Math domain values (Digital SAT–aligned)
 
-## Optional: template and script
+Use these for the `domain` field on math questions so results can show per-concept performance:
 
-- **Template:** Copy `tests/_template.ts` to `tests/<id>.ts` and replace the placeholder questions.
-- **Script:** Run `node scripts/add-test.js <id> "Practice Test N"` to create the file and print the registry snippet to add.
+| domain | Description |
+|--------|-------------|
+| `algebra` | Linear equations, inequalities, systems, linear functions, slope, expressions |
+| `advanced_math` | Quadratics, polynomials, exponents, radicals, rationals, function notation |
+| `problem_solving_data` | Ratios, percentages, statistics, probability, scatterplots, averages |
+| `geometry_trig` | Area, perimeter, volume, circles, triangles, Pythagorean theorem, trig |
+
+Questions without `domain` are grouped under `"unspecified"` when scoring by concept.
+
+## Where questions live
+
+- **Pool modules:** `src/data/pool/*.ts` — one file per module (e.g. `mathM1A.ts`, `sharedMathM2.ts`). Registered in `modulePool.ts`.
+- **Full tests:** `src/data/tests/test1.ts`, `test2.ts` — export `readingWritingModule1`, `mathModule1`, etc.
+- **Example concept-only set:** `src/data/bank/advanced_math_practice.ts` — 5 questions tagged `domain: "advanced_math"` for reference and future “practice by concept” use.
+
+## Adding or generating new questions
+
+1. **Manually:** Add questions to a new or existing `.ts` file under `pool/` or `tests/`. Each math question should include `domain` (and optionally `subdomain`). Register the module in `modulePool.ts` if it is part of the adaptive pool.
+2. **AI-assisted:** Use a prompt that asks for JSON in the shape above (id, question, options, correct, explanation, domain). Paste the output into a new `.ts` file and export as a module or array. See `docs/prompt-template.md` for an example prompt.
+
+## Concept index (optional)
+
+To list “which questions cover which concept,” you can add a file like `conceptBank.ts` that maps domain → question IDs, or run a script over the pool/test files to report by domain. The app does not require this at runtime; concept scores are computed from the questions actually on the test.

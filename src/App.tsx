@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { saveSubmission, getSubmissionHistory, getAssignment, getAllAssignments, saveAssignment, AssignmentRow } from "./firebase";
+import { saveSubmission, getSubmissionHistory, getAssignment, getAllAssignments, saveAssignment, getSubmissions, AssignmentRow, SubmissionRow } from "./firebase";
 import { testRegistry } from "./data/testRegistry";
 import { getPoolTestData, getAllPoolModules } from "./data/modulePool";
-import { scoreSection } from "./utils/scoring";
+import { scoreSection, scoreByConcept } from "./utils/scoring";
 
 export interface TestData {
   readingWritingModule1: Array<{ id: string; question?: string; options?: string[]; passage?: string; correct: string; explanation?: string }>;
@@ -71,6 +71,10 @@ export default function App() {
   const [assignRwM1, setAssignRwM1] = React.useState("");
   const [assignMathM1, setAssignMathM1] = React.useState("");
   const [assignStatus, setAssignStatus] = React.useState<"idle" | "saving" | "done" | "error">("idle");
+  const [resultsSubmissions, setResultsSubmissions] = React.useState<SubmissionRow[]>([]);
+  const [resultsFilterStudentId, setResultsFilterStudentId] = React.useState("");
+  const [resultsStatus, setResultsStatus] = React.useState<"idle" | "loading" | "error">("idle");
+  const [resultsError, setResultsError] = React.useState("");
 
   /** Adaptive Module 2: set after scoring Module 1. Above threshold → harder M2. */
   const [rwModule2Variant, setRwModule2Variant] = React.useState<"easier" | "harder" | null>(null);
@@ -446,6 +450,7 @@ export default function App() {
         <div style={{ marginBottom: "20px", padding: "12px 16px", background: "#f0f4ff", borderRadius: "8px", fontSize: "14px" }}>
           <strong>Jump to:</strong>{" "}
           <a href="#assignments" style={{ marginRight: "12px" }}>Assignments</a>
+          <a href="#results" style={{ marginRight: "12px" }}>Results</a>
           <a href="#available-tests" style={{ marginRight: "12px" }}>Available tests</a>
           <a href="#module-pool">All modules (Module Pool)</a>
         </div>
@@ -530,6 +535,102 @@ export default function App() {
           {assignStatus === "done" && <p style={{ marginTop: "12px", color: "#2e7d32", fontSize: "14px" }}>Assignment saved. The student will see this test when they enter their ID.</p>}
           {assignStatus === "error" && <p style={{ marginTop: "12px", color: "#c62828", fontSize: "14px" }}>Could not save. Check Firestore rules and env variables.</p>}
         </div>
+
+        {/* ── Results ── */}
+        <h2 id="results" style={{ marginBottom: "4px" }}>Results</h2>
+        <p style={{ color: "#555", marginBottom: "12px", fontSize: "14px" }}>
+          View submissions to see how tests were performed. Filter by student ID to see one student&apos;s history. Use the concept breakdown to suggest practice (e.g. &quot;Practice advanced math&quot;).
+        </p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", alignItems: "center", marginBottom: "12px" }}>
+          <label htmlFor="results-filter" style={{ fontSize: "14px", fontWeight: 600 }}>Filter by Student ID (optional)</label>
+          <input
+            id="results-filter"
+            type="text"
+            value={resultsFilterStudentId}
+            onChange={(e) => setResultsFilterStudentId(e.target.value)}
+            placeholder="e.g. 1001"
+            style={{ padding: "8px 12px", fontSize: "14px", width: "160px", border: "1px solid #ccc", borderRadius: "6px" }}
+          />
+          <button
+            type="button"
+            onClick={() => {
+              setResultsStatus("loading");
+              setResultsError("");
+              getSubmissions(resultsFilterStudentId.trim() || undefined)
+                .then((rows) => {
+                  setResultsSubmissions(rows);
+                  setResultsStatus("idle");
+                })
+                .catch((err: unknown) => {
+                  setResultsStatus("error");
+                  setResultsError(err && typeof err === "object" && "message" in err ? String((err as { message: string }).message) : "Failed to load");
+                });
+            }}
+            style={{
+              padding: "8px 16px",
+              fontSize: "14px",
+              fontWeight: 600,
+              background: "#0052cc",
+              color: "white",
+              border: "none",
+              borderRadius: "6px",
+              cursor: resultsStatus === "loading" ? "wait" : "pointer",
+            }}
+          >
+            {resultsStatus === "loading" ? "Loading…" : "Load results"}
+          </button>
+        </div>
+        {resultsStatus === "error" && <p style={{ color: "#c62828", marginBottom: "12px", fontSize: "14px" }}>{resultsError}</p>}
+        {resultsStatus === "idle" && resultsSubmissions.length > 0 && (
+          <div style={{ overflowX: "auto", marginBottom: "24px" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", border: "1px solid #ddd", fontSize: "14px" }}>
+              <thead>
+                <tr style={{ background: "#f5f5f5" }}>
+                  <th style={thStyle}>Student ID</th>
+                  <th style={thStyle}>Date</th>
+                  <th style={thStyle}>Test</th>
+                  <th style={thStyle}>R&W</th>
+                  <th style={thStyle}>Math</th>
+                  <th style={thStyle}>M2 difficulty</th>
+                  <th style={thStyle}>By concept</th>
+                </tr>
+              </thead>
+              <tbody>
+                {resultsSubmissions.map((row) => (
+                  <tr key={row.id}>
+                    <td style={tdStyle}>{row.userId}</td>
+                    <td style={tdStyle}>
+                      {row.submittedAt ? new Date(row.submittedAt).toLocaleString(undefined, { dateStyle: "short", timeStyle: "short" }) : "—"}
+                    </td>
+                    <td style={tdStyle}>{row.testLabel || row.testId || "—"}</td>
+                    <td style={tdStyle}>{row.rwRaw}/{row.rwTotal} ({row.rwPercentage}%)</td>
+                    <td style={tdStyle}>{row.mathRaw}/{row.mathTotal} ({row.mathPercentage}%)</td>
+                    <td style={tdStyle}>
+                      {row.rwModule2Difficulty || row.mathModule2Difficulty
+                        ? [row.rwModule2Difficulty, row.mathModule2Difficulty].filter(Boolean).join(", ")
+                        : "—"}
+                    </td>
+                    <td style={tdStyle}>
+                      {row.conceptScores && Object.keys(row.conceptScores).filter((d) => d !== "unspecified").length > 0
+                        ? Object.entries(row.conceptScores)
+                            .filter(([d]) => d !== "unspecified")
+                            .sort(([a], [b]) => a.localeCompare(b))
+                            .map(([domain, s]) => `${domain.replace(/_/g, " ")} ${s.pct}%`)
+                            .join(" · ")
+                        : "—"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+        {resultsStatus === "idle" && resultsSubmissions.length === 0 && resultsFilterStudentId === "" && (
+          <p style={{ color: "#666", marginBottom: "24px", fontSize: "14px" }}>Click &quot;Load results&quot; to see recent submissions.</p>
+        )}
+        {resultsStatus === "idle" && resultsSubmissions.length === 0 && resultsFilterStudentId !== "" && (
+          <p style={{ color: "#666", marginBottom: "24px", fontSize: "14px" }}>No submissions found for this student.</p>
+        )}
 
         {/* ── Assignments ── */}
         <h2 id="assignments" style={{ marginBottom: "4px" }}>Student Assignments</h2>
@@ -641,6 +742,22 @@ export default function App() {
       mathTotal: m1.total + m2.total,
       mathPercentage: m1.total + m2.total > 0 ? Math.round(((m1.rawScore + m2.rawScore) / (m1.total + m2.total)) * 100) : 0,
     };
+    const allQuestionsWithDomain = [
+      ...testData.readingWritingModule1,
+      ...rw2Questions,
+      ...testData.mathModule1,
+      ...m2Questions,
+    ];
+    const conceptScoresRaw = scoreByConcept(answers, allQuestionsWithDomain);
+    const conceptScores =
+      Object.keys(conceptScoresRaw).length > 0
+        ? (Object.fromEntries(
+            Object.entries(conceptScoresRaw).map(([domain, s]) => [
+              domain,
+              { raw: s.rawScore, total: s.total, pct: s.percentage },
+            ])
+          ) as import("./firebase").ConceptScores)
+        : undefined;
     const testLabel = selectedTestId === "pool" ? "Pool" : combinedRegistry.find((t) => t.id === selectedTestId)?.label;
 
     return (
@@ -658,6 +775,21 @@ export default function App() {
         <p style={{ margin: "15px 0", fontSize: "18px", fontWeight: "bold" }}>
           R&W: {scores.rwRaw}/{scores.rwTotal} ({scores.rwPercentage}%) · Math: {scores.mathRaw}/{scores.mathTotal} ({scores.mathPercentage}%)
         </p>
+        {conceptScores && Object.keys(conceptScores).filter((d) => d !== "unspecified").length > 0 && (
+          <div style={{ marginTop: "16px", padding: "12px 20px", background: "#f5f5f5", borderRadius: "8px", maxWidth: "480px", marginLeft: "auto", marginRight: "auto", textAlign: "left" }}>
+            <div style={{ fontWeight: 600, marginBottom: "8px", fontSize: "14px" }}>By concept</div>
+            <div style={{ fontSize: "14px", color: "#333" }}>
+              {Object.entries(conceptScores)
+                .filter(([domain]) => domain !== "unspecified")
+                .sort(([a], [b]) => a.localeCompare(b))
+                .map(([domain, s]) => (
+                  <span key={domain} style={{ display: "inline-block", marginRight: "12px", marginBottom: "4px" }}>
+                    {domain.replace(/_/g, " ")}: {s.pct}%
+                  </span>
+                ))}
+            </div>
+          </div>
+        )}
         <div style={{ marginTop: "20px" }}>
           <button
             onClick={async () => {
@@ -669,6 +801,7 @@ export default function App() {
                   scores,
                   rwModule2Difficulty: rwModule2Variant ?? undefined,
                   mathModule2Difficulty: mathModule2Variant ?? undefined,
+                  conceptScores,
                 });
                 setSaveStatus("done");
               } catch (err) {

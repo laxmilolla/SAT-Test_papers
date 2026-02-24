@@ -1,5 +1,5 @@
 import { initializeApp, FirebaseApp } from "firebase/app";
-import { getFirestore, collection, addDoc, doc, getDoc, setDoc, query, where, getDocs } from "firebase/firestore";
+import { getFirestore, collection, addDoc, doc, getDoc, setDoc, query, where, getDocs, orderBy, limit } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -28,6 +28,9 @@ export interface SubmissionScores {
   mathPercentage: number;
 }
 
+/** Per-concept scores stored on submission (raw, total, pct). */
+export type ConceptScores = Record<string, { raw: number; total: number; pct: number }>;
+
 export async function saveSubmission(
   userId: string,
   answers: Record<string, string>,
@@ -37,12 +40,13 @@ export async function saveSubmission(
     scores: SubmissionScores;
     rwModule2Difficulty?: "easier" | "harder";
     mathModule2Difficulty?: "easier" | "harder";
+    conceptScores?: ConceptScores;
   }
 ): Promise<void> {
   if (!db) {
     throw new Error("Firebase is not configured. Set REACT_APP_FIREBASE_* env variables.");
   }
-  await addDoc(collection(db, "submissions"), {
+  const doc: Record<string, unknown> = {
     userId: userId.trim() || "Anonymous",
     answers,
     testId: options.testId,
@@ -56,7 +60,11 @@ export async function saveSubmission(
     rwModule2Difficulty: options.rwModule2Difficulty ?? null,
     mathModule2Difficulty: options.mathModule2Difficulty ?? null,
     submittedAt: new Date().toISOString(),
-  });
+  };
+  if (options.conceptScores && Object.keys(options.conceptScores).length > 0) {
+    doc.conceptScores = options.conceptScores;
+  }
+  await addDoc(collection(db, "submissions"), doc);
 }
 
 /** Returns the list of testIds this user has already submitted. */
@@ -149,6 +157,60 @@ export async function saveAssignment(
   const uid = studentId.trim() || "Anonymous";
   const ref = doc(db, "assignments", uid);
   await setDoc(ref, { rwM1ModuleId, mathM1ModuleId });
+}
+
+/** One row for teacher results view. */
+export interface SubmissionRow {
+  id: string;
+  userId: string;
+  testId: string;
+  testLabel: string | null;
+  rwRaw: number;
+  rwTotal: number;
+  rwPercentage: number;
+  mathRaw: number;
+  mathTotal: number;
+  mathPercentage: number;
+  rwModule2Difficulty: string | null;
+  mathModule2Difficulty: string | null;
+  submittedAt: string;
+  conceptScores?: ConceptScores;
+}
+
+/**
+ * Get submissions for teacher results view.
+ * If userId is provided, returns that student's submissions; otherwise returns recent submissions (up to 100).
+ */
+export async function getSubmissions(userId?: string): Promise<SubmissionRow[]> {
+  if (!db) return [];
+  const coll = collection(db, "submissions");
+  let q;
+  if (userId && userId.trim()) {
+    const uid = userId.trim();
+    q = query(coll, where("userId", "==", uid), orderBy("submittedAt", "desc"), limit(100));
+  } else {
+    q = query(coll, orderBy("submittedAt", "desc"), limit(100));
+  }
+  const snap = await getDocs(q);
+  return snap.docs.map((d) => {
+    const data = d.data();
+    return {
+      id: d.id,
+      userId: typeof data.userId === "string" ? data.userId : "",
+      testId: typeof data.testId === "string" ? data.testId : "",
+      testLabel: typeof data.testLabel === "string" ? data.testLabel : null,
+      rwRaw: typeof data.rwRaw === "number" ? data.rwRaw : 0,
+      rwTotal: typeof data.rwTotal === "number" ? data.rwTotal : 0,
+      rwPercentage: typeof data.rwPercentage === "number" ? data.rwPercentage : 0,
+      mathRaw: typeof data.mathRaw === "number" ? data.mathRaw : 0,
+      mathTotal: typeof data.mathTotal === "number" ? data.mathTotal : 0,
+      mathPercentage: typeof data.mathPercentage === "number" ? data.mathPercentage : 0,
+      rwModule2Difficulty: data.rwModule2Difficulty ?? null,
+      mathModule2Difficulty: data.mathModule2Difficulty ?? null,
+      submittedAt: typeof data.submittedAt === "string" ? data.submittedAt : "",
+      conceptScores: data.conceptScores && typeof data.conceptScores === "object" ? (data.conceptScores as ConceptScores) : undefined,
+    };
+  });
 }
 
 export { db };

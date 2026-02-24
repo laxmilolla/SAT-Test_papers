@@ -5,209 +5,28 @@ export const mathM1B: PoolModule = {
   type: "math-m1",
   label: "Math Module 1 (Set B)",
   questions: [
-    {
-      id: "m1b-1",
-      question: "If 5x − 8 = 3x + 12, what is the value of x?",
-      options: ["A) 2", "B) 6", "C) 10", "D) 14"],
-      correct: "C",
-      explanation:
-        "Subtract 3x from both sides: 2x − 8 = 12. Add 8: 2x = 20. Divide by 2: x = 10.",
-    },
-    {
-      id: "m1b-2",
-      question:
-        'Which inequality represents the statement "3 more than twice a number is at most 17"?',
-      options: [
-        "A) 2n + 3 ≥ 17",
-        "B) 2n + 3 ≤ 17",
-        "C) 3n + 2 ≤ 17",
-        "D) 2n − 3 ≤ 17",
-      ],
-      correct: "B",
-      explanation:
-        '"Twice a number" is 2n. "3 more than" that is 2n + 3. "At most 17" means ≤ 17, giving 2n + 3 ≤ 17.',
-    },
-    {
-      id: "m1b-3",
-      question: "What is the slope of the line 4x − 2y = 10?",
-      options: ["A) −2", "B) 4", "C) −5", "D) 2"],
-      correct: "D",
-      explanation:
-        "Rewrite in slope-intercept form: −2y = −4x + 10, so y = 2x − 5. The slope is 2.",
-    },
-    {
-      id: "m1b-4",
-      question:
-        "If x + y = 14 and x − y = 4, what is the value of x?",
-      options: ["A) 9", "B) 5", "C) 7", "D) 11"],
-      correct: "A",
-      explanation:
-        "Add the two equations: 2x = 18, so x = 9. (Then y = 5.)",
-    },
-    {
-      id: "m1b-5",
-      question:
-        "A line passes through (0, −3) and has a slope of 4. What is the value of y when x = 2?",
-      options: ["A) 8", "B) 5", "C) 11", "D) 3"],
-      correct: "B",
-      explanation:
-        "The equation is y = 4x − 3. When x = 2: y = 4(2) − 3 = 8 − 3 = 5.",
-    },
-    {
-      id: "m1b-6",
-      question: "If 7 − 2x > 1, which describes all values of x that satisfy the inequality?",
-      options: ["A) x < 3", "B) x > 3", "C) x > −3", "D) x < −3"],
-      correct: "A",
-      explanation:
-        "Subtract 7: −2x > −6. Divide by −2 and flip the sign: x < 3.",
-    },
-    {
-      id: "m1b-7",
-      question:
-        "The equation y = −3x + 12 models the water level, in inches, of a pool as it drains, where x is the time in hours. After how many hours will the pool be empty?",
-      options: ["A) 3", "B) 6", "C) 4", "D) 12"],
-      correct: "C",
-      explanation:
-        "Set y = 0: 0 = −3x + 12. Then 3x = 12, so x = 4 hours.",
-    },
-    {
-      id: "m1b-8",
-      question:
-        "The ratio of boys to girls in a class is 3 : 5. If there are 40 students in total, how many are girls?",
-      options: ["A) 15", "B) 20", "C) 30", "D) 25"],
-      correct: "D",
-      explanation:
-        "Total parts = 3 + 5 = 8. Girls = (5/8) × 40 = 25.",
-    },
-    {
-      id: "m1b-9",
-      question:
-        "A store marks up items by 40% from the wholesale price. If the wholesale price of an item is $60, what is the retail price?",
-      options: ["A) $84", "B) $76", "C) $96", "D) $100"],
-      correct: "A",
-      explanation:
-        "Retail = 60 × 1.40 = $84.",
-    },
-    {
-      id: "m1b-10",
-      question:
-        "The mean of 6 numbers is 15. When one number is removed, the mean of the remaining 5 numbers is 14. What was the removed number?",
-      options: ["A) 18", "B) 20", "C) 16", "D) 22"],
-      correct: "B",
-      explanation:
-        "Sum of 6 numbers = 6 × 15 = 90. Sum of remaining 5 = 5 × 14 = 70. Removed number = 90 − 70 = 20.",
-    },
-    {
-      id: "m1b-11",
-      question:
-        "A bag contains 4 red, 6 blue, and 5 green marbles. If one marble is drawn at random, what is the probability that it is blue?",
-      options: ["A) 1/3", "B) 1/5", "C) 2/5", "D) 3/5"],
-      correct: "C",
-      explanation:
-        "Total marbles = 4 + 6 + 5 = 15. P(blue) = 6/15 = 2/5.",
-    },
-    {
-      id: "m1b-12",
-      question:
-        "A car travels 180 miles in 3 hours, then 120 miles in 2 hours. What is the average speed for the entire trip?",
-      options: ["A) 55 mph", "B) 65 mph", "C) 50 mph", "D) 60 mph"],
-      correct: "D",
-      explanation:
-        "Total distance = 180 + 120 = 300 miles. Total time = 3 + 2 = 5 hours. Average speed = 300 / 5 = 60 mph.",
-    },
-    {
-      id: "m1b-13",
-      question:
-        "In a data set, the range is 18 and the minimum value is 7. What is the maximum value?",
-      options: ["A) 25", "B) 11", "C) 18", "D) 23"],
-      correct: "A",
-      explanation:
-        "Range = max − min. So max = min + range = 7 + 18 = 25.",
-    },
-    {
-      id: "m1b-14",
-      question:
-        "What are the solutions to x² − 5x − 14 = 0?",
-      options: [
-        "A) x = 7 and x = 2",
-        "B) x = −7 and x = 2",
-        "C) x = 7 and x = −2",
-        "D) x = −7 and x = −2",
-      ],
-      correct: "C",
-      explanation:
-        "Factor: (x − 7)(x + 2) = 0, so x = 7 or x = −2.",
-    },
-    {
-      id: "m1b-15",
-      question: "If g(x) = x² − 4x + 3, what is g(5)?",
-      options: ["A) 12", "B) 8", "C) 3", "D) 6"],
-      correct: "B",
-      explanation:
-        "g(5) = 25 − 20 + 3 = 8.",
-    },
-    {
-      id: "m1b-16",
-      question: "Which expression is equivalent to (3x²)(2x³)?",
-      options: ["A) 5x⁵", "B) 6x⁶", "C) 5x⁶", "D) 6x⁵"],
-      correct: "D",
-      explanation:
-        "Multiply coefficients: 3 × 2 = 6. Add exponents: 2 + 3 = 5. Result: 6x⁵.",
-    },
-    {
-      id: "m1b-17",
-      question:
-        "What is the y-coordinate of the vertex of the parabola y = x² − 6x + 5?",
-      options: ["A) −4", "B) 5", "C) −3", "D) 3"],
-      correct: "A",
-      explanation:
-        "The x-coordinate of the vertex is x = −(−6) / (2 · 1) = 3. Then y = 9 − 18 + 5 = −4.",
-    },
-    {
-      id: "m1b-18",
-      question:
-        "If f(x) = 3x − 1 and g(x) = x + 4, what is f(g(2))?",
-      options: ["A) 11", "B) 15", "C) 17", "D) 9"],
-      correct: "C",
-      explanation:
-        "First, g(2) = 2 + 4 = 6. Then f(6) = 3(6) − 1 = 18 − 1 = 17.",
-    },
-    {
-      id: "m1b-19",
-      question:
-        "A cylinder has a radius of 3 and a height of 10. What is the volume of the cylinder?",
-      options: ["A) 60π", "B) 90π", "C) 30π", "D) 120π"],
-      correct: "B",
-      explanation:
-        "V = πr²h = π(3²)(10) = π(9)(10) = 90π.",
-    },
-    {
-      id: "m1b-20",
-      question:
-        "In a right triangle, one leg has length 5 and the hypotenuse has length 13. What is the length of the other leg?",
-      options: ["A) 8", "B) 10", "C) 11", "D) 12"],
-      correct: "D",
-      explanation:
-        "By the Pythagorean theorem: b² = 13² − 5² = 169 − 25 = 144, so b = 12.",
-    },
-    {
-      id: "m1b-21",
-      question:
-        "What is the distance between the points (1, 2) and (4, 6)?",
-      options: ["A) 7", "B) 4", "C) 5", "D) 6"],
-      correct: "C",
-      explanation:
-        "d = √((4 − 1)² + (6 − 2)²) = √(9 + 16) = √25 = 5.",
-    },
-    {
-      id: "m1b-22",
-      question:
-        "A trapezoid has parallel bases of length 8 and 12 and a height of 5. What is the area of the trapezoid?",
-      options: ["A) 50", "B) 40", "C) 60", "D) 100"],
-      correct: "A",
-      explanation:
-        "A = (1/2)(b₁ + b₂)(h) = (1/2)(8 + 12)(5) = (1/2)(20)(5) = 50.",
-    },
+    { id: "m1b-1", question: "If 5x − 8 = 3x + 12, what is the value of x?", options: ["A) 2", "B) 6", "C) 10", "D) 14"], correct: "C", explanation: "Subtract 3x from both sides: 2x − 8 = 12. Add 8: 2x = 20. Divide by 2: x = 10.", domain: "algebra" },
+    { id: "m1b-2", question: 'Which inequality represents the statement "3 more than twice a number is at most 17"?', options: ["A) 2n + 3 ≥ 17", "B) 2n + 3 ≤ 17", "C) 3n + 2 ≤ 17", "D) 2n − 3 ≤ 17"], correct: "B", explanation: '"Twice a number" is 2n. "3 more than" that is 2n + 3. "At most 17" means ≤ 17, giving 2n + 3 ≤ 17.', domain: "algebra" },
+    { id: "m1b-3", question: "What is the slope of the line 4x − 2y = 10?", options: ["A) −2", "B) 4", "C) −5", "D) 2"], correct: "D", explanation: "Rewrite in slope-intercept form: −2y = −4x + 10, so y = 2x − 5. The slope is 2.", domain: "algebra" },
+    { id: "m1b-4", question: "If x + y = 14 and x − y = 4, what is the value of x?", options: ["A) 9", "B) 5", "C) 7", "D) 11"], correct: "A", explanation: "Add the two equations: 2x = 18, so x = 9. (Then y = 5.)", domain: "algebra" },
+    { id: "m1b-5", question: "A line passes through (0, −3) and has a slope of 4. What is the value of y when x = 2?", options: ["A) 8", "B) 5", "C) 11", "D) 3"], correct: "B", explanation: "The equation is y = 4x − 3. When x = 2: y = 4(2) − 3 = 8 − 3 = 5.", domain: "algebra" },
+    { id: "m1b-6", question: "If 7 − 2x > 1, which describes all values of x that satisfy the inequality?", options: ["A) x < 3", "B) x > 3", "C) x > −3", "D) x < −3"], correct: "A", explanation: "Subtract 7: −2x > −6. Divide by −2 and flip the sign: x < 3.", domain: "algebra" },
+    { id: "m1b-7", question: "The equation y = −3x + 12 models the water level, in inches, of a pool as it drains, where x is the time in hours. After how many hours will the pool be empty?", options: ["A) 3", "B) 6", "C) 4", "D) 12"], correct: "C", explanation: "Set y = 0: 0 = −3x + 12. Then 3x = 12, so x = 4 hours.", domain: "algebra" },
+    { id: "m1b-8", question: "The ratio of boys to girls in a class is 3 : 5. If there are 40 students in total, how many are girls?", options: ["A) 15", "B) 20", "C) 30", "D) 25"], correct: "D", explanation: "Total parts = 3 + 5 = 8. Girls = (5/8) × 40 = 25.", domain: "problem_solving_data" },
+    { id: "m1b-9", question: "A store marks up items by 40% from the wholesale price. If the wholesale price of an item is $60, what is the retail price?", options: ["A) $84", "B) $76", "C) $96", "D) $100"], correct: "A", explanation: "Retail = 60 × 1.40 = $84.", domain: "problem_solving_data" },
+    { id: "m1b-10", question: "The mean of 6 numbers is 15. When one number is removed, the mean of the remaining 5 numbers is 14. What was the removed number?", options: ["A) 18", "B) 20", "C) 16", "D) 22"], correct: "B", explanation: "Sum of 6 numbers = 6 × 15 = 90. Sum of remaining 5 = 5 × 14 = 70. Removed number = 90 − 70 = 20.", domain: "problem_solving_data" },
+    { id: "m1b-11", question: "A bag contains 4 red, 6 blue, and 5 green marbles. If one marble is drawn at random, what is the probability that it is blue?", options: ["A) 1/3", "B) 1/5", "C) 2/5", "D) 3/5"], correct: "C", explanation: "Total marbles = 4 + 6 + 5 = 15. P(blue) = 6/15 = 2/5.", domain: "problem_solving_data" },
+    { id: "m1b-12", question: "A car travels 180 miles in 3 hours, then 120 miles in 2 hours. What is the average speed for the entire trip?", options: ["A) 55 mph", "B) 65 mph", "C) 50 mph", "D) 60 mph"], correct: "D", explanation: "Total distance = 180 + 120 = 300 miles. Total time = 3 + 2 = 5 hours. Average speed = 300 / 5 = 60 mph.", domain: "problem_solving_data" },
+    { id: "m1b-13", question: "In a data set, the range is 18 and the minimum value is 7. What is the maximum value?", options: ["A) 25", "B) 11", "C) 18", "D) 23"], correct: "A", explanation: "Range = max − min. So max = min + range = 7 + 18 = 25.", domain: "problem_solving_data" },
+    { id: "m1b-14", question: "What are the solutions to x² − 5x − 14 = 0?", options: ["A) x = 7 and x = 2", "B) x = −7 and x = 2", "C) x = 7 and x = −2", "D) x = −7 and x = −2"], correct: "C", explanation: "Factor: (x − 7)(x + 2) = 0, so x = 7 or x = −2.", domain: "advanced_math" },
+    { id: "m1b-15", question: "If g(x) = x² − 4x + 3, what is g(5)?", options: ["A) 12", "B) 8", "C) 3", "D) 6"], correct: "B", explanation: "g(5) = 25 − 20 + 3 = 8.", domain: "advanced_math" },
+    { id: "m1b-16", question: "Which expression is equivalent to (3x²)(2x³)?", options: ["A) 5x⁵", "B) 6x⁶", "C) 5x⁶", "D) 6x⁵"], correct: "D", explanation: "Multiply coefficients: 3 × 2 = 6. Add exponents: 2 + 3 = 5. Result: 6x⁵.", domain: "advanced_math" },
+    { id: "m1b-17", question: "What is the y-coordinate of the vertex of the parabola y = x² − 6x + 5?", options: ["A) −4", "B) 5", "C) −3", "D) 3"], correct: "A", explanation: "The x-coordinate of the vertex is x = −(−6) / (2 · 1) = 3. Then y = 9 − 18 + 5 = −4.", domain: "advanced_math" },
+    { id: "m1b-18", question: "If f(x) = 3x − 1 and g(x) = x + 4, what is f(g(2))?", options: ["A) 11", "B) 15", "C) 17", "D) 9"], correct: "C", explanation: "First, g(2) = 2 + 4 = 6. Then f(6) = 3(6) − 1 = 18 − 1 = 17.", domain: "algebra" },
+    { id: "m1b-19", question: "A cylinder has a radius of 3 and a height of 10. What is the volume of the cylinder?", options: ["A) 60π", "B) 90π", "C) 30π", "D) 120π"], correct: "B", explanation: "V = πr²h = π(3²)(10) = π(9)(10) = 90π.", domain: "geometry_trig" },
+    { id: "m1b-20", question: "In a right triangle, one leg has length 5 and the hypotenuse has length 13. What is the length of the other leg?", options: ["A) 8", "B) 10", "C) 11", "D) 12"], correct: "D", explanation: "By the Pythagorean theorem: b² = 13² − 5² = 169 − 25 = 144, so b = 12.", domain: "geometry_trig" },
+    { id: "m1b-21", question: "What is the distance between the points (1, 2) and (4, 6)?", options: ["A) 7", "B) 4", "C) 5", "D) 6"], correct: "C", explanation: "d = √((4 − 1)² + (6 − 2)²) = √(9 + 16) = √25 = 5.", domain: "geometry_trig" },
+    { id: "m1b-22", question: "A trapezoid has parallel bases of length 8 and 12 and a height of 5. What is the area of the trapezoid?", options: ["A) 50", "B) 40", "C) 60", "D) 100"], correct: "A", explanation: "A = (1/2)(b₁ + b₂)(h) = (1/2)(8 + 12)(5) = (1/2)(20)(5) = 50.", domain: "geometry_trig" },
   ],
   m2EasierModuleId: "math-m2-easier",
   m2HarderModuleId: "math-m2-harder",

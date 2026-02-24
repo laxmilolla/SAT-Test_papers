@@ -19,6 +19,9 @@ export interface RWQuestion {
   passage?: string;
   correct: string;
   explanation?: string;
+  /** Concept/domain for performance tracking (e.g. information_ideas, craft_structure). */
+  domain?: string;
+  subdomain?: string;
 }
 
 /** Math question shape (optional image). */
@@ -29,6 +32,9 @@ export interface MathQuestion {
   image?: string;
   correct: string;
   explanation?: string;
+  /** Concept/domain for performance tracking (algebra, advanced_math, problem_solving_data, geometry_trig). */
+  domain?: string;
+  subdomain?: string;
 }
 
 export type PoolQuestion = RWQuestion | MathQuestion;
