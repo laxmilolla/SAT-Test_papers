@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { saveSubmission, getSubmissionHistory, getAssignment } from "./firebase";
+import { saveSubmission, getSubmissionHistory, getAssignment, getAllAssignments, type AssignmentRow } from "./firebase";
 import { testRegistry } from "./data/testRegistry";
 import { getPoolTestData } from "./data/modulePool";
 import { scoreSection } from "./utils/scoring";
@@ -63,6 +63,8 @@ export default function App() {
 
   const [studentId, setStudentId] = React.useState("");
   const [saveStatus, setSaveStatus] = React.useState<"idle" | "saving" | "done" | "error">("idle");
+  const [teacherAssignments, setTeacherAssignments] = React.useState<AssignmentRow[]>([]);
+  const [teacherStatus, setTeacherStatus] = React.useState<"idle" | "loading" | "error">("idle");
 
   /** Adaptive Module 2: set after scoring Module 1. Above threshold → harder M2. */
   const [rwModule2Variant, setRwModule2Variant] = React.useState<"easier" | "harder" | null>(null);
@@ -145,22 +147,14 @@ export default function App() {
         setSelectedTestId(assignment.testId);
       }
       if (!assignTestId) {
-        const testIdToUse = combinedRegistry.length === 1 ? combinedRegistry[0].id : selectedTestId;
-        if (!testIdToUse) {
-          setStartStatus("idle");
+        const taken = await getSubmissionHistory(uid);
+        const available = combinedRegistry.filter((t) => !taken.includes(t.id));
+        if (available.length === 0) {
+          setStartStatus("all_taken");
           return;
         }
-        const taken = await getSubmissionHistory(uid);
-        assignTestId = testIdToUse;
-        if (taken.includes(testIdToUse)) {
-          const available = combinedRegistry.filter((t) => !taken.includes(t.id));
-          if (available.length === 0) {
-            setStartStatus("all_taken");
-            return;
-          }
-          assignTestId = available[0].id;
-          setSelectedTestId(assignTestId);
-        }
+        assignTestId = available[0].id;
+        setSelectedTestId(assignTestId);
       }
       const entry = combinedRegistry.find((t) => t.id === assignTestId);
       if (!entry) throw new Error("Unknown test");
@@ -185,24 +179,10 @@ export default function App() {
         }}
       >
         <h1>Digital SAT Practice Test</h1>
-        {combinedRegistry.length > 1 && (
-          <div style={{ margin: "20px 0" }}>
-            <label style={{ display: "block", marginBottom: "8px", fontWeight: "bold" }}>Select test</label>
-            <select
-              value={selectedTestId ?? ""}
-              onChange={(e) => setSelectedTestId(e.target.value || null)}
-              style={{ padding: "10px 15px", fontSize: "16px", minWidth: "200px", border: "1px solid #ccc", borderRadius: "8px" }}
-            >
-              <option value="">Choose a test</option>
-              {combinedRegistry.map((t) => (
-                <option key={t.id} value={t.id}>{t.label}</option>
-              ))}
-            </select>
-          </div>
-        )}
+        <p style={{ marginBottom: "24px", color: "#555" }}>Enter your Student ID to load your assigned test.</p>
         <div style={{ margin: "20px 0" }}>
           <label htmlFor="student-id" style={{ display: "block", marginBottom: "8px", fontWeight: "bold" }}>
-            Student ID or name (optional)
+            Student ID or name
           </label>
           <input
             id="student-id"
@@ -210,6 +190,7 @@ export default function App() {
             value={studentId}
             onChange={(e) => setStudentId(e.target.value)}
             placeholder="e.g. John D. or 12345"
+            autoFocus
             style={{
               padding: "10px 15px",
               fontSize: "16px",
@@ -228,7 +209,7 @@ export default function App() {
         )}
         <button
           onClick={handleStart}
-          disabled={startStatus === "loading" || (combinedRegistry.length > 1 && !selectedTestId)}
+          disabled={startStatus === "loading"}
           style={{
             padding: "15px 50px",
             fontSize: "20px",
@@ -242,10 +223,96 @@ export default function App() {
           {startStatus === "loading" ? "Loading…" : "START TEST"}
         </button>
         <p style={{ marginTop: "24px", fontSize: "12px", color: "#888" }}>
-          v2 · multi-test, grading, no-repeat
+          Your test is chosen by your teacher or assigned automatically.
+        </p>
+        <p style={{ marginTop: "16px" }}>
+          <button
+            type="button"
+            onClick={() => {
+              setView("teacher");
+              setTeacherStatus("loading");
+              getAllAssignments()
+                .then((rows) => {
+                  setTeacherAssignments(rows);
+                  setTeacherStatus("idle");
+                })
+                .catch(() => setTeacherStatus("error"));
+            }}
+            style={{
+              background: "none",
+              border: "none",
+              color: "#0052cc",
+              textDecoration: "underline",
+              cursor: "pointer",
+              fontSize: "14px",
+            }}
+          >
+            Teacher: view assignments
+          </button>
         </p>
       </div>
     );
+
+  if (view === "teacher") {
+    const assignmentLabel = (row: AssignmentRow) => {
+      if (row.rwM1ModuleId && row.mathM1ModuleId) {
+        return `Pool (R&W: ${row.rwM1ModuleId}, Math: ${row.mathM1ModuleId})`;
+      }
+      if (row.testId) {
+        const label = combinedRegistry.find((t) => t.id === row.testId)?.label ?? row.testId;
+        return label;
+      }
+      return "—";
+    };
+    return (
+      <div style={{ padding: "40px", fontFamily: "sans-serif", maxWidth: "800px", margin: "0 auto" }}>
+        <h2>Assignments by student</h2>
+        <p style={{ color: "#555", marginBottom: "16px" }}>
+          Students with an assignment get this test when they enter their ID. To add or change assignments, use Firebase Console → Firestore → assignments.
+        </p>
+        <button
+          type="button"
+          onClick={() => setView("start")}
+          style={{
+            marginBottom: "20px",
+            padding: "8px 16px",
+            background: "#eee",
+            border: "1px solid #ccc",
+            borderRadius: "6px",
+            cursor: "pointer",
+          }}
+        >
+          ← Back to start
+        </button>
+        {teacherStatus === "loading" && <p>Loading…</p>}
+        {teacherStatus === "error" && <p style={{ color: "#c62828" }}>Failed to load assignments.</p>}
+        {teacherStatus === "idle" && (
+          <>
+            {teacherAssignments.length === 0 ? (
+              <p style={{ color: "#666" }}>No assignments yet. Add documents in Firestore under the &quot;assignments&quot; collection (document ID = student ID).</p>
+            ) : (
+              <table style={{ width: "100%", borderCollapse: "collapse", border: "1px solid #ddd" }}>
+                <thead>
+                  <tr style={{ background: "#f5f5f5" }}>
+                    <th style={{ padding: "10px", textAlign: "left", border: "1px solid #ddd" }}>Student ID</th>
+                    <th style={{ padding: "10px", textAlign: "left", border: "1px solid #ddd" }}>Assigned test</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {teacherAssignments.map((row) => (
+                    <tr key={row.studentId}>
+                      <td style={{ padding: "10px", border: "1px solid #ddd" }}>{row.studentId}</td>
+                      <td style={{ padding: "10px", border: "1px solid #ddd" }}>{assignmentLabel(row)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </>
+        )}
+      </div>
+    );
+  }
 
   if (view === "results" && testData && selectedTestId) {
     const rw1 = scoreSection(answers, testData.readingWritingModule1);

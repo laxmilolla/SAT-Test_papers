@@ -112,4 +112,26 @@ export async function getAssignment(userId: string): Promise<StudentAssignment |
   return null;
 }
 
+/** For teacher view: list all assignments (student ID → what they're assigned). */
+export interface AssignmentRow {
+  studentId: string;
+  testId?: string;
+  rwM1ModuleId?: string;
+  mathM1ModuleId?: string;
+}
+
+export async function getAllAssignments(): Promise<AssignmentRow[]> {
+  if (!db) return [];
+  const snap = await getDocs(collection(db, "assignments"));
+  return snap.docs.map((d) => {
+    const data = d.data();
+    return {
+      studentId: d.id,
+      testId: typeof data.testId === "string" ? data.testId : undefined,
+      rwM1ModuleId: typeof data.rwM1ModuleId === "string" ? data.rwM1ModuleId : undefined,
+      mathM1ModuleId: typeof data.mathM1ModuleId === "string" ? data.mathM1ModuleId : undefined,
+    };
+  });
+}
+
 export { db };
