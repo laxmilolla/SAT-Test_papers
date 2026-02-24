@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { saveSubmission, getSubmissionHistory, getAssignment, getAllAssignments, type AssignmentRow } from "./firebase";
+import { saveSubmission, getSubmissionHistory, getAssignment, getAllAssignments, AssignmentRow } from "./firebase";
 import { testRegistry } from "./data/testRegistry";
 import { getPoolTestData } from "./data/modulePool";
 import { scoreSection } from "./utils/scoring";
