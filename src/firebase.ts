@@ -1,5 +1,5 @@
 import { initializeApp, FirebaseApp } from "firebase/app";
-import { getFirestore, collection, addDoc, doc, getDoc, query, where, getDocs } from "firebase/firestore";
+import { getFirestore, collection, addDoc, doc, getDoc, setDoc, query, where, getDocs } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -132,6 +132,23 @@ export async function getAllAssignments(): Promise<AssignmentRow[]> {
       mathM1ModuleId: typeof data.mathM1ModuleId === "string" ? data.mathM1ModuleId : undefined,
     };
   });
+}
+
+/**
+ * Set pool-based assignment for a student (document ID = studentId).
+ * Overwrites the document with only rwM1ModuleId and mathM1ModuleId (pool test).
+ */
+export async function saveAssignment(
+  studentId: string,
+  rwM1ModuleId: string,
+  mathM1ModuleId: string
+): Promise<void> {
+  if (!db) {
+    throw new Error("Firebase is not configured. Set REACT_APP_FIREBASE_* env variables.");
+  }
+  const uid = studentId.trim() || "Anonymous";
+  const ref = doc(db, "assignments", uid);
+  await setDoc(ref, { rwM1ModuleId, mathM1ModuleId });
 }
 
 export { db };

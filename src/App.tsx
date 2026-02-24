@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { saveSubmission, getSubmissionHistory, getAssignment, getAllAssignments, AssignmentRow } from "./firebase";
+import { saveSubmission, getSubmissionHistory, getAssignment, getAllAssignments, saveAssignment, AssignmentRow } from "./firebase";
 import { testRegistry } from "./data/testRegistry";
 import { getPoolTestData, getAllPoolModules } from "./data/modulePool";
 import { scoreSection } from "./utils/scoring";
@@ -67,6 +67,10 @@ export default function App() {
   const [teacherStatus, setTeacherStatus] = React.useState<"idle" | "loading" | "error">("idle");
   const [teacherError, setTeacherError] = React.useState<string>("");
   const [expandedModules, setExpandedModules] = React.useState<Set<string>>(new Set());
+  const [assignStudentId, setAssignStudentId] = React.useState("");
+  const [assignRwM1, setAssignRwM1] = React.useState("");
+  const [assignMathM1, setAssignMathM1] = React.useState("");
+  const [assignStatus, setAssignStatus] = React.useState<"idle" | "saving" | "done" | "error">("idle");
 
   /** Adaptive Module 2: set after scoring Module 1. Above threshold → harder M2. */
   const [rwModule2Variant, setRwModule2Variant] = React.useState<"easier" | "harder" | null>(null);
@@ -446,10 +450,91 @@ export default function App() {
           <a href="#module-pool">All modules (Module Pool)</a>
         </div>
 
+        {/* ── Assign test form ── */}
+        <div style={{ marginBottom: "28px", padding: "20px", border: "1px solid #ddd", borderRadius: "8px", background: "#fafafa" }}>
+          <h3 style={{ marginTop: 0, marginBottom: "12px" }}>Assign test to student</h3>
+          <p style={{ color: "#555", fontSize: "14px", marginBottom: "16px" }}>
+            Enter student ID and choose Module 1 for Reading &amp; Writing and Math. The student will get this test when they enter their ID on the start screen. M2 (easier/harder) is chosen automatically from their M1 score.
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", alignItems: "flex-end" }}>
+            <div>
+              <label htmlFor="assign-student-id" style={{ display: "block", marginBottom: "4px", fontSize: "14px", fontWeight: 600 }}>Student ID</label>
+              <input
+                id="assign-student-id"
+                type="text"
+                value={assignStudentId}
+                onChange={(e) => setAssignStudentId(e.target.value)}
+                placeholder="e.g. 1001 or Jane"
+                style={{ padding: "8px 12px", fontSize: "14px", width: "180px", border: "1px solid #ccc", borderRadius: "6px" }}
+              />
+            </div>
+            <div>
+              <label htmlFor="assign-rw-m1" style={{ display: "block", marginBottom: "4px", fontSize: "14px", fontWeight: 600 }}>R&amp;W Module 1</label>
+              <select
+                id="assign-rw-m1"
+                value={assignRwM1}
+                onChange={(e) => setAssignRwM1(e.target.value)}
+                style={{ padding: "8px 12px", fontSize: "14px", minWidth: "200px", border: "1px solid #ccc", borderRadius: "6px" }}
+              >
+                <option value="">— Select —</option>
+                {rwM1Modules.map((m) => (
+                  <option key={m.id} value={m.id}>{m.label ?? m.id}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="assign-math-m1" style={{ display: "block", marginBottom: "4px", fontSize: "14px", fontWeight: 600 }}>Math Module 1</label>
+              <select
+                id="assign-math-m1"
+                value={assignMathM1}
+                onChange={(e) => setAssignMathM1(e.target.value)}
+                style={{ padding: "8px 12px", fontSize: "14px", minWidth: "200px", border: "1px solid #ccc", borderRadius: "6px" }}
+              >
+                <option value="">— Select —</option>
+                {mathM1Modules.map((m) => (
+                  <option key={m.id} value={m.id}>{m.label ?? m.id}</option>
+                ))}
+              </select>
+            </div>
+            <button
+              type="button"
+              disabled={assignStatus === "saving" || !assignStudentId.trim() || !assignRwM1 || !assignMathM1}
+              onClick={async () => {
+                setAssignStatus("saving");
+                try {
+                  await saveAssignment(assignStudentId.trim(), assignRwM1, assignMathM1);
+                  const rows = await getAllAssignments();
+                  setTeacherAssignments(rows);
+                  setAssignStatus("done");
+                } catch (err) {
+                  setAssignStatus("error");
+                }
+              }}
+              style={{
+                padding: "8px 20px",
+                fontSize: "14px",
+                fontWeight: 600,
+                background: "#0052cc",
+                color: "white",
+                border: "none",
+                borderRadius: "6px",
+                cursor: assignStatus === "saving" ? "wait" : "pointer",
+              }}
+            >
+              {assignStatus === "idle" && "Save assignment"}
+              {assignStatus === "saving" && "Saving…"}
+              {assignStatus === "done" && "Saved!"}
+              {assignStatus === "error" && "Save failed"}
+            </button>
+          </div>
+          {assignStatus === "done" && <p style={{ marginTop: "12px", color: "#2e7d32", fontSize: "14px" }}>Assignment saved. The student will see this test when they enter their ID.</p>}
+          {assignStatus === "error" && <p style={{ marginTop: "12px", color: "#c62828", fontSize: "14px" }}>Could not save. Check Firestore rules and env variables.</p>}
+        </div>
+
         {/* ── Assignments ── */}
         <h2 id="assignments" style={{ marginBottom: "4px" }}>Student Assignments</h2>
         <p style={{ color: "#555", marginBottom: "16px", fontSize: "14px" }}>
-          To add or change assignments, use Firebase Console → Firestore → <code>assignments</code> collection (document ID = student ID).
+          Assigned tests appear below. You can also add or change assignments in Firebase Console → Firestore → <code>assignments</code>.
         </p>
         {teacherStatus === "loading" && <p>Loading…</p>}
         {teacherStatus === "error" && (
