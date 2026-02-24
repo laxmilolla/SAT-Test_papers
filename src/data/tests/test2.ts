@@ -3,13 +3,13 @@ export const readingWritingModule1 = [
     {
       id: "rw1-1",
       passage:
-        "Marine biologist Sylvia Earle has spent over 7,000 hours underwater studying ocean ecosystems. Her research has been _____ in documenting the rapid decline of coral reefs worldwide.",
+        "[Practice Test 2 — Set B] The novelist Toni Morrison explored themes of identity and community in her work. Her fiction _____ readers to confront difficult aspects of American history.",
       question:
         "Which choice completes the text with the most logical and precise word?",
-      options: ["A) pivotal", "B) suspicious", "C) reluctant", "D) arbitrary"],
+      options: ["A) invites", "B) prevents", "C) forbids", "D) discourages"],
       correct: "A",
       explanation:
-        '"Pivotal" means crucial; it fits the context of significant research.',
+        '"Invites" fits the context of encouraging readers to engage with difficult themes.',
     },
     {
       id: "rw1-2",
@@ -364,13 +364,13 @@ export const readingWritingModule2 = [
     {
       id: "rw2-1",
       passage:
-        "The politician's speech was filled with _____ statements that appealed to voters' emotions rather than presenting concrete policy proposals.",
+        "[Test 2] The experiment's results were _____; other researchers repeated the study and reached the same conclusions.",
       question:
         "Which choice completes the text with the most logical and precise word?",
-      options: ["A) rhetorical", "B) empirical", "C) technical", "D) literal"],
+      options: ["A) reproducible", "B) vague", "C) biased", "D) outdated"],
       correct: "A",
       explanation:
-        '"Rhetorical" describes language meant to persuade, often through emotion.',
+        '"Reproducible" means the results can be replicated, fitting the context of repeated studies.',
     },
     {
       id: "rw2-2",
@@ -718,10 +718,10 @@ export const readingWritingModule2 = [
 export const mathModule1 = [
     {
       id: "m1-1",
-      question: "If 3x + 7 = 22, what is the value of x?",
-      options: ["A) 3", "B) 5", "C) 7", "D) 15"],
+      question: "[Test 2] If 2y − 5 = 13, what is the value of y?",
+      options: ["A) 4", "B) 9", "C) 18", "D) 36"],
       correct: "B",
-      explanation: "Subtract 7: 3x = 15. Divide by 3: x = 5.",
+      explanation: "Add 5: 2y = 18. Divide by 2: y = 9.",
     },
     {
       id: "m1-2",

@@ -10,8 +10,42 @@ export interface TestData {
   mathModule2: Array<{ id: string; question?: string; options?: string[]; image?: string; correct: string; explanation?: string }>;
 }
 
+/** Registry entry: either code-loaded (load) or JSON-loaded (url). */
+export type RegistryEntry =
+  | { id: string; label: string; load: () => Promise<TestData> }
+  | { id: string; label: string; url: string };
+
+function loadTestData(entry: RegistryEntry): Promise<TestData> {
+  if ("load" in entry && entry.load) return entry.load();
+  if ("url" in entry && entry.url) {
+    return fetch(entry.url).then((r) => {
+      if (!r.ok) throw new Error("Failed to load test");
+      return r.json();
+    });
+  }
+  throw new Error("Invalid registry entry");
+}
+
 export default function App() {
-  const [selectedTestId, setSelectedTestId] = React.useState<string | null>(testRegistry.length === 1 ? testRegistry[0].id : null);
+  const [jsonRegistry, setJsonRegistry] = React.useState<Array<{ id: string; label: string; url: string }>>([]);
+  const combinedRegistry = React.useMemo(
+    (): RegistryEntry[] => [
+      ...testRegistry.map((t) => ({ id: t.id, label: t.label, load: t.load as () => Promise<TestData> })),
+      ...jsonRegistry,
+    ],
+    [jsonRegistry]
+  );
+
+  React.useEffect(() => {
+    fetch("/tests/registry.json")
+      .then((r) => (r.ok ? r.json() : []))
+      .then((arr) => (Array.isArray(arr) ? setJsonRegistry(arr) : setJsonRegistry([])))
+      .catch(() => setJsonRegistry([]));
+  }, []);
+
+  const [selectedTestId, setSelectedTestId] = React.useState<string | null>(
+    combinedRegistry.length === 1 ? combinedRegistry[0].id : null
+  );
   const [testData, setTestData] = React.useState<TestData | null>(null);
   const [startStatus, setStartStatus] = React.useState<"idle" | "loading" | "error" | "all_taken">("idle");
   const [view, setView] = React.useState("start");
@@ -63,7 +97,7 @@ export default function App() {
   };
 
   const handleStart = async () => {
-    const testIdToUse = testRegistry.length === 1 ? testRegistry[0].id : selectedTestId;
+    const testIdToUse = combinedRegistry.length === 1 ? combinedRegistry[0].id : selectedTestId;
     if (!testIdToUse) return;
     setStartStatus("loading");
     try {
@@ -71,7 +105,7 @@ export default function App() {
       const taken = await getSubmissionHistory(uid);
       let assignTestId = testIdToUse;
       if (taken.includes(testIdToUse)) {
-        const available = testRegistry.filter((t) => !taken.includes(t.id));
+        const available = combinedRegistry.filter((t) => !taken.includes(t.id));
         if (available.length === 0) {
           setStartStatus("all_taken");
           return;
@@ -79,9 +113,9 @@ export default function App() {
         assignTestId = available[0].id;
         setSelectedTestId(assignTestId);
       }
-      const entry = testRegistry.find((t) => t.id === assignTestId);
+      const entry = combinedRegistry.find((t) => t.id === assignTestId);
       if (!entry) throw new Error("Unknown test");
-      const data = (await entry.load()) as TestData;
+      const data = (await loadTestData(entry)) as TestData;
       setTestData(data);
       setView("test");
       setStartStatus("idle");
@@ -100,7 +134,7 @@ export default function App() {
         }}
       >
         <h1>Digital SAT Practice Test</h1>
-        {testRegistry.length > 1 && (
+        {combinedRegistry.length > 1 && (
           <div style={{ margin: "20px 0" }}>
             <label style={{ display: "block", marginBottom: "8px", fontWeight: "bold" }}>Select test</label>
             <select
@@ -109,7 +143,7 @@ export default function App() {
               style={{ padding: "10px 15px", fontSize: "16px", minWidth: "200px", border: "1px solid #ccc", borderRadius: "8px" }}
             >
               <option value="">Choose a test</option>
-              {testRegistry.map((t) => (
+              {combinedRegistry.map((t) => (
                 <option key={t.id} value={t.id}>{t.label}</option>
               ))}
             </select>
@@ -143,7 +177,7 @@ export default function App() {
         )}
         <button
           onClick={handleStart}
-          disabled={startStatus === "loading" || (testRegistry.length > 1 && !selectedTestId)}
+          disabled={startStatus === "loading" || (combinedRegistry.length > 1 && !selectedTestId)}
           style={{
             padding: "15px 50px",
             fontSize: "20px",
@@ -175,7 +209,7 @@ export default function App() {
       mathTotal: m1.total + m2.total,
       mathPercentage: m1.total + m2.total > 0 ? Math.round(((m1.rawScore + m2.rawScore) / (m1.total + m2.total)) * 100) : 0,
     };
-    const testLabel = testRegistry.find((t) => t.id === selectedTestId)?.label;
+    const testLabel = combinedRegistry.find((t) => t.id === selectedTestId)?.label;
 
     return (
       <div
