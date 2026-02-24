@@ -1,15 +1,12 @@
-/**
- * Module pool registry: resolve modules by ID and build TestData for pool-based assignments.
- */
 import type { PoolModule, PoolTestData, RWQuestion, MathQuestion } from "./poolTypes";
-import {
-  rwM1A,
-  rwM2EasierA,
-  rwM2HarderA,
-  mathM1A,
-  mathM2EasierA,
-  mathM2HarderA,
-} from "./pool/familyA";
+import { rwM1A } from "./pool/rwM1A";
+import { rwM1B } from "./pool/rwM1B";
+import { rwM1C } from "./pool/rwM1C";
+import { mathM1A } from "./pool/mathM1A";
+import { mathM1B } from "./pool/mathM1B";
+import { mathM1C } from "./pool/mathM1C";
+import { rwM2Easier, rwM2Harder } from "./pool/sharedRwM2";
+import { mathM2Easier, mathM2Harder } from "./pool/sharedMathM2";
 
 const poolModulesById = new Map<string, PoolModule>();
 
@@ -17,14 +14,17 @@ function register(m: PoolModule): void {
   poolModulesById.set(m.id, m);
 }
 
-// Register family A (will be populated when familyA is loaded)
 function initPool(): void {
   register(rwM1A);
-  register(rwM2EasierA);
-  register(rwM2HarderA);
+  register(rwM1B);
+  register(rwM1C);
   register(mathM1A);
-  register(mathM2EasierA);
-  register(mathM2HarderA);
+  register(mathM1B);
+  register(mathM1C);
+  register(rwM2Easier);
+  register(rwM2Harder);
+  register(mathM2Easier);
+  register(mathM2Harder);
 }
 
 initPool();
@@ -37,10 +37,6 @@ export function getAllPoolModules(): PoolModule[] {
   return Array.from(poolModulesById.values());
 }
 
-/**
- * Build TestData from two M1 pool modules (R&W and Math). Uses each M1's
- * m2EasierModuleId and m2HarderModuleId for adaptive M2.
- */
 export async function getPoolTestData(
   rwM1ModuleId: string,
   mathM1ModuleId: string
