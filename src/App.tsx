@@ -66,6 +66,7 @@ export default function App() {
   const [teacherAssignments, setTeacherAssignments] = React.useState<AssignmentRow[]>([]);
   const [teacherStatus, setTeacherStatus] = React.useState<"idle" | "loading" | "error">("idle");
   const [teacherError, setTeacherError] = React.useState<string>("");
+  const [expandedModules, setExpandedModules] = React.useState<Set<string>>(new Set());
 
   /** Adaptive Module 2: set after scoring Module 1. Above threshold → harder M2. */
   const [rwModule2Variant, setRwModule2Variant] = React.useState<"easier" | "harder" | null>(null);
@@ -295,6 +296,72 @@ export default function App() {
       return <span style={{ ...chipBase, background: c.bg, color: c.fg }}>{type}</span>;
     };
 
+    const toggleModule = (id: string) => {
+      setExpandedModules((prev) => {
+        const next = new Set(prev);
+        if (next.has(id)) next.delete(id);
+        else next.add(id);
+        return next;
+      });
+    };
+
+    const questionCard = (q: { id: string; question?: string; options?: string[]; passage?: string; image?: string; correct: string; explanation?: string }, idx: number) => (
+      <div
+        key={q.id}
+        style={{
+          padding: "14px 16px",
+          margin: "8px 0",
+          background: "#fff",
+          border: "1px solid #e0e0e0",
+          borderRadius: "8px",
+          fontSize: "14px",
+          lineHeight: "1.6",
+        }}
+      >
+        <div style={{ fontWeight: 600, marginBottom: "6px", color: "#333" }}>
+          Q{idx + 1} <span style={{ fontWeight: 400, color: "#999", fontSize: "12px" }}>({q.id})</span>
+        </div>
+        {q.passage && (
+          <div style={{ padding: "10px 12px", background: "#f9f9f9", borderRadius: "6px", marginBottom: "8px", fontSize: "13px", color: "#444", borderLeft: "3px solid #ccc" }}>
+            {q.passage.length > 300 ? q.passage.slice(0, 300) + "…" : q.passage}
+          </div>
+        )}
+        {q.question && <div style={{ marginBottom: "8px" }}>{q.question}</div>}
+        {q.options && q.options.length > 0 && (
+          <div style={{ marginBottom: "8px" }}>
+            {q.options.map((opt, oi) => {
+              const isCorrect = opt.charAt(0) === q.correct;
+              return (
+                <div
+                  key={oi}
+                  style={{
+                    padding: "4px 10px",
+                    margin: "3px 0",
+                    borderRadius: "4px",
+                    background: isCorrect ? "#e8f5e9" : "transparent",
+                    fontWeight: isCorrect ? 600 : 400,
+                    color: isCorrect ? "#2e7d32" : "#333",
+                  }}
+                >
+                  {isCorrect && "✓ "}{opt}
+                </div>
+              );
+            })}
+          </div>
+        )}
+        {!q.options && (
+          <div style={{ fontSize: "13px", color: "#555" }}>
+            Correct answer: <strong>{q.correct}</strong>
+          </div>
+        )}
+        {q.explanation && (
+          <div style={{ fontSize: "12px", color: "#666", marginTop: "4px", fontStyle: "italic" }}>
+            {q.explanation}
+          </div>
+        )}
+      </div>
+    );
+
     const moduleTable = (title: string, modules: typeof allPoolModules) => (
       <>
         <h4 style={sectionHead}>{title}</h4>
@@ -312,19 +379,43 @@ export default function App() {
               </tr>
             </thead>
             <tbody>
-              {modules.map((m) => (
-                <tr key={m.id}>
-                  <td style={{ ...tdStyle, fontFamily: "monospace", fontSize: "13px" }}>{m.id}</td>
-                  <td style={tdStyle}>{typeChip(m.type)}</td>
-                  <td style={tdStyle}>{m.label ?? "—"}</td>
-                  <td style={{ ...tdStyle, textAlign: "center" }}>{m.questions.length}</td>
-                  <td style={{ ...tdStyle, fontFamily: "monospace", fontSize: "13px" }}>
-                    {m.m2EasierModuleId && <div>easier → {m.m2EasierModuleId}</div>}
-                    {m.m2HarderModuleId && <div>harder → {m.m2HarderModuleId}</div>}
-                    {!m.m2EasierModuleId && !m.m2HarderModuleId && "—"}
-                  </td>
-                </tr>
-              ))}
+              {modules.map((m) => {
+                const isOpen = expandedModules.has(m.id);
+                return (
+                  <React.Fragment key={m.id}>
+                    <tr
+                      onClick={() => toggleModule(m.id)}
+                      style={{ cursor: "pointer", transition: "background 0.15s" }}
+                      onMouseEnter={(e) => (e.currentTarget.style.background = "#fafafa")}
+                      onMouseLeave={(e) => (e.currentTarget.style.background = "")}
+                    >
+                      <td style={{ ...tdStyle, fontFamily: "monospace", fontSize: "13px" }}>
+                        <span style={{ marginRight: "6px", display: "inline-block", width: "14px" }}>{isOpen ? "▼" : "▶"}</span>
+                        {m.id}
+                      </td>
+                      <td style={tdStyle}>{typeChip(m.type)}</td>
+                      <td style={tdStyle}>{m.label ?? "—"}</td>
+                      <td style={{ ...tdStyle, textAlign: "center" }}>{m.questions.length}</td>
+                      <td style={{ ...tdStyle, fontFamily: "monospace", fontSize: "13px" }}>
+                        {m.m2EasierModuleId && <div>easier → {m.m2EasierModuleId}</div>}
+                        {m.m2HarderModuleId && <div>harder → {m.m2HarderModuleId}</div>}
+                        {!m.m2EasierModuleId && !m.m2HarderModuleId && "—"}
+                      </td>
+                    </tr>
+                    {isOpen && (
+                      <tr>
+                        <td colSpan={5} style={{ padding: "12px 20px", background: "#fafcff", border: "1px solid #ddd" }}>
+                          <div style={{ maxHeight: "500px", overflowY: "auto" }}>
+                            {(m.questions as Array<{ id: string; question?: string; options?: string[]; passage?: string; image?: string; correct: string; explanation?: string }>).map(
+                              (q, idx) => questionCard(q, idx)
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
+                );
+              })}
             </tbody>
           </table>
         )}
