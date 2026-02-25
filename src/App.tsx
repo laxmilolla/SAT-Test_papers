@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { saveSubmission, getSubmissionHistory, getAssignment, getAllAssignments, saveAssignment, getSubmissions, AssignmentRow, SubmissionRow } from "./firebase";
+import { saveSubmission, getSubmissionHistory, getPoolPairsTaken, getAssignment, getAllAssignments, saveAssignment, getSubmissions, AssignmentRow, SubmissionRow } from "./firebase";
 import { testRegistry } from "./data/testRegistry";
 import { getPoolTestData, getAllPoolModules } from "./data/modulePool";
 import { scoreSection, scoreByConcept } from "./utils/scoring";
@@ -53,7 +53,7 @@ export default function App() {
     combinedRegistry.length === 1 ? combinedRegistry[0].id : null
   );
   const [testData, setTestData] = React.useState<TestData | null>(null);
-  const [startStatus, setStartStatus] = React.useState<"idle" | "loading" | "error" | "all_taken">("idle");
+  const [startStatus, setStartStatus] = React.useState<"idle" | "loading" | "error" | "all_taken" | "pool_already_taken">("idle");
   const [view, setView] = React.useState("start");
   const [section, setSection] = React.useState("reading");
   const [module, setModule] = React.useState(1);
@@ -68,6 +68,8 @@ export default function App() {
   const [teacherError, setTeacherError] = React.useState<string>("");
   const [expandedModules, setExpandedModules] = React.useState<Set<string>>(new Set());
   const [assignStudentId, setAssignStudentId] = React.useState("");
+  /** "" = Select student, "__new__" = Add new student, else = existing studentId */
+  const [assignStudentDropdown, setAssignStudentDropdown] = React.useState<string>("");
   const [assignRwM1, setAssignRwM1] = React.useState("");
   const [assignMathM1, setAssignMathM1] = React.useState("");
   const [assignStatus, setAssignStatus] = React.useState<"idle" | "saving" | "done" | "error">("idle");
@@ -158,6 +160,14 @@ export default function App() {
       const assignment = await getAssignment(uid);
 
       if (assignment?.rwM1ModuleId && assignment?.mathM1ModuleId) {
+        const pairsTaken = await getPoolPairsTaken(uid);
+        const alreadyTaken = pairsTaken.some(
+          (p) => p.rwM1ModuleId === assignment.rwM1ModuleId && p.mathM1ModuleId === assignment.mathM1ModuleId
+        );
+        if (alreadyTaken) {
+          setStartStatus("pool_already_taken");
+          return;
+        }
         const data = (await getPoolTestData(assignment.rwM1ModuleId, assignment.mathM1ModuleId)) as TestData;
         setTestData(data);
         setSelectedTestId("pool");
@@ -234,6 +244,9 @@ export default function App() {
         </div>
         {startStatus === "all_taken" && (
           <p style={{ color: "#c62828", margin: "10px 0" }}>You&apos;ve completed all available tests. Ask your teacher for more.</p>
+        )}
+        {startStatus === "pool_already_taken" && (
+          <p style={{ color: "#c62828", margin: "10px 0" }}>You&apos;ve already completed this assigned test. Ask your teacher to assign a different module set.</p>
         )}
         {startStatus === "error" && (
           <p style={{ color: "#c62828", margin: "10px 0" }}>Failed to load test. Please try again.</p>
@@ -568,20 +581,46 @@ export default function App() {
         {/* ── Assign test form ── */}
         <div style={{ marginBottom: "28px", padding: "20px", border: "1px solid #ddd", borderRadius: "8px", background: "#fafafa" }}>
           <h3 style={{ marginTop: 0, marginBottom: "12px" }}>Assign test to student</h3>
-          <p style={{ color: "#555", fontSize: "14px", marginBottom: "16px" }}>
-            Enter student ID and choose Module 1 for Reading &amp; Writing and Math. The student will get this test when they enter their ID on the start screen. M2 (easier/harder) is chosen automatically from their M1 score.
+          <p style={{ color: "#555", fontSize: "14px", marginBottom: "8px" }}>
+            Choose Module 1 for Reading &amp; Writing and Math. The student will get this test when they enter their ID on the start screen. M2 (easier/harder) is chosen automatically from their M1 score.
           </p>
+          <p style={{ color: "#666", fontSize: "13px", marginBottom: "16px" }}>
+            Choose a student to update their assignment, or add a new student.
+          </p>
+          {(() => {
+            const effectiveStudentId = assignStudentDropdown === "__new__" ? assignStudentId.trim() : assignStudentDropdown;
+            const sortedStudentIds = [...teacherAssignments].map((r) => r.studentId).sort((a, b) => a.localeCompare(b));
+            return (
           <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", alignItems: "flex-end" }}>
             <div>
-              <label htmlFor="assign-student-id" style={{ display: "block", marginBottom: "4px", fontSize: "14px", fontWeight: 600 }}>Student ID</label>
-              <input
-                id="assign-student-id"
-                type="text"
-                value={assignStudentId}
-                onChange={(e) => setAssignStudentId(e.target.value)}
-                placeholder="e.g. 1001 or Jane"
-                style={{ padding: "8px 12px", fontSize: "14px", width: "180px", border: "1px solid #ccc", borderRadius: "6px" }}
-              />
+              <label htmlFor="assign-student-select" style={{ display: "block", marginBottom: "4px", fontSize: "14px", fontWeight: 600 }}>Student</label>
+              <select
+                id="assign-student-select"
+                value={assignStudentDropdown}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  setAssignStudentDropdown(v);
+                  if (v === "__new__") setAssignStudentId("");
+                  else setAssignStudentId(v);
+                }}
+                style={{ padding: "8px 12px", fontSize: "14px", minWidth: "200px", border: "1px solid #ccc", borderRadius: "6px" }}
+              >
+                <option value="">— Select student —</option>
+                {sortedStudentIds.map((sid) => (
+                  <option key={sid} value={sid}>{sid}</option>
+                ))}
+                <option value="__new__">Add new student…</option>
+              </select>
+              {assignStudentDropdown === "__new__" && (
+                <input
+                  id="assign-student-id"
+                  type="text"
+                  value={assignStudentId}
+                  onChange={(e) => setAssignStudentId(e.target.value)}
+                  placeholder="e.g. 1001 or Jane"
+                  style={{ marginTop: "8px", padding: "8px 12px", fontSize: "14px", width: "100%", maxWidth: "200px", boxSizing: "border-box", border: "1px solid #ccc", borderRadius: "6px", display: "block" }}
+                />
+              )}
             </div>
             <div>
               <label htmlFor="assign-rw-m1" style={{ display: "block", marginBottom: "4px", fontSize: "14px", fontWeight: 600 }}>R&amp;W Module 1</label>
@@ -613,13 +652,15 @@ export default function App() {
             </div>
             <button
               type="button"
-              disabled={assignStatus === "saving" || !assignStudentId.trim() || !assignRwM1 || !assignMathM1}
+              disabled={assignStatus === "saving" || !effectiveStudentId || !assignRwM1 || !assignMathM1}
               onClick={async () => {
                 setAssignStatus("saving");
                 try {
-                  await saveAssignment(assignStudentId.trim(), assignRwM1, assignMathM1);
+                  await saveAssignment(effectiveStudentId, assignRwM1, assignMathM1);
                   const rows = await getAllAssignments();
                   setTeacherAssignments(rows);
+                  setAssignStudentDropdown(effectiveStudentId);
+                  setAssignStudentId(effectiveStudentId);
                   setAssignStatus("done");
                 } catch (err) {
                   setAssignStatus("error");
@@ -642,6 +683,8 @@ export default function App() {
               {assignStatus === "error" && "Save failed"}
             </button>
           </div>
+            );
+          })()}
           {assignStatus === "done" && <p style={{ marginTop: "12px", color: "#2e7d32", fontSize: "14px" }}>Assignment saved. The student will see this test when they enter their ID.</p>}
           {assignStatus === "error" && <p style={{ marginTop: "12px", color: "#c62828", fontSize: "14px" }}>Could not save. Check Firestore rules and env variables.</p>}
         </div>

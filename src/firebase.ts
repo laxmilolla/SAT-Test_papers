@@ -95,6 +95,28 @@ export async function getSubmissionHistory(userId: string): Promise<string[]> {
   return testIds;
 }
 
+/** Returns pool (rwM1, mathM1) pairs this user has already submitted (for no-repeat pool assignment). */
+export async function getPoolPairsTaken(userId: string): Promise<Array<{ rwM1ModuleId: string; mathM1ModuleId: string }>> {
+  if (!db) return [];
+  const uid = userId.trim() || "Anonymous";
+  const q = query(collection(db, "submissions"), where("userId", "==", uid));
+  const snap = await getDocs(q);
+  const seen = new Set<string>();
+  const pairs: Array<{ rwM1ModuleId: string; mathM1ModuleId: string }> = [];
+  snap.docs.forEach((d) => {
+    const data = d.data();
+    if (data.testId !== "pool") return;
+    const rw = typeof data.rwM1ModuleId === "string" ? data.rwM1ModuleId : "";
+    const math = typeof data.mathM1ModuleId === "string" ? data.mathM1ModuleId : "";
+    if (!rw || !math) return;
+    const key = `${rw}:${math}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    pairs.push({ rwM1ModuleId: rw, mathM1ModuleId: math });
+  });
+  return pairs;
+}
+
 /** Assignment (manual in Firebase). If present, student gets this test when they start. */
 export interface StudentAssignment {
   /** When set, load full test from registry. */
