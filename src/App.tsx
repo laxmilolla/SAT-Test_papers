@@ -53,7 +53,7 @@ export default function App() {
     combinedRegistry.length === 1 ? combinedRegistry[0].id : null
   );
   const [testData, setTestData] = React.useState<TestData | null>(null);
-  const [startStatus, setStartStatus] = React.useState<"idle" | "loading" | "error" | "all_taken" | "pool_already_taken" | "inactive">("idle");
+  const [startStatus, setStartStatus] = React.useState<"idle" | "loading" | "error" | "all_taken" | "pool_already_taken" | "inactive" | "not_assigned">("idle");
   const [view, setView] = React.useState("start");
   const [section, setSection] = React.useState("reading");
   const [module, setModule] = React.useState(1);
@@ -234,24 +234,9 @@ export default function App() {
         return;
       }
 
-      const taken = await getSubmissionHistory(uid);
-      const available = combinedRegistry.filter((t) => !taken.includes(t.id));
-      if (available.length === 0) {
-        setStartStatus("all_taken");
-        return;
-      }
-      const assignTestId = available[0].id;
-      setSelectedTestId(assignTestId);
-      const entry = combinedRegistry.find((t) => t.id === assignTestId);
-      if (!entry) throw new Error("Unknown test");
-      const data = (await loadTestData(entry)) as TestData;
-      setTestData(data);
-      setAssignedRwM1ModuleId(null);
-      setAssignedMathM1ModuleId(null);
-      setRwModule2Variant(null);
-      setMathModule2Variant(null);
-      setView("test");
-      setStartStatus("idle");
+      // No assignment: do not allow access (no default/test fallback)
+      setStartStatus("not_assigned");
+      return;
     } catch (err) {
       setStartStatus("error");
     }
@@ -297,6 +282,9 @@ export default function App() {
         )}
         {startStatus === "inactive" && (
           <p style={{ color: "#c62828", margin: "10px 0" }}>Your access has been deactivated. Please contact your teacher.</p>
+        )}
+        {startStatus === "not_assigned" && (
+          <p style={{ color: "#c62828", margin: "10px 0" }}>Your ID is not in the system. Please contact your teacher to get assigned a test.</p>
         )}
         {startStatus === "error" && (
           <p style={{ color: "#c62828", margin: "10px 0" }}>Failed to load test. Please try again.</p>
