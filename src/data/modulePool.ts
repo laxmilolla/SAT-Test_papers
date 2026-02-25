@@ -9,6 +9,8 @@ import { mathM1C } from "./pool/mathM1C";
 import { mathM1D } from "./pool/mathM1D";
 import { rwM2Easier, rwM2Harder } from "./pool/sharedRwM2";
 import { mathM2Easier, mathM2Harder } from "./pool/sharedMathM2";
+import { mathM1E } from "./pool/mathM1E";
+import { mathM2NewEasier, mathM2NewHarder } from "./pool/sharedMathM2New";
 
 const poolModulesById = new Map<string, PoolModule>();
 
@@ -25,10 +27,13 @@ function initPool(): void {
   register(mathM1B);
   register(mathM1C);
   register(mathM1D);
+  register(mathM1E);
   register(rwM2Easier);
   register(rwM2Harder);
   register(mathM2Easier);
   register(mathM2Harder);
+  register(mathM2NewEasier);
+  register(mathM2NewHarder);
 }
 
 initPool();
