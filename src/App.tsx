@@ -684,7 +684,7 @@ export default function App() {
           </p>
           {(() => {
             const effectiveStudentId = assignStudentDropdown === "__new__" ? assignStudentId.trim() : assignStudentDropdown;
-            const sortedStudentIds = [...teacherAssignments].map((r) => r.studentId).sort((a, b) => a.localeCompare(b));
+            const sortedStudentIds = Array.from(new Set(teacherAssignments.map((r) => r.studentId))).sort((a, b) => a.localeCompare(b));
             return (
           <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", alignItems: "flex-end" }}>
             <div>
