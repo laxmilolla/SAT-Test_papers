@@ -126,19 +126,7 @@ export interface StudentAssignment {
   mathM1ModuleId?: string;
 }
 
-/**
- * Get the assigned test for a student. Set in Firebase: collection "assignments",
- * document ID = student ID (or "Anonymous").
- * - testId = "test1" etc. → load full test from registry.
- * - rwM1ModuleId + mathM1ModuleId → load from module pool (e.g. "rw-m1-a", "math-m1-a").
- */
-export async function getAssignment(userId: string): Promise<StudentAssignment | null> {
-  if (!db) return null;
-  const uid = userId.trim() || "Anonymous";
-  const ref = doc(db, "assignments", uid);
-  const snap = await getDoc(ref);
-  if (!snap.exists()) return null;
-  const data = snap.data();
+function parseAssignmentDoc(data: Record<string, unknown>): StudentAssignment | null {
   const testId = data?.testId;
   const rwM1ModuleId = data?.rwM1ModuleId;
   const mathM1ModuleId = data?.mathM1ModuleId;
@@ -151,7 +139,38 @@ export async function getAssignment(userId: string): Promise<StudentAssignment |
   return null;
 }
 
-/** For teacher view: list all assignments (student ID → what they're assigned). */
+/**
+ * Get all assigned tests for a student (supports multiple assignments per student).
+ * Reads legacy doc assignments/{userId} and any docs with studentId == userId.
+ */
+export async function getAssignments(userId: string): Promise<StudentAssignment[]> {
+  if (!db) return [];
+  const uid = userId.trim() || "Anonymous";
+  const result: StudentAssignment[] = [];
+  const legacyRef = doc(db, "assignments", uid);
+  const legacySnap = await getDoc(legacyRef);
+  if (legacySnap.exists()) {
+    const a = parseAssignmentDoc(legacySnap.data() as Record<string, unknown>);
+    if (a) result.push(a);
+  }
+  const q = query(collection(db, "assignments"), where("studentId", "==", uid));
+  const snap = await getDocs(q);
+  snap.docs.forEach((d) => {
+    const a = parseAssignmentDoc(d.data() as Record<string, unknown>);
+    if (a) result.push(a);
+  });
+  return result;
+}
+
+/**
+ * Get the first assigned test for a student (for backward compatibility).
+ */
+export async function getAssignment(userId: string): Promise<StudentAssignment | null> {
+  const list = await getAssignments(userId);
+  return list[0] ?? null;
+}
+
+/** For teacher view: list all assignments (one row per assignment; a student can have multiple). */
 export interface AssignmentRow {
   studentId: string;
   testId?: string;
@@ -164,8 +183,9 @@ export async function getAllAssignments(): Promise<AssignmentRow[]> {
   const snap = await getDocs(collection(db, "assignments"));
   return snap.docs.map((d) => {
     const data = d.data();
+    const studentId = typeof data.studentId === "string" && data.studentId ? data.studentId : d.id;
     return {
-      studentId: d.id,
+      studentId,
       testId: typeof data.testId === "string" ? data.testId : undefined,
       rwM1ModuleId: typeof data.rwM1ModuleId === "string" ? data.rwM1ModuleId : undefined,
       mathM1ModuleId: typeof data.mathM1ModuleId === "string" ? data.mathM1ModuleId : undefined,
@@ -174,8 +194,8 @@ export async function getAllAssignments(): Promise<AssignmentRow[]> {
 }
 
 /**
- * Set pool-based assignment for a student (document ID = studentId).
- * Overwrites the document with only rwM1ModuleId and mathM1ModuleId (pool test).
+ * Add a pool-based assignment for a student (adds a new assignment; does not overwrite).
+ * Student can have multiple assignments; they choose which to take on the start screen.
  */
 export async function saveAssignment(
   studentId: string,
@@ -186,8 +206,7 @@ export async function saveAssignment(
     throw new Error("Firebase is not configured. Set REACT_APP_FIREBASE_* env variables.");
   }
   const uid = studentId.trim() || "Anonymous";
-  const ref = doc(db, "assignments", uid);
-  await setDoc(ref, { rwM1ModuleId, mathM1ModuleId });
+  await addDoc(collection(db, "assignments"), { studentId: uid, rwM1ModuleId, mathM1ModuleId });
 }
 
 /** One row for teacher results view. */

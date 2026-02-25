@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { saveSubmission, getSubmissionHistory, getPoolPairsTaken, getAssignment, getAllAssignments, saveAssignment, getSubmissions, AssignmentRow, SubmissionRow } from "./firebase";
+import { saveSubmission, getSubmissionHistory, getPoolPairsTaken, getAssignments, getAllAssignments, saveAssignment, getSubmissions, AssignmentRow, SubmissionRow, StudentAssignment } from "./firebase";
 import { testRegistry } from "./data/testRegistry";
 import { getPoolTestData, getAllPoolModules } from "./data/modulePool";
 import { scoreSection, scoreByConcept } from "./utils/scoring";
@@ -73,6 +73,8 @@ export default function App() {
   const [assignRwM1, setAssignRwM1] = React.useState("");
   const [assignMathM1, setAssignMathM1] = React.useState("");
   const [assignStatus, setAssignStatus] = React.useState<"idle" | "saving" | "done" | "error">("idle");
+  /** When student has multiple assignments, they pick one here before starting. */
+  const [assignmentsForPicker, setAssignmentsForPicker] = React.useState<StudentAssignment[] | null>(null);
   const [resultsSubmissions, setResultsSubmissions] = React.useState<SubmissionRow[]>([]);
   const [resultsFilterStudentId, setResultsFilterStudentId] = React.useState("");
   const [resultsStatus, setResultsStatus] = React.useState<"idle" | "loading" | "error">("idle");
@@ -153,13 +155,11 @@ export default function App() {
     }
   };
 
-  const handleStart = async () => {
+  const loadOneAssignment = async (assignment: StudentAssignment) => {
     const uid = studentId.trim() || "Anonymous";
-    setStartStatus("loading");
+    setAssignmentsForPicker(null);
     try {
-      const assignment = await getAssignment(uid);
-
-      if (assignment?.rwM1ModuleId && assignment?.mathM1ModuleId) {
+      if (assignment.rwM1ModuleId && assignment.mathM1ModuleId) {
         const pairsTaken = await getPoolPairsTaken(uid);
         const alreadyTaken = pairsTaken.some(
           (p) => p.rwM1ModuleId === assignment.rwM1ModuleId && p.mathM1ModuleId === assignment.mathM1ModuleId
@@ -179,9 +179,8 @@ export default function App() {
         setStartStatus("idle");
         return;
       }
-
       let assignTestId: string | null = null;
-      if (assignment?.testId && combinedRegistry.some((t) => t.id === assignment.testId)) {
+      if (assignment.testId && combinedRegistry.some((t) => t.id === assignment.testId)) {
         assignTestId = assignment.testId;
         setSelectedTestId(assignment.testId);
       }
@@ -195,6 +194,47 @@ export default function App() {
         assignTestId = available[0].id;
         setSelectedTestId(assignTestId);
       }
+      const entry = combinedRegistry.find((t) => t.id === assignTestId);
+      if (!entry) throw new Error("Unknown test");
+      const data = (await loadTestData(entry)) as TestData;
+      setTestData(data);
+      setAssignedRwM1ModuleId(null);
+      setAssignedMathM1ModuleId(null);
+      setRwModule2Variant(null);
+      setMathModule2Variant(null);
+      setView("test");
+      setStartStatus("idle");
+    } catch {
+      setStartStatus("error");
+    }
+  };
+
+  const handleStart = async () => {
+    const uid = studentId.trim() || "Anonymous";
+    setStartStatus("loading");
+    setAssignmentsForPicker(null);
+    try {
+      const assignments = await getAssignments(uid);
+
+      if (assignments.length > 1) {
+        setAssignmentsForPicker(assignments);
+        setStartStatus("idle");
+        return;
+      }
+
+      if (assignments.length === 1) {
+        await loadOneAssignment(assignments[0]);
+        return;
+      }
+
+      const taken = await getSubmissionHistory(uid);
+      const available = combinedRegistry.filter((t) => !taken.includes(t.id));
+      if (available.length === 0) {
+        setStartStatus("all_taken");
+        return;
+      }
+      const assignTestId = available[0].id;
+      setSelectedTestId(assignTestId);
       const entry = combinedRegistry.find((t) => t.id === assignTestId);
       if (!entry) throw new Error("Unknown test");
       const data = (await loadTestData(entry)) as TestData;
@@ -251,21 +291,63 @@ export default function App() {
         {startStatus === "error" && (
           <p style={{ color: "#c62828", margin: "10px 0" }}>Failed to load test. Please try again.</p>
         )}
-        <button
-          onClick={handleStart}
-          disabled={startStatus === "loading"}
-          style={{
-            padding: "15px 50px",
-            fontSize: "20px",
-            background: "#0052cc",
-            color: "white",
-            border: "none",
-            borderRadius: "10px",
-            cursor: startStatus === "loading" ? "wait" : "pointer",
-          }}
-        >
-          {startStatus === "loading" ? "Loading…" : "START TEST"}
-        </button>
+        {assignmentsForPicker && assignmentsForPicker.length > 1 && (
+          <div style={{ marginTop: "20px", padding: "16px", background: "#f5f5f5", borderRadius: "8px", maxWidth: "420px", marginLeft: "auto", marginRight: "auto" }}>
+            <p style={{ marginBottom: "12px", fontWeight: 600 }}>You have multiple tests assigned. Choose one to start:</p>
+            {assignmentsForPicker.map((a, idx) => {
+              const label = a.rwM1ModuleId && a.mathM1ModuleId
+                ? `Set ${idx + 1}: R&W ${a.rwM1ModuleId}, Math ${a.mathM1ModuleId}`
+                : a.testId
+                  ? `Set ${idx + 1}: ${combinedRegistry.find((t) => t.id === a.testId)?.label ?? a.testId}`
+                  : `Set ${idx + 1}`;
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => loadOneAssignment(a)}
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    marginBottom: "8px",
+                    padding: "12px 16px",
+                    fontSize: "14px",
+                    textAlign: "left",
+                    background: "#fff",
+                    border: "1px solid #ccc",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                  }}
+                >
+                  {label}
+                </button>
+              );
+            })}
+            <button
+              type="button"
+              onClick={() => setAssignmentsForPicker(null)}
+              style={{ marginTop: "8px", fontSize: "13px", background: "transparent", border: "none", color: "#666", cursor: "pointer", textDecoration: "underline" }}
+            >
+              Cancel
+            </button>
+          </div>
+        )}
+        {!assignmentsForPicker?.length && (
+          <button
+            onClick={handleStart}
+            disabled={startStatus === "loading"}
+            style={{
+              padding: "15px 50px",
+              fontSize: "20px",
+              background: "#0052cc",
+              color: "white",
+              border: "none",
+              borderRadius: "10px",
+              cursor: startStatus === "loading" ? "wait" : "pointer",
+            }}
+          >
+            {startStatus === "loading" ? "Loading…" : "START TEST"}
+          </button>
+        )}
         <p style={{ marginTop: "24px", fontSize: "12px", color: "#888" }}>
           Your test is chosen by your teacher or assigned automatically.
         </p>
@@ -585,7 +667,7 @@ export default function App() {
             Choose Module 1 for Reading &amp; Writing and Math. The student will get this test when they enter their ID on the start screen. M2 (easier/harder) is chosen automatically from their M1 score.
           </p>
           <p style={{ color: "#666", fontSize: "13px", marginBottom: "16px" }}>
-            Choose a student to update their assignment, or add a new student.
+            Choose a student and add a new assignment (each save adds a set; students can have multiple assigned sets).
           </p>
           {(() => {
             const effectiveStudentId = assignStudentDropdown === "__new__" ? assignStudentId.trim() : assignStudentDropdown;
@@ -677,7 +759,7 @@ export default function App() {
                 cursor: assignStatus === "saving" ? "wait" : "pointer",
               }}
             >
-              {assignStatus === "idle" && "Save assignment"}
+              {assignStatus === "idle" && "Add assignment"}
               {assignStatus === "saving" && "Saving…"}
               {assignStatus === "done" && "Saved!"}
               {assignStatus === "error" && "Save failed"}
@@ -685,7 +767,7 @@ export default function App() {
           </div>
             );
           })()}
-          {assignStatus === "done" && <p style={{ marginTop: "12px", color: "#2e7d32", fontSize: "14px" }}>Assignment saved. The student will see this test when they enter their ID.</p>}
+          {assignStatus === "done" && <p style={{ marginTop: "12px", color: "#2e7d32", fontSize: "14px" }}>Assignment added. The student will see this set when they enter their ID (if they have multiple, they can choose which to take).</p>}
           {assignStatus === "error" && <p style={{ marginTop: "12px", color: "#c62828", fontSize: "14px" }}>Could not save. Check Firestore rules and env variables.</p>}
         </div>
 
@@ -817,8 +899,8 @@ export default function App() {
                   </tr>
                 </thead>
                 <tbody>
-                  {teacherAssignments.map((row) => (
-                    <tr key={row.studentId}>
+                  {teacherAssignments.map((row, idx) => (
+                    <tr key={`${row.studentId}-${row.rwM1ModuleId ?? row.testId ?? ""}-${idx}`}>
                       <td style={tdStyle}>{row.studentId}</td>
                       <td style={tdStyle}>{assignmentLabel(row)}</td>
                     </tr>
