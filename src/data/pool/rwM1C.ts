@@ -171,7 +171,7 @@ export const rwM1C: PoolModule = {
       passage:
         "The French Impressionists of the late nineteenth century broke from academic painting traditions by working outdoors and capturing the transient effects of natural light on landscapes, water, and urban scenes. Rather than blending colors smoothly on a palette, painters like Claude Monet applied short, visible brushstrokes of pure color side by side, allowing the viewer's eye to blend them at a distance. This technique gave Impressionist canvases their characteristic vibrancy and sense of movement.",
       question:
-        "Based on the text, which choice best describes the Impressionists' primary artistic innovation?",
+        "According to the text, which choice best describes the Impressionists' primary artistic innovation?",
       options: [
         "A) They developed a brushwork technique that produced vibrant visual effects through optical color mixing.",
         "B) They were the first European painters to depict landscapes rather than historical or religious subjects.",
@@ -207,7 +207,7 @@ export const rwM1C: PoolModule = {
       passage:
         "Archaeologist Howard Carter spent years searching the Valley of the Kings before discovering the nearly intact tomb of Tutankhamun in 1922. The passage notes that Carter's team cataloged over five thousand artifacts from the tomb, a process that took nearly a decade to complete. Among the most significant finds were the pharaoh's golden death mask and a series of nested coffins, the innermost of which was made of solid gold.",
       question:
-        "Which choice best describes the function of the second sentence in the overall structure of the text?",
+        "Which choice best describes the function of the second sentence in the text as a whole?",
       options: [
         "A) It challenges the significance of Carter's discovery.",
         "B) It illustrates the scale and complexity of the archaeological find described in the first sentence.",
@@ -297,7 +297,7 @@ export const rwM1C: PoolModule = {
       passage:
         "In a review of recent scholarship on the Harlem Renaissance, a cultural historian writes: \"While earlier accounts tended to frame the Harlem Renaissance primarily as a literary movement centered on a handful of prominent poets and novelists, recent research has revealed a far more expansive cultural phenomenon. Scholars now emphasize the movement's deep connections to visual art, theater, political activism, and the development of new musical forms that would shape American culture for generations.\"",
       question:
-        "Which choice best describes the function of the first sentence in the text?",
+        "Which choice best describes the function of the first sentence in the text as a whole?",
       options: [
         "A) It establishes an older interpretation that the second sentence revises and expands.",
         "B) It presents a claim that the second sentence supports with specific evidence.",
@@ -437,7 +437,7 @@ export const rwM1C: PoolModule = {
     {
       id: "rw1c-25",
       passage:
-        "Psychologist Daniel Kahneman's research distinguishes between two modes of thinking: System 1, which operates quickly and intuitively, and System 2, which is slower and more deliberate. Kahneman argues that while System 1 is efficient for routine decisions, it is also prone to systematic errors called cognitive biases. [The passage continues with examples of how these biases affect financial decision-making, such as the tendency to weigh potential losses more heavily than equivalent gains.]",
+        "Psychologist Daniel Kahneman's research distinguishes between two modes of thinking: System 1, which operates quickly and intuitively, and System 2, which is slower and more deliberate. Kahneman argues that while System 1 is efficient for routine decisions, it is also prone to systematic errors called cognitive biases. Research on loss aversion, for example, shows that people tend to weigh potential losses more heavily than equivalent gains when making financial decisions.",
       question:
         "Which choice best describes the overall structure of the text?",
       options: [
@@ -474,7 +474,7 @@ export const rwM1C: PoolModule = {
       id: "rw1c-27",
       passage:
         "The Industrial Revolution, which began in Britain in the late eighteenth century, fundamentally transformed manufacturing by replacing hand production with machine-based processes powered first by water and then by steam. Factories concentrated workers in urban centers, creating new forms of labor organization and social stratification. While the revolution dramatically increased the production of goods and eventually raised living standards, it also produced significant environmental degradation and harsh working conditions that prompted early reform movements and labor organizing.",
-      question: "Which choice best states the central idea of the text?",
+      question: "Which choice best states the main idea of the text?",
       options: [
         "A) The Industrial Revolution had exclusively negative consequences for workers and the environment.",
         "B) The Industrial Revolution's transformation of manufacturing brought both increased productivity and significant social and environmental costs.",

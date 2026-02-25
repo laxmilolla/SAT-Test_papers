@@ -22,7 +22,7 @@ export const rwM2Easier: PoolModule = {
       id: "rw2e-2",
       passage:
         "The Rosetta Stone, discovered in 1799, contained the same text in three scripts: Greek, Demotic, and hieroglyphics. This allowed scholars to finally decode Egyptian hieroglyphics by comparing the known Greek text to the unknown symbols.",
-      question: "What is the main idea of this passage?",
+      question: "Which choice best states the main idea of the text?",
       options: [
         "A) The Rosetta Stone was found in 1799.",
         "B) Greek was the most important ancient language.",
@@ -76,7 +76,7 @@ export const rwM2Easier: PoolModule = {
       passage:
         "In her study of ancient Mesopotamian trade routes, historian Elara Voss found that merchants regularly exchanged goods over distances exceeding 1,500 miles. These networks connected civilizations that had previously been thought to develop in isolation.",
       question:
-        "Based on the passage, Voss's research suggests that ancient civilizations:",
+        "According to the text, Voss's research suggests that ancient civilizations:",
       options: [
         "A) rarely engaged in long-distance trade.",
         "B) were more interconnected than previously believed.",
@@ -111,7 +111,7 @@ export const rwM2Easier: PoolModule = {
       id: "rw2e-7",
       passage:
         "The Hubble Space Telescope has been orbiting Earth since 1990. During its decades of operation, it has captured images of distant galaxies, nebulae, and other celestial objects that have transformed our understanding of the universe.",
-      question: "What is the primary purpose of this passage?",
+      question: "Which choice best states the main purpose of the text?",
       options: [
         "A) To argue that space exploration is underfunded.",
         "B) To describe the contributions of the Hubble Space Telescope.",
@@ -195,7 +195,7 @@ export const rwM2Easier: PoolModule = {
       id: "rw2e-12",
       passage:
         "Researchers at a wildlife preserve observed that elephant herds consistently chose longer routes to water sources, bypassing shorter paths. Further investigation revealed that the shorter paths crossed territories of rival herds.",
-      question: "What can most reasonably be inferred from the passage?",
+      question: "Which choice best describes an inference supported by the text?",
       options: [
         "A) Elephants lack the ability to detect the shortest route.",
         "B) Elephants choose routes based partly on social factors.",
@@ -230,7 +230,7 @@ export const rwM2Easier: PoolModule = {
       id: "rw2e-14",
       passage:
         "In 1854, physician John Snow traced a cholera outbreak in London to a contaminated water pump on Broad Street. By mapping the cases and identifying the common water source, Snow demonstrated that cholera was waterborne — a finding that laid the groundwork for modern epidemiology.",
-      question: "What is the main idea of the passage?",
+      question: "Which choice best states the main idea of the text?",
       options: [
         "A) Cholera was the deadliest disease in 19th-century London.",
         "B) John Snow's investigation helped establish the field of epidemiology.",
@@ -248,7 +248,7 @@ export const rwM2Easier: PoolModule = {
       passage:
         "The city's new recycling program has been remarkably successful. In its first year, household recycling rates increased by 40 percent, and the amount of waste sent to landfills decreased by 25 percent.",
       question:
-        "Which choice best describes the function of the second sentence in the overall structure of the passage?",
+        "Which choice best describes the function of the second sentence in the text as a whole?",
       options: [
         "A) It provides specific data to support the claim made in the first sentence.",
         "B) It introduces a new topic unrelated to recycling.",
@@ -296,7 +296,7 @@ export const rwM2Easier: PoolModule = {
       id: "rw2e-18",
       passage:
         "Anthropologist David Graeber argued that the traditional narrative of economic history — barter leading to money leading to credit — is largely a myth. He presented evidence that credit systems existed long before coins were invented.",
-      question: "What is the main purpose of this passage?",
+      question: "Which choice best states the main purpose of the text?",
       options: [
         "A) To explain how coins were invented.",
         "B) To present a challenge to a commonly held belief about economic history.",
@@ -332,7 +332,7 @@ export const rwM2Easier: PoolModule = {
       passage:
         "Botanist Kenji Murakami observed that certain desert plants open their stomata only at night. This adaptation allows them to absorb carbon dioxide while losing less water to evaporation in the cool nighttime air.",
       question:
-        "According to the passage, why do these desert plants open their stomata at night?",
+        "According to the text, why do these desert plants open their stomata at night?",
       options: [
         "A) To attract nocturnal pollinators.",
         "B) To reduce water loss while still absorbing carbon dioxide.",
@@ -422,7 +422,7 @@ export const rwM2Easier: PoolModule = {
       passage:
         "The ruins of Pompeii, buried by the eruption of Mount Vesuvius in 79 CE, provide a remarkably detailed snapshot of Roman daily life. Preserved homes, shops, and public baths reveal how ordinary citizens lived nearly two thousand years ago.",
       question:
-        "What is the primary purpose of this passage?",
+        "Which choice best states the main purpose of the text?",
       options: [
         "A) To explain the cause of the eruption of Mount Vesuvius.",
         "B) To argue that Pompeii was the most important Roman city.",
@@ -458,7 +458,7 @@ export const rwM2Easier: PoolModule = {
       passage:
         "Dr. Samuel Chen's research team developed a new water filtration membrane made from graphene oxide. In laboratory tests, the membrane removed 99.8 percent of contaminants from water samples while using significantly less energy than conventional systems.",
       question:
-        "Based on the passage, what is the primary advantage of Chen's graphene oxide membrane?",
+        "According to the text, what is the primary advantage of Chen's graphene oxide membrane?",
       options: [
         "A) It is less expensive to manufacture than other membranes.",
         "B) It achieves very high contaminant removal with lower energy use.",
@@ -538,7 +538,7 @@ export const rwM2Harder: PoolModule = {
       passage:
         "In a 2023 study, neuroscientist Dr. Amara Osei examined how bilingual individuals switch between languages during conversation. She found that the prefrontal cortex — the brain region associated with executive function — showed heightened activity during language switching. Osei hypothesized that this constant cognitive exercise strengthens executive function over time, potentially delaying the onset of age-related cognitive decline. However, she cautioned that her study's cross-sectional design could not establish a causal relationship between bilingualism and cognitive resilience.",
       question:
-        "Which choice best describes the overall structure of the passage?",
+        "Which choice best describes the overall structure of the text?",
       options: [
         "A) A hypothesis is proposed and immediately refuted by contradictory evidence.",
         "B) A research finding is presented, a hypothesis is offered, and a methodological limitation is acknowledged.",
@@ -556,7 +556,7 @@ export const rwM2Harder: PoolModule = {
       passage:
         "The Harlem Renaissance of the 1920s and 1930s was not merely an artistic movement; it was a profound reimagining of African American identity. Writers such as Langston Hughes and Zora Neale Hurston drew on Black vernacular traditions — spirituals, blues, and everyday speech — to craft literature that was both aesthetically innovative and politically charged. Their work challenged the prevailing notion that serious literature required adherence to European formal conventions.",
       question:
-        "According to the passage, Hughes and Hurston's literary approach was significant because it:",
+        "According to the text, Hughes and Hurston's literary approach was significant because it:",
       options: [
         "A) introduced African American readers to European literary traditions.",
         "B) demonstrated that vernacular sources could produce artistically and politically important literature.",
@@ -592,7 +592,7 @@ export const rwM2Harder: PoolModule = {
       passage:
         "The playwright's dialogue has been praised for its verisimilitude — characters speak in fragmented, overlapping sentences that mirror the rhythms of actual conversation. Critics note, however, that this commitment to realism occasionally undermines dramatic clarity, as audiences may struggle to follow the narrative thread amid the naturalistic chaos.",
       question:
-        "Which choice best describes the function of the second sentence?",
+        "Which choice best describes the function of the second sentence in the text as a whole?",
       options: [
         "A) It provides an example that supports the claim in the first sentence.",
         "B) It qualifies the praise described in the first sentence by identifying a drawback.",
@@ -646,7 +646,7 @@ export const rwM2Harder: PoolModule = {
       passage:
         "Ecologist Dr. Fiona Greenwald's longitudinal study of wolf reintroduction in Yellowstone National Park revealed a phenomenon she termed a 'trophic cascade of behavior.' After wolves returned, elk herds not only decreased in number but fundamentally altered their grazing patterns, avoiding open riverbanks where they were vulnerable to predation. This behavioral shift allowed willow and aspen trees to regenerate along waterways, which in turn stabilized stream banks and created new habitat for beaver, songbird, and fish populations.",
       question:
-        "Which choice best describes the main idea of the passage?",
+        "Which choice best states the main idea of the text?",
       options: [
         "A) Wolf reintroduction caused elk populations to decline dramatically in Yellowstone.",
         "B) Behavioral changes in elk triggered by wolf reintroduction produced cascading ecological benefits.",
@@ -718,7 +718,7 @@ export const rwM2Harder: PoolModule = {
       passage:
         "The research team found that participants who were shown images of natural landscapes before taking a creativity test scored, on average, 23 percent higher than those shown images of urban environments. The team's lead researcher, Dr. Hana Johansson, suggested that natural settings may activate diffuse attention — a state in which the mind wanders freely — whereas urban scenes promote focused attention directed at potential threats and navigation demands.",
       question:
-        "Based on the passage, Johansson's explanation assumes that:",
+        "According to the text, Johansson's explanation assumes that:",
       options: [
         "A) creativity tests are more valid when administered in outdoor settings.",
         "B) diffuse attention is more conducive to creative thinking than focused attention.",
@@ -754,7 +754,7 @@ export const rwM2Harder: PoolModule = {
       passage:
         "The International Space Station (ISS) orbits Earth at approximately 17,500 miles per hour, completing one full orbit every 90 minutes. At this speed, astronauts aboard the station witness 16 sunrises and sunsets each day. Despite this disorienting schedule, crew members maintain a 24-hour routine synchronized with Coordinated Universal Time (UTC) to preserve their circadian rhythms and ensure coordination with ground control teams in multiple time zones.",
       question:
-        "Which choice best describes the overall structure of the passage?",
+        "Which choice best describes the overall structure of the text?",
       options: [
         "A) A problem is identified and a technological solution is described.",
         "B) A physical phenomenon is described, a resulting challenge is presented, and an operational accommodation is explained.",
@@ -857,7 +857,7 @@ export const rwM2Harder: PoolModule = {
       passage:
         "Psychologist Dr. Leon Whitfield conducted a meta-analysis of 47 studies on the 'spacing effect' — the finding that information studied in distributed sessions is retained better than information studied in a single concentrated session. Whitfield's analysis confirmed the effect's robustness but revealed an important nuance: the optimal spacing interval varies significantly depending on the desired retention period. For material that needs to be recalled after one week, study sessions spaced one day apart were most effective; for material needed after one month, sessions spaced one week apart yielded the best results.",
       question:
-        "According to the passage, what was the key nuance Whitfield's meta-analysis revealed?",
+        "According to the text, what was the key nuance Whitfield's meta-analysis revealed?",
       options: [
         "A) The spacing effect only works for certain types of information.",
         "B) Distributed study sessions are always superior to concentrated sessions regardless of timing.",
@@ -942,7 +942,7 @@ export const rwM2Harder: PoolModule = {
       passage:
         "Climate scientist Dr. Akira Tanaka's model predicts that the Atlantic Meridional Overturning Circulation (AMOC) — the system of ocean currents that carries warm water from the tropics to the North Atlantic — could weaken by 30 to 50 percent by 2100 if greenhouse gas emissions continue at current rates. A weakened AMOC would paradoxically cause parts of Western Europe to experience cooler temperatures even as global average temperatures rise, because less tropical heat would be transported northward. Tanaka emphasizes that while complete AMOC collapse remains unlikely within this century, even a partial weakening could disrupt weather patterns, fisheries, and agriculture across the Northern Hemisphere.",
       question:
-        "Which choice best describes the main purpose of the passage?",
+        "Which choice best describes the main purpose of the text?",
       options: [
         "A) To argue that AMOC collapse is imminent and irreversible.",
         "B) To present a model's predictions about AMOC weakening and explain its potential regional and global consequences.",

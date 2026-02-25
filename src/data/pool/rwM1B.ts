@@ -171,7 +171,7 @@ export const rwM1B: PoolModule = {
       passage:
         "During the Italian Renaissance, wealthy families such as the Medici of Florence did not simply collect art for personal enjoyment; they strategically commissioned works from painters, sculptors, and architects to demonstrate their cultural sophistication and political influence. By funding artists like Botticelli and Michelangelo, these patrons shaped the direction of Western art while simultaneously reinforcing their own social standing in an intensely competitive civic environment.",
       question:
-        "Based on the text, which choice best describes the primary motivation of Renaissance art patrons like the Medici?",
+        "According to the text, which choice best describes the primary motivation of Renaissance art patrons like the Medici?",
       options: [
         "A) They used art patronage as a means of consolidating cultural and political power.",
         "B) They were motivated primarily by a desire to preserve religious traditions through visual art.",
@@ -207,7 +207,7 @@ export const rwM1B: PoolModule = {
       passage:
         "In a 2023 study of exoplanet atmospheres, astronomers used spectroscopic data from the James Webb Space Telescope's near-infrared instruments to detect the chemical signature of dimethyl sulfide in the atmosphere of K2-18 b, a sub-Neptune exoplanet orbiting within its star's habitable zone. On Earth, dimethyl sulfide is produced almost exclusively by marine phytoplankton.",
       question:
-        "Which choice best describes the function of the underlined sentence in the overall structure of the text?",
+        "Which choice best describes the function of the underlined sentence in the text as a whole?",
       options: [
         "A) It establishes that phytoplankton are the most important organisms in Earth's oceans.",
         "B) It undermines the claim that dimethyl sulfide was detected on K2-18 b.",
@@ -315,7 +315,7 @@ export const rwM1B: PoolModule = {
       passage:
         "In a report on antibiotic resistance, a public health researcher writes: \"The development pipeline for new antibiotics has slowed dramatically over the past two decades, even as resistant bacterial strains continue to proliferate. Pharmaceutical companies, facing high development costs and limited profit potential compared to drugs for chronic conditions, have largely shifted investment away from antibiotic research.\"",
       question:
-        "Which choice best describes the function of the second sentence in the text?",
+        "Which choice best describes the function of the second sentence in the text as a whole?",
       options: [
         "A) It provides an economic explanation for the trend described in the first sentence.",
         "B) It challenges the claim made in the first sentence about antibiotic development.",
@@ -457,7 +457,7 @@ export const rwM1B: PoolModule = {
     {
       id: "rw1b-25",
       passage:
-        "Philosopher John Rawls proposed a thought experiment called the \"veil of ignorance,\" in which individuals design a society's rules without knowing what position they will occupy in that society. Rawls argued that rational people behind this veil would choose principles ensuring basic liberties and arranging inequalities so that they benefit the least advantaged members of society. [The passage continues with critiques of Rawls's theory from libertarian philosophers who argue that the thought experiment ignores the importance of individual property rights.]",
+        "Philosopher John Rawls proposed a thought experiment called the \"veil of ignorance,\" in which individuals design a society's rules without knowing what position they will occupy in that society. Rawls argued that rational people behind this veil would choose principles ensuring basic liberties and arranging inequalities so that they benefit the least advantaged members of society. Critics from libertarian traditions, however, argue that the thought experiment ignores the importance of individual property rights and places too much weight on fairness over freedom.",
       question:
         "Which choice best describes the overall structure of the text?",
       options: [
@@ -494,7 +494,7 @@ export const rwM1B: PoolModule = {
       id: "rw1b-27",
       passage:
         "Archaeological evidence from ancient Mesopotamia suggests that the development of irrigation systems along the Tigris and Euphrates rivers enabled early agricultural communities to produce food surpluses. These surpluses freed a portion of the population from farming, allowing the emergence of specialized occupations such as potters, weavers, and scribes. The resulting division of labor contributed to the growth of complex social hierarchies and, eventually, some of the world's first cities.",
-      question: "Which choice best states the central idea of the text?",
+      question: "Which choice best states the main idea of the text?",
       options: [
         "A) Mesopotamian potters and weavers were more important to early civilizations than farmers.",
         "B) The development of writing in Mesopotamia was unrelated to agricultural practices.",
