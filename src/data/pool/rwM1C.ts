@@ -20,6 +20,8 @@ export const rwM1C: PoolModule = {
       correct: "C",
       explanation:
         "\"Overlooked\" means not given proper attention or recognition, which fits the contrast between Franklin's treatment during her lifetime and the current historical recognition of her work.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw1c-2",
@@ -36,6 +38,8 @@ export const rwM1C: PoolModule = {
       correct: "A",
       explanation:
         "The subject is \"The philosophical tradition,\" which is singular. The intervening relative clause does not change the number of the subject, so the singular verb \"holds\" is correct.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1c-3",
@@ -52,6 +56,8 @@ export const rwM1C: PoolModule = {
       correct: "D",
       explanation:
         "\"Contentious\" means causing or likely to cause disagreement, which fits the description of findings that \"sparked debates that continued for decades.\"",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw1c-4",
@@ -68,6 +74,8 @@ export const rwM1C: PoolModule = {
       correct: "D",
       explanation:
         "A semicolon before \"however\" and a comma after it is the standard way to join two independent clauses with a conjunctive adverb.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1c-5",
@@ -83,6 +91,8 @@ export const rwM1C: PoolModule = {
       correct: "C",
       explanation:
         "The passage emphasizes that the Silk Road facilitated exchange of goods, ideas, religion, science, and more, making C the best summary of its central point.",
+      domain: "information_ideas",
+      subdomain: "central_idea",
     },
     {
       id: "rw1c-6",
@@ -99,6 +109,8 @@ export const rwM1C: PoolModule = {
       correct: "D",
       explanation:
         "The future perfect progressive \"will have been collecting\" is needed to describe an action that will have been ongoing up to a specific point in the future (\"by the time... next spring\").",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1c-7",
@@ -115,6 +127,8 @@ export const rwM1C: PoolModule = {
       correct: "A",
       explanation:
         "\"Conversely\" signals an opposite scenario: the first case describes rising supply (prices fall), while the second describes rising demand (prices rise). These are contrasting situations.",
+      domain: "craft_structure",
+      subdomain: "transitions",
     },
     {
       id: "rw1c-8",
@@ -131,6 +145,8 @@ export const rwM1C: PoolModule = {
       correct: "B",
       explanation:
         "\"Practical\" means useful and effective for real-world application, which fits the passage's explanation of AC's advantages for long-distance transmission.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw1c-9",
@@ -147,6 +163,8 @@ export const rwM1C: PoolModule = {
       correct: "C",
       explanation:
         "The plural possessive pronoun \"their\" correctly refers to the plural antecedent \"navigators.\"",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1c-10",
@@ -163,6 +181,8 @@ export const rwM1C: PoolModule = {
       correct: "A",
       explanation:
         "The passage describes how Impressionists used visible brushstrokes of pure color side by side, allowing optical mixing by the viewer, creating vibrancy and movement. A captures this innovation.",
+      domain: "information_ideas",
+      subdomain: "central_idea",
     },
     {
       id: "rw1c-11",
@@ -179,6 +199,8 @@ export const rwM1C: PoolModule = {
       correct: "D",
       explanation:
         "The sentence lists three parallel observations about coral in warmer waters. The conjunction \"and\" is needed before the final item in the series.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1c-12",
@@ -195,6 +217,8 @@ export const rwM1C: PoolModule = {
       correct: "B",
       explanation:
         "The second sentence (over 5,000 artifacts, a decade to catalog) demonstrates how extensive the discovery was, illustrating the scale mentioned in the first sentence.",
+      domain: "craft_structure",
+      subdomain: "purpose",
     },
     {
       id: "rw1c-13",
@@ -211,6 +235,8 @@ export const rwM1C: PoolModule = {
       correct: "A",
       explanation:
         "\"Inaccurate\" sets up the escalation: the representations were not merely wrong (inaccurate) but actively harmful in constructing justifications for colonialism. The sentence structure \"not merely X but Y\" requires X to be a lesser version of Y.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw1c-14",
@@ -227,6 +253,8 @@ export const rwM1C: PoolModule = {
       correct: "B",
       explanation:
         "A comma after \"system\" properly separates the main clause from the nonrestrictive relative clause beginning with \"where.\" No comma should follow \"where\" itself.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1c-15",
@@ -243,6 +271,8 @@ export const rwM1C: PoolModule = {
       correct: "D",
       explanation:
         "The study showed screen users took longer to fall asleep and had less deep sleep. The logical inference is that reducing screen time could improve both sleep onset and quality.",
+      domain: "information_ideas",
+      subdomain: "inference",
     },
     {
       id: "rw1c-16",
@@ -259,6 +289,8 @@ export const rwM1C: PoolModule = {
       correct: "B",
       explanation:
         "The participial phrase \"studying the regrowth patterns\" correctly modifies \"ecologists\" and maintains the sentence structure where \"ecologists... have tracked\" is the main clause.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1c-17",
@@ -275,6 +307,8 @@ export const rwM1C: PoolModule = {
       correct: "A",
       explanation:
         "The first sentence presents the older, narrower view (primarily literary); the second sentence revises it by showing the movement was much broader, making A correct.",
+      domain: "craft_structure",
+      subdomain: "purpose",
     },
     {
       id: "rw1c-18",
@@ -291,6 +325,8 @@ export const rwM1C: PoolModule = {
       correct: "C",
       explanation:
         "\"Stabilizing\" means making something steady or consistent, which matches the passage's description of currents that regulate climate by redistributing heat and moderating temperatures.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw1c-19",
@@ -307,6 +343,8 @@ export const rwM1C: PoolModule = {
       correct: "D",
       explanation:
         "The subject \"participants\" is plural and the sentence describes completed research findings (past tense), so \"were\" is the correct choice.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1c-20",
@@ -339,6 +377,8 @@ export const rwM1C: PoolModule = {
       correct: "C",
       explanation:
         "\"Yet\" signals a contrast between the excitement generated by the discovery and the disappointment that practical applications have been slow, making it the best transition.",
+      domain: "craft_structure",
+      subdomain: "transitions",
     },
     {
       id: "rw1c-22",
@@ -355,6 +395,8 @@ export const rwM1C: PoolModule = {
       correct: "A",
       explanation:
         "The passage directly states that Gothic elements \"allowed builders to distribute the weight... more efficiently, enabling the construction of thinner walls punctuated by large stained-glass windows.\"",
+      domain: "information_ideas",
+      subdomain: "central_idea",
     },
     {
       id: "rw1c-23",
@@ -371,6 +413,8 @@ export const rwM1C: PoolModule = {
       correct: "B",
       explanation:
         "With \"neither... nor,\" the verb agrees with the nearer subject (\"assessment,\" singular). The past tense \"revealed\" fits the completed actions described, making B correct.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1c-24",
@@ -387,6 +431,8 @@ export const rwM1C: PoolModule = {
       correct: "D",
       explanation:
         "The study revealed subducted plates go far deeper than expected and may influence mantle convection that drives surface plate movement, supporting the inference that deep processes have a greater influence than previously understood.",
+      domain: "information_ideas",
+      subdomain: "inference",
     },
     {
       id: "rw1c-25",
@@ -403,6 +449,8 @@ export const rwM1C: PoolModule = {
       correct: "A",
       explanation:
         "The text first introduces Kahneman's dual-system framework, then applies it to real-world financial decision-making, making A (framework → implications) the best description.",
+      domain: "craft_structure",
+      subdomain: "purpose",
     },
     {
       id: "rw1c-26",
@@ -419,6 +467,8 @@ export const rwM1C: PoolModule = {
       correct: "C",
       explanation:
         "Wilson proposes large protected reserves (separating humans from nature), while Ellis argues species can thrive in human-managed landscapes (integrating conservation with human activity). C captures this key difference.",
+      domain: "information_ideas",
+      subdomain: "cross_text",
     },
     {
       id: "rw1c-27",
@@ -434,6 +484,8 @@ export const rwM1C: PoolModule = {
       correct: "B",
       explanation:
         "The passage presents both sides: increased production and living standards alongside environmental degradation and harsh conditions. B captures this balanced central idea.",
+      domain: "information_ideas",
+      subdomain: "central_idea",
     },
   ],
   m2EasierModuleId: "rw-m2-easier",

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { saveSubmission, getSubmissionHistory, getPoolPairsTaken, getAssignments, getAllAssignments, saveAssignment, getStudentActive, setStudentActive, getAllStudentsStatus, getSubmissions, AssignmentRow, SubmissionRow, StudentAssignment } from "./firebase";
 import { testRegistry } from "./data/testRegistry";
 import { getPoolTestData, getAllPoolModules } from "./data/modulePool";
+import { RW_DOMAIN_LABELS } from "./data/rwDomains";
 import { scoreSection, scoreByConcept } from "./utils/scoring";
 
 export interface TestData {
@@ -1102,7 +1103,7 @@ export default function App() {
                 .sort(([a], [b]) => a.localeCompare(b))
                 .map(([domain, s]) => (
                   <span key={domain} style={{ display: "inline-block", marginRight: "12px", marginBottom: "4px" }}>
-                    {domain.replace(/_/g, " ")}: {s.pct}%
+                    {RW_DOMAIN_LABELS[domain] ?? domain.replace(/_/g, " ")}: {s.pct}%
                   </span>
                 ))}
             </div>
@@ -1200,6 +1201,11 @@ export default function App() {
       >
         <h2>
           {section.toUpperCase()} - Module {module}
+          {section === "math" && (
+            <span style={{ fontSize: "14px", fontWeight: "normal", color: "#555", marginLeft: "12px" }}>
+              Calculator allowed
+            </span>
+          )}
         </h2>
         <h2 style={{ color: "red" }}>
           {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, "0")}
@@ -1234,26 +1240,50 @@ export default function App() {
           <p style={{ fontWeight: "bold", fontSize: "20px" }}>
             {qIdx + 1}. {q?.question}
           </p>
-          {q?.options?.map((opt: string) => (
-            <button
-              key={opt}
-              onClick={() => setAnswers({ ...answers, [q.id]: opt.charAt(0) })}
-              style={{
-                display: "block",
-                width: "100%",
-                textAlign: "left",
-                padding: "15px",
-                margin: "10px 0",
-                cursor: "pointer",
-                border: "1px solid #ccc",
-                borderRadius: "8px",
-                background:
-                  answers[q.id] === opt.charAt(0) ? "#e8f0fe" : "white",
-              }}
-            >
-              {opt}
-            </button>
-          ))}
+          {(q as { inputType?: string })?.inputType === "grid_in" ? (
+            <div style={{ marginTop: "12px" }}>
+              <label htmlFor={`grid-in-${q?.id}`} style={{ display: "block", marginBottom: "6px", fontSize: "14px", color: "#555" }}>
+                Enter your answer (number or fraction, e.g. 4 or 3/4):
+              </label>
+              <input
+                id={`grid-in-${q?.id}`}
+                type="text"
+                inputMode="decimal"
+                value={answers[q?.id ?? ""] ?? ""}
+                onChange={(e) => setAnswers({ ...answers, [q?.id ?? ""]: e.target.value })}
+                style={{
+                  padding: "12px 16px",
+                  fontSize: "18px",
+                  width: "100%",
+                  maxWidth: "200px",
+                  border: "1px solid #ccc",
+                  borderRadius: "8px",
+                }}
+                placeholder="e.g. 4 or 3/4"
+              />
+            </div>
+          ) : (
+            q?.options?.map((opt: string) => (
+              <button
+                key={opt}
+                onClick={() => setAnswers({ ...answers, [q.id]: opt.charAt(0) })}
+                style={{
+                  display: "block",
+                  width: "100%",
+                  textAlign: "left",
+                  padding: "15px",
+                  margin: "10px 0",
+                  cursor: "pointer",
+                  border: "1px solid #ccc",
+                  borderRadius: "8px",
+                  background:
+                    answers[q.id] === opt.charAt(0) ? "#e8f0fe" : "white",
+                }}
+              >
+                {opt}
+              </button>
+            ))
+          )}
         </div>
       </div>
       <div

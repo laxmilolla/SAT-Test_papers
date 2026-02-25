@@ -20,6 +20,8 @@ export const rwM1B: PoolModule = {
       correct: "B",
       explanation:
         "\"Unwavering\" means steady and resolute, which best describes Kahlo's persistent dedication to art despite extreme physical suffering.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw1b-2",
@@ -36,6 +38,8 @@ export const rwM1B: PoolModule = {
       correct: "C",
       explanation:
         "The subject \"cathedrals\" is plural, so the verb must be the plural form \"represent.\" The intervening prepositional phrase does not change the subject.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1b-3",
@@ -52,6 +56,8 @@ export const rwM1B: PoolModule = {
       correct: "A",
       explanation:
         "\"Paradoxical\" means seemingly contradictory, which accurately describes the irrational behavior of splurging a refund while holding debt.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw1b-4",
@@ -68,6 +74,8 @@ export const rwM1B: PoolModule = {
       correct: "D",
       explanation:
         "A comma is needed after \"swamps\" to close the introductory adverbial clause \"As water passes through marshes and swamps\" before the main clause begins.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1b-5",
@@ -83,6 +91,8 @@ export const rwM1B: PoolModule = {
       correct: "B",
       explanation:
         "The passage emphasizes the engineering sophistication of aqueducts (gravity-driven, varied terrain solutions) and their role in supporting urban life, making B the best summary.",
+      domain: "information_ideas",
+      subdomain: "central_idea",
     },
     {
       id: "rw1b-6",
@@ -99,6 +109,8 @@ export const rwM1B: PoolModule = {
       correct: "A",
       explanation:
         "The sentence describes a completed historical action during the Baroque period, so the simple past tense \"incorporated\" is correct.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1b-7",
@@ -115,6 +127,8 @@ export const rwM1B: PoolModule = {
       correct: "C",
       explanation:
         "\"Instead\" signals a contrast: Chomsky's nativist view (innate capacity) is presented as an alternative to the behaviorist view (imitation/reinforcement) described in the previous sentence.",
+      domain: "craft_structure",
+      subdomain: "transitions",
     },
     {
       id: "rw1b-8",
@@ -131,6 +145,8 @@ export const rwM1B: PoolModule = {
       correct: "D",
       explanation:
         "\"Devastating\" means highly destructive, which accurately characterizes the eruption's power as described by the flattening of 230 square miles of forest.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw1b-9",
@@ -147,6 +163,8 @@ export const rwM1B: PoolModule = {
       correct: "B",
       explanation:
         "The antecedent is \"a software development team,\" which is a singular collective noun. The singular pronoun \"it\" correctly refers to the team as a unit.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1b-10",
@@ -163,6 +181,8 @@ export const rwM1B: PoolModule = {
       correct: "A",
       explanation:
         "The passage explicitly states the Medici commissioned art to demonstrate \"cultural sophistication and political influence\" and to reinforce \"social standing,\" making A the best answer.",
+      domain: "information_ideas",
+      subdomain: "central_idea",
     },
     {
       id: "rw1b-11",
@@ -179,6 +199,8 @@ export const rwM1B: PoolModule = {
       correct: "C",
       explanation:
         "The sentence contains a list of three items. In standard parallel structure, the conjunction \"and\" is placed before the final item in the series.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1b-12",
@@ -195,6 +217,8 @@ export const rwM1B: PoolModule = {
       correct: "D",
       explanation:
         "By noting that dimethyl sulfide is produced by living organisms on Earth, the sentence explains why finding it on another planet is significant—it could indicate biological activity.",
+      domain: "craft_structure",
+      subdomain: "purpose",
     },
     {
       id: "rw1b-13",
@@ -211,6 +235,8 @@ export const rwM1B: PoolModule = {
       correct: "B",
       explanation:
         "\"Prescient\" means having foresight or foreknowledge, which fits the idea that Lovelace anticipated computing concepts a century before they were realized.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw1b-14",
@@ -227,6 +253,8 @@ export const rwM1B: PoolModule = {
       correct: "A",
       explanation:
         "\"In which\" correctly introduces a relative clause describing the structure within the hierarchy. The preposition \"in\" is needed because people exist \"in\" a hierarchy.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1b-15",
@@ -243,6 +271,26 @@ export const rwM1B: PoolModule = {
       correct: "C",
       explanation:
         "The passage states that synthetic fertilizers reduce microbial diversity and that this may reduce the soil's ability to support plants without continued chemical intervention, implying a cycle of dependency.",
+      domain: "information_ideas",
+      subdomain: "inference",
+    },
+    {
+      id: "rw1b-15e",
+      passage:
+        "The spread of printing technology in fifteenth-century Europe dramatically increased the availability of written texts and lowered their cost. Previously, books had been copied by hand, a slow and expensive process that limited ownership largely to religious institutions and the wealthy. The invention of the movable-type printing press allowed for the rapid production of identical copies, which in turn supported the rise of literacy and the exchange of ideas across regions.",
+      question:
+        "Which choice best supports the claim that printing technology changed who could access written works?",
+      options: [
+        "A) The spread of printing technology in fifteenth-century Europe dramatically increased the availability of written texts and lowered their cost.",
+        "B) Previously, books had been copied by hand, a slow and expensive process that limited ownership largely to religious institutions and the wealthy.",
+        "C) The invention of the movable-type printing press allowed for the rapid production of identical copies.",
+        "D) The exchange of ideas across regions was supported by the new technology.",
+      ],
+      correct: "B",
+      explanation:
+        "Sentence B directly states that before printing, ownership was limited to religious institutions and the wealthy, supporting the claim that printing changed who could access written works.",
+      domain: "information_ideas",
+      subdomain: "command_of_evidence",
     },
     {
       id: "rw1b-16",
@@ -259,6 +307,8 @@ export const rwM1B: PoolModule = {
       correct: "D",
       explanation:
         "\"Driven\" is a past participle that correctly modifies the subject \"Dorothy Hodgkin\" in this participial phrase. The other options either create a comma splice (A), misattribute the action (B), or are wordy and non-standard (C).",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1b-17",
@@ -275,6 +325,8 @@ export const rwM1B: PoolModule = {
       correct: "A",
       explanation:
         "The first sentence states that antibiotic development has slowed; the second sentence explains why (economic factors), making A correct.",
+      domain: "craft_structure",
+      subdomain: "purpose",
     },
     {
       id: "rw1b-18",
@@ -291,6 +343,8 @@ export const rwM1B: PoolModule = {
       correct: "B",
       explanation:
         "\"Grueling\" means extremely tiring and demanding, which accurately describes a 44,000-mile journey through extreme weather and predation.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw1b-19",
@@ -307,6 +361,8 @@ export const rwM1B: PoolModule = {
       correct: "C",
       explanation:
         "The plural possessive \"societies'\" is needed because the \"tendency\" belongs to multiple modern industrial societies. The apostrophe follows the plural 's'.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1b-20",
@@ -323,6 +379,8 @@ export const rwM1B: PoolModule = {
       correct: "B",
       explanation:
         "Text 2's central argument is that nuclear power's risks (waste, accidents, proliferation) and its diversion of resources from renewables make it problematic. The author would most likely question whether nuclear's environmental benefits outweigh these unresolved concerns.",
+      domain: "information_ideas",
+      subdomain: "cross_text",
     },
     {
       id: "rw1b-21",
@@ -339,6 +397,8 @@ export const rwM1B: PoolModule = {
       correct: "A",
       explanation:
         "\"However\" signals a contrast between the positive aspect (flexible opportunities) and the negative concerns (lack of benefits and protections) that follow.",
+      domain: "craft_structure",
+      subdomain: "transitions",
     },
     {
       id: "rw1b-22",
@@ -355,6 +415,8 @@ export const rwM1B: PoolModule = {
       correct: "B",
       explanation:
         "The passage states the technique produced a \"shimmering, almost ethereal glow\" intended to \"evoke a sense of divine presence,\" directly supporting B.",
+      domain: "information_ideas",
+      subdomain: "central_idea",
     },
     {
       id: "rw1b-23",
@@ -371,6 +433,8 @@ export const rwM1B: PoolModule = {
       correct: "C",
       explanation:
         "The subject is \"The expression,\" which is singular. The phrase \"along with the regulatory sequences\" is a parenthetical addition and does not make the subject plural, so \"has\" is correct.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1b-24",
@@ -387,6 +451,8 @@ export const rwM1B: PoolModule = {
       correct: "A",
       explanation:
         "The Phoenix study showed that greater tree canopy correlated with lower temperatures even with similar building density, supporting the inference that tree coverage can mitigate heat island effects.",
+      domain: "information_ideas",
+      subdomain: "inference",
     },
     {
       id: "rw1b-25",
@@ -403,6 +469,8 @@ export const rwM1B: PoolModule = {
       correct: "D",
       explanation:
         "The text first explains Rawls's \"veil of ignorance\" concept, then introduces libertarian critiques, making D (concept followed by opposing view) the best description.",
+      domain: "craft_structure",
+      subdomain: "purpose",
     },
     {
       id: "rw1b-26",
@@ -419,6 +487,8 @@ export const rwM1B: PoolModule = {
       correct: "B",
       explanation:
         "Both texts acknowledge the factual observation that test scores have risen; they disagree on what that rise means, making B the point of agreement.",
+      domain: "information_ideas",
+      subdomain: "cross_text",
     },
     {
       id: "rw1b-27",
@@ -434,6 +504,26 @@ export const rwM1B: PoolModule = {
       correct: "C",
       explanation:
         "The passage traces a causal chain: irrigation → surpluses → specialized occupations → social hierarchies → cities. Choice C captures this central idea.",
+      domain: "information_ideas",
+      subdomain: "central_idea",
+    },
+    {
+      id: "rw1b-28",
+      passage:
+        "A study tracked the number of bird species observed at a wetland reserve over four years:\n\nYear    | Number of species\n2019    | 42\n2020    | 38\n2021    | 45\n2022    | 41\n\nResearchers noted that water levels and vegetation cover varied across the years due to seasonal rainfall patterns.",
+      question:
+        "According to the table, in which year were the most bird species observed at the reserve?",
+      options: [
+        "A) 2019",
+        "B) 2020",
+        "C) 2021",
+        "D) 2022",
+      ],
+      correct: "C",
+      explanation:
+        "The table shows 45 species in 2021, which is the highest value among the four years.",
+      domain: "information_ideas",
+      subdomain: "command_of_evidence",
     },
   ],
   m2EasierModuleId: "rw-m2-easier",

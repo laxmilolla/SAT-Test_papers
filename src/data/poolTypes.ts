@@ -24,7 +24,7 @@ export interface RWQuestion {
   subdomain?: string;
 }
 
-/** Math question shape (optional image). */
+/** Math question shape (optional image). Grid-in questions have no options; student enters a number or fraction. */
 export interface MathQuestion {
   id: string;
   question?: string;
@@ -35,6 +35,8 @@ export interface MathQuestion {
   /** Concept/domain for performance tracking (algebra, advanced_math, problem_solving_data, geometry_trig). */
   domain?: string;
   subdomain?: string;
+  /** When "grid_in", student enters numeric/fraction answer instead of choosing options. */
+  inputType?: "multiple_choice" | "grid_in";
 }
 
 export type PoolQuestion = RWQuestion | MathQuestion;
