@@ -209,6 +209,44 @@ export async function saveAssignment(
   await addDoc(collection(db, "assignments"), { studentId: uid, rwM1ModuleId, mathM1ModuleId });
 }
 
+/**
+ * Check if a student is allowed to start a test (active). Default true if no record.
+ * Store in Firestore: collection "students", document ID = studentId, field active: boolean.
+ */
+export async function getStudentActive(studentId: string): Promise<boolean> {
+  if (!db) return true;
+  const uid = studentId.trim() || "Anonymous";
+  const ref = doc(db, "students", uid);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) return true;
+  const data = snap.data();
+  return data?.active !== false;
+}
+
+/**
+ * Set a student active (true) or inactive (false). Inactive students cannot start a test.
+ */
+export async function setStudentActive(studentId: string, active: boolean): Promise<void> {
+  if (!db) {
+    throw new Error("Firebase is not configured. Set REACT_APP_FIREBASE_* env variables.");
+  }
+  const uid = studentId.trim() || "Anonymous";
+  const ref = doc(db, "students", uid);
+  await setDoc(ref, { active });
+}
+
+/**
+ * For teacher: get active status for all students who have a document in "students".
+ * Students not in the returned map are treated as active.
+ */
+export async function getAllStudentsStatus(): Promise<Record<string, boolean>> {
+  if (!db) return {};
+  const snap = await getDocs(collection(db, "students"));
+  return Object.fromEntries(
+    snap.docs.map((d) => [d.id, (d.data() as { active?: boolean }).active !== false])
+  );
+}
+
 /** One row for teacher results view. */
 export interface SubmissionRow {
   id: string;

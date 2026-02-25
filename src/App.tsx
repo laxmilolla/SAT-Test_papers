@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { saveSubmission, getSubmissionHistory, getPoolPairsTaken, getAssignments, getAllAssignments, saveAssignment, getSubmissions, AssignmentRow, SubmissionRow, StudentAssignment } from "./firebase";
+import { saveSubmission, getSubmissionHistory, getPoolPairsTaken, getAssignments, getAllAssignments, saveAssignment, getStudentActive, setStudentActive, getAllStudentsStatus, getSubmissions, AssignmentRow, SubmissionRow, StudentAssignment } from "./firebase";
 import { testRegistry } from "./data/testRegistry";
 import { getPoolTestData, getAllPoolModules } from "./data/modulePool";
 import { scoreSection, scoreByConcept } from "./utils/scoring";
@@ -53,7 +53,7 @@ export default function App() {
     combinedRegistry.length === 1 ? combinedRegistry[0].id : null
   );
   const [testData, setTestData] = React.useState<TestData | null>(null);
-  const [startStatus, setStartStatus] = React.useState<"idle" | "loading" | "error" | "all_taken" | "pool_already_taken">("idle");
+  const [startStatus, setStartStatus] = React.useState<"idle" | "loading" | "error" | "all_taken" | "pool_already_taken" | "inactive">("idle");
   const [view, setView] = React.useState("start");
   const [section, setSection] = React.useState("reading");
   const [module, setModule] = React.useState(1);
@@ -64,6 +64,7 @@ export default function App() {
   const [studentId, setStudentId] = React.useState("");
   const [saveStatus, setSaveStatus] = React.useState<"idle" | "saving" | "done" | "error">("idle");
   const [teacherAssignments, setTeacherAssignments] = React.useState<AssignmentRow[]>([]);
+  const [teacherStudentStatus, setTeacherStudentStatus] = React.useState<Record<string, boolean>>({});
   const [teacherStatus, setTeacherStatus] = React.useState<"idle" | "loading" | "error">("idle");
   const [teacherError, setTeacherError] = React.useState<string>("");
   const [expandedModules, setExpandedModules] = React.useState<Set<string>>(new Set());
@@ -72,7 +73,7 @@ export default function App() {
   const [assignStudentDropdown, setAssignStudentDropdown] = React.useState<string>("");
   const [assignRwM1, setAssignRwM1] = React.useState("");
   const [assignMathM1, setAssignMathM1] = React.useState("");
-  const [assignStatus, setAssignStatus] = React.useState<"idle" | "saving" | "done" | "error">("idle");
+  const [assignStatus, setAssignStatus] = React.useState<"idle" | "saving" | "done" | "error" | "duplicate">("idle");
   /** When student has multiple assignments, they pick one here before starting. */
   const [assignmentsForPicker, setAssignmentsForPicker] = React.useState<StudentAssignment[] | null>(null);
   const [resultsSubmissions, setResultsSubmissions] = React.useState<SubmissionRow[]>([]);
@@ -214,6 +215,12 @@ export default function App() {
     setStartStatus("loading");
     setAssignmentsForPicker(null);
     try {
+      const isActive = await getStudentActive(uid);
+      if (!isActive) {
+        setStartStatus("inactive");
+        return;
+      }
+
       const assignments = await getAssignments(uid);
 
       if (assignments.length > 1) {
@@ -287,6 +294,9 @@ export default function App() {
         )}
         {startStatus === "pool_already_taken" && (
           <p style={{ color: "#c62828", margin: "10px 0" }}>You&apos;ve already completed this assigned test. Ask your teacher to assign a different module set.</p>
+        )}
+        {startStatus === "inactive" && (
+          <p style={{ color: "#c62828", margin: "10px 0" }}>Your access has been deactivated. Please contact your teacher.</p>
         )}
         {startStatus === "error" && (
           <p style={{ color: "#c62828", margin: "10px 0" }}>Failed to load test. Please try again.</p>
@@ -380,9 +390,10 @@ export default function App() {
                     setView("teacher");
                     setTeacherStatus("loading");
                     setTeacherError("");
-                    getAllAssignments()
-                      .then((rows) => {
+                    Promise.all([getAllAssignments(), getAllStudentsStatus()])
+                      .then(([rows, status]) => {
                         setTeacherAssignments(rows);
+                        setTeacherStudentStatus(status);
                         setTeacherStatus("idle");
                       })
                       .catch((err: unknown) => {
@@ -420,9 +431,10 @@ export default function App() {
                   setView("teacher");
                   setTeacherStatus("loading");
                   setTeacherError("");
-                  getAllAssignments()
-                    .then((rows) => {
+                  Promise.all([getAllAssignments(), getAllStudentsStatus()])
+                    .then(([rows, status]) => {
                       setTeacherAssignments(rows);
+                      setTeacherStudentStatus(status);
                       setTeacherStatus("idle");
                     })
                     .catch((err: unknown) => {
@@ -654,6 +666,7 @@ export default function App() {
 
         <div style={{ marginBottom: "20px", padding: "12px 16px", background: "#f0f4ff", borderRadius: "8px", fontSize: "14px" }}>
           <strong>Jump to:</strong>{" "}
+          <a href="#student-access" style={{ marginRight: "12px" }}>Student access</a>
           <a href="#assignments" style={{ marginRight: "12px" }}>Assignments</a>
           <a href="#results" style={{ marginRight: "12px" }}>Results</a>
           <a href="#available-tests" style={{ marginRight: "12px" }}>Available tests</a>
@@ -682,6 +695,7 @@ export default function App() {
                 onChange={(e) => {
                   const v = e.target.value;
                   setAssignStudentDropdown(v);
+                  setAssignStatus("idle");
                   if (v === "__new__") setAssignStudentId("");
                   else setAssignStudentId(v);
                 }}
@@ -698,7 +712,7 @@ export default function App() {
                   id="assign-student-id"
                   type="text"
                   value={assignStudentId}
-                  onChange={(e) => setAssignStudentId(e.target.value)}
+                  onChange={(e) => { setAssignStudentId(e.target.value); setAssignStatus("idle"); }}
                   placeholder="e.g. 1001 or Jane"
                   style={{ marginTop: "8px", padding: "8px 12px", fontSize: "14px", width: "100%", maxWidth: "200px", boxSizing: "border-box", border: "1px solid #ccc", borderRadius: "6px", display: "block" }}
                 />
@@ -709,7 +723,7 @@ export default function App() {
               <select
                 id="assign-rw-m1"
                 value={assignRwM1}
-                onChange={(e) => setAssignRwM1(e.target.value)}
+                onChange={(e) => { setAssignRwM1(e.target.value); setAssignStatus("idle"); }}
                 style={{ padding: "8px 12px", fontSize: "14px", minWidth: "200px", border: "1px solid #ccc", borderRadius: "6px" }}
               >
                 <option value="">— Select —</option>
@@ -723,7 +737,7 @@ export default function App() {
               <select
                 id="assign-math-m1"
                 value={assignMathM1}
-                onChange={(e) => setAssignMathM1(e.target.value)}
+                onChange={(e) => { setAssignMathM1(e.target.value); setAssignStatus("idle"); }}
                 style={{ padding: "8px 12px", fontSize: "14px", minWidth: "200px", border: "1px solid #ccc", borderRadius: "6px" }}
               >
                 <option value="">— Select —</option>
@@ -736,11 +750,22 @@ export default function App() {
               type="button"
               disabled={assignStatus === "saving" || !effectiveStudentId || !assignRwM1 || !assignMathM1}
               onClick={async () => {
+                const alreadyAssigned = teacherAssignments.some(
+                  (r) =>
+                    r.studentId === effectiveStudentId &&
+                    r.rwM1ModuleId === assignRwM1 &&
+                    r.mathM1ModuleId === assignMathM1
+                );
+                if (alreadyAssigned) {
+                  setAssignStatus("duplicate");
+                  return;
+                }
                 setAssignStatus("saving");
                 try {
                   await saveAssignment(effectiveStudentId, assignRwM1, assignMathM1);
-                  const rows = await getAllAssignments();
+                  const [rows, status] = await Promise.all([getAllAssignments(), getAllStudentsStatus()]);
                   setTeacherAssignments(rows);
+                  setTeacherStudentStatus(status);
                   setAssignStudentDropdown(effectiveStudentId);
                   setAssignStudentId(effectiveStudentId);
                   setAssignStatus("done");
@@ -763,12 +788,14 @@ export default function App() {
               {assignStatus === "saving" && "Saving…"}
               {assignStatus === "done" && "Saved!"}
               {assignStatus === "error" && "Save failed"}
+              {assignStatus === "duplicate" && "Already assigned"}
             </button>
           </div>
             );
           })()}
           {assignStatus === "done" && <p style={{ marginTop: "12px", color: "#2e7d32", fontSize: "14px" }}>Assignment added. The student will see this set when they enter their ID (if they have multiple, they can choose which to take).</p>}
           {assignStatus === "error" && <p style={{ marginTop: "12px", color: "#c62828", fontSize: "14px" }}>Could not save. Check Firestore rules and env variables.</p>}
+          {assignStatus === "duplicate" && <p style={{ marginTop: "12px", color: "#c62828", fontSize: "14px" }}>This student already has this set assigned. Choose a different student or a different R&amp;W / Math module combination.</p>}
         </div>
 
         {/* ── Results ── */}
@@ -872,6 +899,68 @@ export default function App() {
         {resultsStatus === "idle" && resultsSubmissions.length === 0 && resultsFilterStudentId !== "" && (
           <p style={{ color: "#666", marginBottom: "24px", fontSize: "14px" }}>No submissions found for this student.</p>
         )}
+
+        {/* ── Student access (active/inactive) ── */}
+        <h2 id="student-access" style={{ marginBottom: "4px" }}>Student access</h2>
+        <p style={{ color: "#555", marginBottom: "16px", fontSize: "14px" }}>
+          Inactive students cannot start a test when they enter their ID. Use this when a student leaves your class.
+        </p>
+        {teacherStatus === "idle" && (() => {
+          const uniqueStudentIds = Array.from(new Set(teacherAssignments.map((r) => r.studentId))).sort((a, b) => a.localeCompare(b));
+          if (uniqueStudentIds.length === 0) {
+            return <p style={{ color: "#666" }}>No students with assignments yet. Assign a test first.</p>;
+          }
+          return (
+            <table style={{ width: "100%", maxWidth: "480px", borderCollapse: "collapse", border: "1px solid #ddd", marginBottom: "24px" }}>
+              <thead>
+                <tr style={{ background: "#f5f5f5" }}>
+                  <th style={thStyle}>Student ID</th>
+                  <th style={thStyle}>Status</th>
+                  <th style={thStyle}>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {uniqueStudentIds.map((sid) => {
+                  const isActive = teacherStudentStatus[sid] !== false;
+                  return (
+                    <tr key={sid}>
+                      <td style={tdStyle}>{sid}</td>
+                      <td style={tdStyle}>
+                        <span style={{ color: isActive ? "#2e7d32" : "#c62828", fontWeight: 600 }}>
+                          {isActive ? "Active" : "Inactive"}
+                        </span>
+                      </td>
+                      <td style={tdStyle}>
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            try {
+                              await setStudentActive(sid, !isActive);
+                              setTeacherStudentStatus((prev) => ({ ...prev, [sid]: !isActive }));
+                            } catch {
+                              // keep UI unchanged on error
+                            }
+                          }}
+                          style={{
+                            padding: "4px 12px",
+                            fontSize: "13px",
+                            background: isActive ? "#c62828" : "#2e7d32",
+                            color: "white",
+                            border: "none",
+                            borderRadius: "6px",
+                            cursor: "pointer",
+                          }}
+                        >
+                          {isActive ? "Deactivate" : "Activate"}
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          );
+        })()}
 
         {/* ── Assignments ── */}
         <h2 id="assignments" style={{ marginBottom: "4px" }}>Student Assignments</h2>

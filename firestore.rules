@@ -12,5 +12,10 @@ service cloud.firestore {
       allow create: if true;
       allow update, delete: if true;
     }
+    // Student access: teacher can deactivate/activate students (inactive = cannot start test)
+    match /students/{document} {
+      allow read: if true;
+      allow write: if true;
+    }
   }
 }
