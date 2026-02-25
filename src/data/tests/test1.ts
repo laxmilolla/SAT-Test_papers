@@ -10,6 +10,8 @@ export const readingWritingModule1 = [
       correct: "A",
       explanation:
         '"Pivotal" means crucial; it fits the context of significant research.',
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw1-2",
@@ -26,6 +28,8 @@ export const readingWritingModule1 = [
       correct: "A",
       explanation:
         'Singular subject "city" takes "was founded"; passive voice is correct here.',
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1-3",
@@ -36,6 +40,8 @@ export const readingWritingModule1 = [
       options: ["A) shaped", "B) shapes", "C) will shape", "D) is shaping"],
       correct: "A",
       explanation: 'Past tense "shaped" is correct for a completed past action.',
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1-4",
@@ -52,6 +58,8 @@ export const readingWritingModule1 = [
       correct: "B",
       explanation:
         "Text 2 adds problem-solving as another function; it does not reject Text 1.",
+      domain: "information_ideas",
+      subdomain: "cross_text",
     },
     {
       id: "rw1-5",
@@ -63,6 +71,8 @@ export const readingWritingModule1 = [
       correct: "A",
       explanation:
         'Past progressive "were having" fits ongoing effects at the time of documentation.',
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1-6",
@@ -74,6 +84,8 @@ export const readingWritingModule1 = [
       correct: "A",
       explanation:
         '"Palpable" means tangible or keenly felt, fitting dramatic tension.',
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw1-7",
@@ -84,6 +96,8 @@ export const readingWritingModule1 = [
       options: ["A) Despite", "B) During", "C) Instead of", "D) Without"],
       correct: "B",
       explanation: '"During" correctly indicates when oxygen is produced.',
+      domain: "craft_structure",
+      subdomain: "transitions",
     },
     {
       id: "rw1-8",
@@ -100,6 +114,8 @@ export const readingWritingModule1 = [
       correct: "B",
       explanation:
         '"However" signals contrast between support and need for more research.',
+      domain: "craft_structure",
+      subdomain: "transitions",
     },
     {
       id: "rw1-9",
@@ -116,6 +132,8 @@ export const readingWritingModule1 = [
       correct: "B",
       explanation:
         'No punctuation is required after "including" before the list.',
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1-10",
@@ -132,6 +150,8 @@ export const readingWritingModule1 = [
       correct: "A",
       explanation:
         '"Persists" means continues to exist, fitting the idea that the capacity lasts throughout life.',
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw1-11",
@@ -148,6 +168,8 @@ export const readingWritingModule1 = [
       correct: "B",
       explanation:
         'Plural subject "windows" requires the plural verb "were positioned."',
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1-12",
@@ -164,6 +186,8 @@ export const readingWritingModule1 = [
       correct: "A",
       explanation:
         'Present perfect progressive "has been melting" shows ongoing action up to the present.',
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1-13",
@@ -174,6 +198,8 @@ export const readingWritingModule1 = [
       options: ["A) dilemma:", "B) dilemma;", "C) dilemma,", "D) dilemma"],
       correct: "A",
       explanation: "A colon correctly introduces the explanation of the dilemma.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1-14",
@@ -190,6 +216,8 @@ export const readingWritingModule1 = [
       correct: "A",
       explanation:
         'Past tense "earned her" is correct for a completed past achievement.',
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1-15",
@@ -200,6 +228,8 @@ export const readingWritingModule1 = [
       options: ["A) and", "B) but", "C) so", "D) or"],
       correct: "A",
       explanation: '"And" links two sequential actions by the same subject.',
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1-16",
@@ -211,6 +241,8 @@ export const readingWritingModule1 = [
       correct: "A",
       explanation:
         '"Extensive" means wide in scope, contrasting with "previously believed."',
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw1-17",
@@ -222,6 +254,8 @@ export const readingWritingModule1 = [
       correct: "B",
       explanation:
         '"Which" is used for nonrestrictive clauses referring to things; commas set it off.',
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1-18",
@@ -233,6 +267,8 @@ export const readingWritingModule1 = [
       correct: "B",
       explanation:
         'The participle "prompting" correctly introduces a result of the main clause.',
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1-19",
@@ -248,6 +284,8 @@ export const readingWritingModule1 = [
       ],
       correct: "A",
       explanation: "A semicolon correctly links two related independent clauses.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1-20",
@@ -264,6 +302,8 @@ export const readingWritingModule1 = [
       correct: "B",
       explanation:
         '"Display of" is parallel to "use of" and "social structures."',
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1-21",
@@ -280,6 +320,8 @@ export const readingWritingModule1 = [
       correct: "A",
       explanation:
         '"Persuasive" fits the context of strong evidence supporting the argument.',
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw1-22",
@@ -291,6 +333,8 @@ export const readingWritingModule1 = [
       correct: "B",
       explanation:
         'The subject "Bioluminescence" (singular) takes the singular verb "occurs."',
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1-23",
@@ -302,6 +346,8 @@ export const readingWritingModule1 = [
       correct: "B",
       explanation:
         'The participle "finding" introduces the result of the examination.',
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1-24",
@@ -313,6 +359,8 @@ export const readingWritingModule1 = [
       correct: "B",
       explanation:
         '"Which" is used for nonrestrictive clauses referring to things.',
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1-25",
@@ -324,6 +372,8 @@ export const readingWritingModule1 = [
       correct: "B",
       explanation:
         '"Inaccurate" fits the idea that predictions were wrong when conditions changed.',
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw1-26",
@@ -340,6 +390,8 @@ export const readingWritingModule1 = [
       correct: "B",
       explanation:
         'Plural subject "Astronomers" takes the plural verb "have discovered."',
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw1-27",
@@ -356,6 +408,8 @@ export const readingWritingModule1 = [
       correct: "A",
       explanation:
         '"However" signals contrast between compelling findings and the need for replication.',
+      domain: "craft_structure",
+      subdomain: "transitions",
     },
   ];
 

@@ -15,6 +15,8 @@ export const rwM2Easier: PoolModule = {
       correct: "A",
       explanation:
         "'Austere' means plain and without decoration, which fits the description of clean lines and minimal ornamentation.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw2e-2",
@@ -30,6 +32,8 @@ export const rwM2Easier: PoolModule = {
       correct: "C",
       explanation:
         "The passage explains how the Rosetta Stone's multilingual text allowed scholars to decode hieroglyphics.",
+      domain: "information_ideas",
+      subdomain: "central_idea",
     },
     {
       id: "rw2e-3",
@@ -46,6 +50,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "'To accomplish this journey' logically connects the migration distance to the navigation methods used.",
+      domain: "craft_structure",
+      subdomain: "transitions",
     },
     {
       id: "rw2e-4",
@@ -62,6 +68,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "A semicolon correctly joins two independent clauses without creating a comma splice.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw2e-5",
@@ -78,6 +86,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "The passage states the networks 'connected civilizations that had previously been thought to develop in isolation,' showing greater interconnection.",
+      domain: "information_ideas",
+      subdomain: "inference",
     },
     {
       id: "rw2e-6",
@@ -94,6 +104,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "'Disjointed' means lacking coherent connection, fitting the description of unclear transitions between timelines.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw2e-7",
@@ -109,6 +121,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "The passage focuses on describing what the Hubble Telescope has accomplished during its operation.",
+      domain: "information_ideas",
+      subdomain: "central_idea",
     },
     {
       id: "rw2e-8",
@@ -120,6 +134,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "With 'neither...nor,' the verb agrees with the nearer subject ('students'), which requires the plural 'were.'",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw2e-9",
@@ -136,6 +152,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "Matching the chemical composition of meteorite fragments would directly support the meteorite impact theory.",
+      domain: "information_ideas",
+      subdomain: "command_of_evidence",
     },
     {
       id: "rw2e-10",
@@ -152,6 +170,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "'For example' introduces a specific instance that illustrates the general claim about lower local election turnout.",
+      domain: "craft_structure",
+      subdomain: "transitions",
     },
     {
       id: "rw2e-11",
@@ -168,6 +188,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "'Accomplished' means highly skilled, consistent with playing with the confidence of a seasoned professional.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw2e-12",
@@ -183,6 +205,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "The elephants avoided shorter paths through rival territory, indicating social factors influence their route choices.",
+      domain: "information_ideas",
+      subdomain: "inference",
     },
     {
       id: "rw2e-13",
@@ -199,6 +223,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "The original has a dangling modifier. The students, not the lab results, finished the experiment, so 'the students' must follow the introductory phrase.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw2e-14",
@@ -214,6 +240,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "The passage describes how Snow's method of tracing the outbreak 'laid the groundwork for modern epidemiology.'",
+      domain: "information_ideas",
+      subdomain: "central_idea",
     },
     {
       id: "rw2e-15",
@@ -230,6 +258,8 @@ export const rwM2Easier: PoolModule = {
       correct: "A",
       explanation:
         "The second sentence provides statistics (40% increase, 25% decrease) that directly support the claim of success.",
+      domain: "craft_structure",
+      subdomain: "purpose",
     },
     {
       id: "rw2e-16",
@@ -246,6 +276,8 @@ export const rwM2Easier: PoolModule = {
       correct: "C",
       explanation:
         "'Industrious' means hardworking and diligent, matching the description of streamlining systems and reducing processing times.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw2e-17",
@@ -257,6 +289,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "'Each' is a singular indefinite pronoun and requires the singular verb 'has.'",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw2e-18",
@@ -272,6 +306,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "The passage describes Graeber challenging the 'traditional narrative' with contrary evidence.",
+      domain: "information_ideas",
+      subdomain: "central_idea",
     },
     {
       id: "rw2e-19",
@@ -288,6 +324,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "'As a result' shows the causal relationship between visitors coming and businesses seeing increased revenue.",
+      domain: "craft_structure",
+      subdomain: "transitions",
     },
     {
       id: "rw2e-20",
@@ -304,6 +342,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "The passage directly states the adaptation allows plants to 'absorb carbon dioxide while losing less water to evaporation.'",
+      domain: "information_ideas",
+      subdomain: "central_idea",
     },
     {
       id: "rw2e-21",
@@ -320,6 +360,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "The subject is 'exhibit' (singular), so the verb must be singular: 'has been.'",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw2e-22",
@@ -336,6 +378,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "'Abandon' means to give up on something, which fits the context of leaving one approach to try a completely different method.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw2e-23",
@@ -352,6 +396,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "The study found higher social trust and lower loneliness among community gardeners, indicating improved social well-being.",
+      domain: "information_ideas",
+      subdomain: "central_idea",
     },
     {
       id: "rw2e-24",
@@ -368,6 +414,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "'By contrast' signals the shift from nature/solitude themes to urban life/social connection themes.",
+      domain: "craft_structure",
+      subdomain: "transitions",
     },
     {
       id: "rw2e-25",
@@ -384,6 +432,8 @@ export const rwM2Easier: PoolModule = {
       correct: "C",
       explanation:
         "The passage focuses on how the preserved ruins provide insight into Roman daily life.",
+      domain: "information_ideas",
+      subdomain: "central_idea",
     },
     {
       id: "rw2e-26",
@@ -400,6 +450,8 @@ export const rwM2Easier: PoolModule = {
       correct: "C",
       explanation:
         "'Yet' signals a contrast between the majority supporting the policy and leaders opposing it.",
+      domain: "craft_structure",
+      subdomain: "transitions",
     },
     {
       id: "rw2e-27",
@@ -416,6 +468,8 @@ export const rwM2Easier: PoolModule = {
       correct: "B",
       explanation:
         "The passage specifies both the high removal rate (99.8%) and significantly lower energy use compared to conventional systems.",
+      domain: "information_ideas",
+      subdomain: "central_idea",
     },
   ],
 };
@@ -440,6 +494,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "'Opaque' means not transparent, creating an ironic contrast with the governor's public support for transparency.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw2h-2",
@@ -456,6 +512,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "Patel's core argument is that targeted programs 'more effectively allocate resources to those who need them most' versus universal distribution.",
+      domain: "information_ideas",
+      subdomain: "cross_text",
     },
     {
       id: "rw2h-3",
@@ -472,6 +530,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "'Ambivalent' means having mixed or uncertain feelings, fitting the critic's approach of presenting multiple frameworks rather than a definitive judgment.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw2h-4",
@@ -488,6 +548,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "The passage presents Osei's finding (heightened prefrontal activity), offers a hypothesis (strengthened executive function), and acknowledges a limitation (cross-sectional design).",
+      domain: "craft_structure",
+      subdomain: "purpose",
     },
     {
       id: "rw2h-5",
@@ -504,6 +566,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "The passage states they used 'Black vernacular traditions' to create work that was 'aesthetically innovative and politically charged,' challenging the idea that serious literature required European conventions.",
+      domain: "information_ideas",
+      subdomain: "central_idea",
     },
     {
       id: "rw2h-6",
@@ -520,6 +584,8 @@ export const rwM2Harder: PoolModule = {
       correct: "C",
       explanation:
         "'Furthermore' introduces an additional, deeper implication: not only does the finding challenge one assumption, it also suggests a reversal of the assumed causal direction.",
+      domain: "craft_structure",
+      subdomain: "transitions",
     },
     {
       id: "rw2h-7",
@@ -536,6 +602,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "The second sentence uses 'however' to introduce a limitation: the realism praised in sentence one can undermine dramatic clarity.",
+      domain: "craft_structure",
+      subdomain: "purpose",
     },
     {
       id: "rw2h-8",
@@ -552,6 +620,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "'Detailed' is parallel with 'outlined' — both are past-tense verbs in the relative clause 'which outlined...and detailed.'",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw2h-9",
@@ -568,6 +638,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "Vasquez points to economic inequality undermining institutional legitimacy; Liu points to military allegiance shifting from the state to individual generals.",
+      domain: "information_ideas",
+      subdomain: "cross_text",
     },
     {
       id: "rw2h-10",
@@ -584,6 +656,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "The passage traces a chain of effects: wolves changed elk behavior, which allowed tree regeneration, which created habitat for other species — a behavioral trophic cascade.",
+      domain: "information_ideas",
+      subdomain: "central_idea",
     },
     {
       id: "rw2h-11",
@@ -600,6 +674,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "'Cogent' means clear, logical, and convincing — consistent with 'internally consistent and rigorously' constructed. The tension is that despite logical rigor, the premises are unverifiable.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw2h-12",
@@ -616,6 +692,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "If contracts specified exact details with little room for deviation, this would contradict Feretti's claim that artists 'actively negotiated' and had significant creative input.",
+      domain: "information_ideas",
+      subdomain: "command_of_evidence",
     },
     {
       id: "rw2h-13",
@@ -632,6 +710,8 @@ export const rwM2Harder: PoolModule = {
       correct: "C",
       explanation:
         "'In addition' introduces a second, complementary provision of the same amendment — both disclosure and verification.",
+      domain: "craft_structure",
+      subdomain: "transitions",
     },
     {
       id: "rw2h-14",
@@ -648,6 +728,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "Johansson's explanation links natural settings to diffuse attention and higher creativity scores, implying diffuse attention supports creative thinking more than focused attention does.",
+      domain: "information_ideas",
+      subdomain: "inference",
     },
     {
       id: "rw2h-15",
@@ -664,6 +746,8 @@ export const rwM2Harder: PoolModule = {
       correct: "C",
       explanation:
         "'Distinctive' means characteristic and unique, appropriate for describing a notable quality that sets Butler's work apart.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw2h-16",
@@ -680,6 +764,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "The passage describes the ISS's orbital speed (phenomenon), the resulting 16 sunrises/sunsets (challenge), and the UTC-based schedule (accommodation).",
+      domain: "craft_structure",
+      subdomain: "purpose",
     },
     {
       id: "rw2h-17",
@@ -691,6 +777,8 @@ export const rwM2Harder: PoolModule = {
       correct: "D",
       explanation:
         "The subject is 'documents' (plural), requiring the plural verb 'have.' The intervening clause about the letters does not change the subject.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw2h-18",
@@ -707,6 +795,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "The increased frequency of the variant in northern European populations over time is consistent with natural selection favoring it in low-sunlight environments.",
+      domain: "information_ideas",
+      subdomain: "command_of_evidence",
     },
     {
       id: "rw2h-19",
@@ -723,6 +813,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "'Abstruse' means difficult to understand, fitting the critics' complaint and the defenders' counterargument that complexity rewards repeated listening.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw2h-20",
@@ -739,6 +831,8 @@ export const rwM2Harder: PoolModule = {
       correct: "C",
       explanation:
         "Huang acknowledges complete streets are 'beneficial in dense urban cores' but argues they may be 'impractical in suburban and rural contexts,' suggesting Reeves's approach needs geographic nuance.",
+      domain: "information_ideas",
+      subdomain: "cross_text",
     },
     {
       id: "rw2h-21",
@@ -755,6 +849,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "'Abandon' (noun) means a lack of inhibition or restraint, creating the paradox with precision: technically exact yet seemingly spontaneous.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw2h-22",
@@ -771,6 +867,8 @@ export const rwM2Harder: PoolModule = {
       correct: "C",
       explanation:
         "The passage states 'the optimal spacing interval varies significantly depending on the desired retention period,' with different intervals ideal for different timeframes.",
+      domain: "information_ideas",
+      subdomain: "central_idea",
     },
     {
       id: "rw2h-23",
@@ -782,6 +880,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "The subject is 'organization' (singular). The phrase 'along with its network of regional affiliates' is a parenthetical addition and does not make the subject plural.",
+      domain: "craft_structure",
+      subdomain: "boundaries",
     },
     {
       id: "rw2h-24",
@@ -798,6 +898,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "The quote presents two options (documenting without intervening vs. intervening) and shows that each carries a cost (complicity vs. lost impartiality) — a classic ethical dilemma.",
+      domain: "craft_structure",
+      subdomain: "purpose",
     },
     {
       id: "rw2h-25",
@@ -814,6 +916,8 @@ export const rwM2Harder: PoolModule = {
       correct: "C",
       explanation:
         "'By extension' signals that the next idea is a logical further implication of the research — moving from underestimated pollution volumes to underestimated ecological impacts.",
+      domain: "craft_structure",
+      subdomain: "transitions",
     },
     {
       id: "rw2h-26",
@@ -830,6 +934,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "'Nuanced' means characterized by subtle distinctions, fitting the biographer's aim to present both brilliance and limitations rather than one-sided praise.",
+      domain: "craft_structure",
+      subdomain: "words_in_context",
     },
     {
       id: "rw2h-27",
@@ -846,6 +952,8 @@ export const rwM2Harder: PoolModule = {
       correct: "B",
       explanation:
         "The passage presents Tanaka's predictions (30-50% weakening), explains a paradoxical consequence (European cooling), and notes broader impacts — all without claiming collapse is certain or comparing to other models.",
+      domain: "information_ideas",
+      subdomain: "central_idea",
     },
   ],
 };

@@ -22,6 +22,8 @@ export interface RWQuestion {
   /** Concept/domain for performance tracking (e.g. information_ideas, craft_structure). */
   domain?: string;
   subdomain?: string;
+  /** Optional image URL or path for infographic/chart questions. */
+  image?: string;
 }
 
 /** Math question shape (optional image). Grid-in questions have no options; student enters a number or fraction. */

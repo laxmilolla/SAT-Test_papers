@@ -487,6 +487,61 @@ export const rwM1C: PoolModule = {
       domain: "information_ideas",
       subdomain: "central_idea",
     },
+    {
+      id: "rw1c-27e",
+      passage:
+        "The spread of public libraries in the United States during the late nineteenth and early twentieth centuries was closely tied to the belief that access to books would improve civic participation and reduce social inequality. Philanthropists such as Andrew Carnegie funded the construction of thousands of library buildings on the condition that local governments would maintain and operate them. Library advocates argued that self-education through reading could help working-class Americans advance economically and participate more fully in democratic life.",
+      question:
+        "Which choice best supports the claim that library advocates linked reading to democratic participation?",
+      options: [
+        "A) The spread of public libraries in the United States during the late nineteenth and early twentieth centuries was closely tied to the belief that access to books would improve civic participation and reduce social inequality.",
+        "B) Philanthropists such as Andrew Carnegie funded the construction of thousands of library buildings on the condition that local governments would maintain and operate them.",
+        "C) Library advocates argued that self-education through reading could help working-class Americans advance economically and participate more fully in democratic life.",
+        "D) Public libraries were built in both urban and rural areas across the United States.",
+      ],
+      correct: "C",
+      explanation:
+        "Sentence C directly states that advocates argued reading could help Americans 'participate more fully in democratic life,' supporting the claim linking reading to democratic participation.",
+      domain: "information_ideas",
+      subdomain: "command_of_evidence",
+    },
+    {
+      id: "rw1c-28",
+      passage:
+        "A survey recorded the number of hours per week that students spent on homework:\n\nGrade level | Average hours\n9           | 8\n10          | 9\n11          | 10\n12          | 11\n\nResearchers noted that participation was voluntary and that not all students in each grade responded.",
+      question:
+        "According to the table, which grade level reported the highest average weekly homework hours?",
+      options: [
+        "A) 9",
+        "B) 10",
+        "C) 11",
+        "D) 12",
+      ],
+      correct: "D",
+      explanation:
+        "The table shows grade 12 with 11 hours, which is the highest average among the four grade levels.",
+      domain: "information_ideas",
+      subdomain: "command_of_evidence",
+    },
+    {
+      id: "rw1c-29",
+      passage:
+        "The infographic above summarizes the results of a 2022 survey about where adults in the United States get their news. The chart shows the percentage of respondents who reported using each source at least once per week.",
+      question:
+        "Based on the infographic, which of the following is best supported about news consumption?",
+      options: [
+        "A) Television was the most commonly used news source among respondents.",
+        "B) Social media was used by a larger share of respondents than print newspapers.",
+        "C) Radio was the least used news source overall.",
+        "D) Online news sites were used by more than half of all respondents.",
+      ],
+      correct: "B",
+      explanation:
+        "The infographic compares multiple sources; the correct answer is the claim best supported by the data shown (e.g., social media versus print).",
+      domain: "information_ideas",
+      subdomain: "command_of_evidence",
+      image: "/infographic_news_sources.png",
+    },
   ],
   m2EasierModuleId: "rw-m2-easier",
   m2HarderModuleId: "rw-m2-harder",
