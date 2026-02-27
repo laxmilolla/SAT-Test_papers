@@ -33,6 +33,38 @@ function loadTestData(entry: RegistryEntry): Promise<TestData> {
   throw new Error("Invalid registry entry");
 }
 
+/** Escape HTML so text is safe for use inside HTML. */
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+/**
+ * Format plain-text math notation for display: ^(expr) and ^number become superscripts.
+ * Used only for math section; content is from our own data.
+ */
+function formatMathDisplay(text: string): string {
+  if (!text) return "";
+  let out = "";
+  let i = 0;
+  const re = /\^\(([^)]*)\)|\^(\d+)/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(text)) !== null) {
+    out += escapeHtml(text.slice(i, m.index));
+    if (m[1] !== undefined) {
+      out += "<sup>" + escapeHtml(m[1]) + "</sup>";
+    } else {
+      out += "<sup>" + m[2] + "</sup>";
+    }
+    i = m.index + m[0].length;
+  }
+  out += escapeHtml(text.slice(i));
+  return out;
+}
+
 export default function App() {
   const [jsonRegistry, setJsonRegistry] = React.useState<Array<{ id: string; label: string; url: string }>>([]);
   const combinedRegistry = React.useMemo(
@@ -1266,7 +1298,12 @@ export default function App() {
         </div>
         <div style={{ flex: 1, padding: "40px", overflowY: "auto" }}>
           <p style={{ fontWeight: "bold", fontSize: "20px" }}>
-            {qIdx + 1}. {q?.question}
+            {qIdx + 1}.{" "}
+            {section === "math" && q?.question ? (
+              <span dangerouslySetInnerHTML={{ __html: formatMathDisplay(q.question) }} />
+            ) : (
+              q?.question
+            )}
           </p>
           {(q as { inputType?: string })?.inputType === "grid_in" ? (
             <div style={{ marginTop: "12px" }}>
@@ -1308,7 +1345,11 @@ export default function App() {
                   answers[q.id] === opt.charAt(0) ? "#e8f0fe" : "white",
               }}
             >
-              {opt}
+              {section === "math" ? (
+                <span dangerouslySetInnerHTML={{ __html: formatMathDisplay(opt) }} />
+              ) : (
+                opt
+              )}
             </button>
             ))
           )}
