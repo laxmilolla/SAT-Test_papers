@@ -43,21 +43,23 @@ function escapeHtml(s: string): string {
 }
 
 /**
- * Format plain-text math notation for display: ^(expr) and ^number become superscripts.
+ * Format plain-text math notation for display: ^(expr), ^number, and ^letter become superscripts.
  * Used only for math section; content is from our own data.
  */
 function formatMathDisplay(text: string): string {
   if (!text) return "";
   let out = "";
   let i = 0;
-  const re = /\^\(([^)]*)\)|\^(\d+)/g;
+  const re = /\^\(([^)]*)\)|\^(\d+)|\^([a-zA-Z])/g;
   let m: RegExpExecArray | null;
   while ((m = re.exec(text)) !== null) {
     out += escapeHtml(text.slice(i, m.index));
     if (m[1] !== undefined) {
       out += "<sup>" + escapeHtml(m[1]) + "</sup>";
-    } else {
+    } else if (m[2] !== undefined) {
       out += "<sup>" + m[2] + "</sup>";
+    } else {
+      out += "<sup>" + m[3] + "</sup>";
     }
     i = m.index + m[0].length;
   }
