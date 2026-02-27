@@ -1,0 +1,36 @@
+import type { PoolModule } from "../poolTypes";
+
+/**
+ * Math Module 1 (Set F) from math_1.docx — standard difficulty.
+ */
+export const mathM1F: PoolModule = {
+  id: "math-m1-f",
+  type: "math-m1",
+  label: "Math Module 1 (Set F — math_1 doc)",
+  m2EasierModuleId: "math-m2-math1-easier",
+  m2HarderModuleId: "math-m2-math1-harder",
+  questions: [
+    { id: "m1f-1", question: "If 3x + 5 = 17, what is the value of 6x?", options: ["A) 12", "B) 24", "C) 36", "D) 48"], correct: "B", explanation: "Subtract 5: 3x = 12. Divide by 3: x = 4. So 6x = 24.", domain: "algebra" },
+    { id: "m1f-2", question: "A sporting goods store sells a jacket for $120. During a clearance sale, the price is discounted by 20%. What is the sale price?", options: ["A) $24", "B) $96", "C) $100", "D) $144"], correct: "B", explanation: "20% off means pay 80%. 120 × 0.80 = 96.", domain: "problem_solving_data" },
+    { id: "m1f-3", question: "The function f is defined by f(x) = x² − 8x + 15. What are the x-intercepts of the graph of y = f(x) in the xy-plane?", options: ["A) (3, 0) and (5, 0)", "B) (−3, 0) and (−5, 0)", "C) (0, 3) and (0, 5)", "D) (0, −3) and (0, −5)"], correct: "A", explanation: "Set f(x) = 0. Factor: (x − 3)(x − 5) = 0, so x = 3 and x = 5.", domain: "advanced_math" },
+    { id: "m1f-4", question: "The graph of the linear function f is shown in the xy-plane. Which equation defines f?", options: ["A) f(x) = −2x + 4", "B) f(x) = −(1/2)x + 4", "C) f(x) = 2x + 4", "D) f(x) = (1/2)x + 4"], correct: "A", explanation: "y-intercept is 4; slope is −2 (down 2 per 1 right). So y = −2x + 4.", image: "/math1f_4_line.png", domain: "algebra" },
+    { id: "m1f-5", question: "2x + 3y = 12 and −4x + y = 4. The solution is (x, y). What is the value of y?", options: ["A) −2", "B) 0", "C) 2", "D) 4"], correct: "D", explanation: "Multiply first by 2: 4x + 6y = 24. Add to second: 7y = 28, y = 4.", domain: "algebra" },
+    { id: "m1f-6", question: "If x^(a²) / x^(b²) = x^16, x > 1, and a + b = 2, what is the value of a − b?", options: ["A) 4", "B) 8", "C) 14", "D) 16"], correct: "B", explanation: "a² − b² = 16, so (a−b)(a+b) = 16. With a+b = 2, a−b = 8.", domain: "advanced_math" },
+    { id: "m1f-7", question: "The scatterplot shows the relationship between x and y. A line of best fit is shown. For how many data points does the line of best fit predict a greater y-value than the actual y-value?", options: ["A) 3", "B) 4", "C) 5", "D) 8"], correct: "A", explanation: "Points below the line: line predicts greater than actual. Three such points.", image: "/math1f_7_scatter.png", domain: "problem_solving_data" },
+    { id: "m1f-8", question: "Right triangle ABC has AB = 8, BC = 15, and AC = 17. Angle B is the right angle. What is the value of sin(A)?", options: ["A) 8/15", "B) 8/17", "C) 15/17", "D) 17/15"], correct: "C", explanation: "sin(A) = opposite/hypotenuse = BC/AC = 15/17.", domain: "geometry_trig" },
+    { id: "m1f-9", question: "If 5x − 4 ≤ 2x + 11, what is the greatest possible integer value of x?", correct: "5", explanation: "3x ≤ 15, x ≤ 5. Greatest integer is 5.", domain: "algebra", inputType: "grid_in" },
+    { id: "m1f-10", question: "The equation y = −2(x − 3)² + 8 represents a parabola. What is the maximum value of y?", correct: "8", explanation: "Vertex form: vertex (3, 8). Parabola opens down, so max y = 8.", domain: "advanced_math", inputType: "grid_in" },
+    { id: "m1f-11", question: "A printing machine can print 400 pages in 5 minutes. At this rate, how many pages can it print in 12 minutes?", correct: "960", explanation: "Rate 80 pages/min. 80 × 12 = 960.", domain: "problem_solving_data", inputType: "grid_in" },
+    { id: "m1f-12", question: "A food truck sells tacos for $3 and burritos for $7. On Tuesday it sold 85 items and generated $415. How many burritos were sold?", options: ["A) 35", "B) 40", "C) 45", "D) 50"], correct: "B", explanation: "t + b = 85, 3t + 7b = 415. Substitute t = 85 − b: 3(85−b) + 7b = 415 → 4b = 160, b = 40.", domain: "algebra" },
+    { id: "m1f-13", question: "Initial bacteria population 500, doubles every 4 hours. Which equation gives population P(t) after t hours?", options: ["A) P(t) = 500(2)^(4t)", "B) P(t) = 500(4)^(t/2)", "C) P(t) = 500(2)^(t/4)", "D) P(t) = 2(500)^(t/4)"], correct: "C", explanation: "Exponential growth: initial × (multiplier)^(time/period) = 500(2)^(t/4).", domain: "advanced_math" },
+    { id: "m1f-14", question: "In the circle with center O, the radius is 6 cm. Central angle AOB is 60°. What is the area, in square cm, of the shaded sector AOB?", options: ["A) 3π", "B) 6π", "C) 12π", "D) 36π"], correct: "B", explanation: "Sector area = (60/360) × π(6)² = (1/6)(36π) = 6π.", image: "/math1f_14_sector.png", domain: "geometry_trig" },
+    { id: "m1f-15", question: "65% of 800 students take the bus. How many students do NOT take the bus?", options: ["A) 280", "B) 350", "C) 520", "D) 650"], correct: "A", explanation: "35% do not: 0.35 × 800 = 280.", domain: "problem_solving_data" },
+    { id: "m1f-16", question: "Which describes the solutions to 2x² − 4x + 5 = 0?", options: ["A) Exactly one real solution", "B) Exactly two real solutions", "C) No real solutions", "D) Infinitely many real solutions"], correct: "C", explanation: "Discriminant b² − 4ac = 16 − 40 = −24 < 0, so no real solutions.", domain: "advanced_math" },
+    { id: "m1f-17", question: "Which system of inequalities is represented by the shaded region in the xy-plane shown?", options: ["A) y ≥ 2x − 1 and y ≤ −(1/2)x + 4", "B) y ≤ 2x − 1 and y ≥ −(1/2)x + 4", "C) y ≥ 2x − 1 and y ≥ −(1/2)x + 4", "D) y ≤ 2x − 1 and y ≤ −(1/2)x + 4"], correct: "A", explanation: "Shaded region is above y = 2x−1 and below y = −(1/2)x+4.", image: "/math1f_17_ineq.png", domain: "algebra" },
+    { id: "m1f-18", question: "Data set: 5, 8, 10, 10, 15, 20. If 20 is removed, which describes the change to mean and median?", options: ["A) Mean decreases; median stays the same", "B) Both mean and median decrease", "C) Mean stays same; median decreases", "D) Mean decreases; median increases"], correct: "A", explanation: "New mean is lower; median remains 10 (middle of 5,8,10,10,15).", domain: "problem_solving_data" },
+    { id: "m1f-19", question: "f(x) = x² + cx + 16 has exactly one distinct real solution. What is the value of c? (c > 0)", options: ["A) 4", "B) 8", "C) 16", "D) 32"], correct: "B", explanation: "One solution when discriminant = 0: c² − 64 = 0, c = 8.", domain: "advanced_math" },
+    { id: "m1f-20", question: "A right circular cylinder has volume 45π cubic inches and height 5 inches. What is the radius of the base?", options: ["A) 3", "B) 4.5", "C) 9", "D) 15"], correct: "A", explanation: "45π = πr²(5) → r² = 9, r = 3.", domain: "geometry_trig" },
+    { id: "m1f-21", question: "If 3/(x − 1) = 6/(x + 2), what is the value of x?", correct: "4", explanation: "Cross-multiply: 3(x+2) = 6(x−1) → 3x+6 = 6x−6 → x = 4.", domain: "advanced_math", inputType: "grid_in" },
+    { id: "m1f-22", question: "In the xy-plane, the circle (x − 4)² + (y + 3)² = 25 intersects the y-axis at two points. What is the distance between these two points?", correct: "6", explanation: "Set x = 0: 16 + (y+3)² = 25 → (y+3)² = 9 → y = 0 or y = −6. Distance = 6.", domain: "geometry_trig", inputType: "grid_in" },
+  ],
+};
