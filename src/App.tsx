@@ -157,6 +157,34 @@ export default function App() {
     }
   };
 
+  const handleBack = () => {
+    if (qIdx > 0) {
+      setQIdx(qIdx - 1);
+      return;
+    }
+    if (!testData) return;
+    if (module === 2) {
+      setModule(1);
+      const m1Len = section === "reading" ? testData.readingWritingModule1.length : testData.mathModule1.length;
+      setQIdx(m1Len - 1);
+      return;
+    }
+    if (section === "math" && module === 1) {
+      setSection("reading");
+      setModule(2);
+      let rw2: Array<{ id: string }> = testData.readingWritingModule2;
+      if (rwModule2Variant === "harder" && testData.readingWritingModule2Harder?.length) rw2 = testData.readingWritingModule2Harder;
+      else if (rwModule2Variant === "easier" && testData.readingWritingModule2Easier?.length) rw2 = testData.readingWritingModule2Easier;
+      setQIdx(rw2.length - 1);
+      setTimeLeft(32 * 60);
+    }
+  };
+
+  const canGoBack =
+    qIdx > 0 ||
+    module === 2 ||
+    (section === "math" && module === 1);
+
   const loadOneAssignment = async (assignment: StudentAssignment) => {
     const uid = studentId.trim() || "Anonymous";
     setAssignmentsForPicker(null);
@@ -300,7 +328,7 @@ export default function App() {
                   ? `Set ${idx + 1}: ${combinedRegistry.find((t) => t.id === a.testId)?.label ?? a.testId}`
                   : `Set ${idx + 1}`;
               return (
-                <button
+        <button
                   key={idx}
                   type="button"
                   onClick={() => loadOneAssignment(a)}
@@ -334,13 +362,13 @@ export default function App() {
           <button
             onClick={handleStart}
             disabled={startStatus === "loading"}
-            style={{
-              padding: "15px 50px",
-              fontSize: "20px",
-              background: "#0052cc",
-              color: "white",
-              border: "none",
-              borderRadius: "10px",
+          style={{
+            padding: "15px 50px",
+            fontSize: "20px",
+            background: "#0052cc",
+            color: "white",
+            border: "none",
+            borderRadius: "10px",
               cursor: startStatus === "loading" ? "wait" : "pointer",
             }}
           >
@@ -440,12 +468,12 @@ export default function App() {
                 border: "none",
                 color: "#999",
                 textDecoration: "underline",
-                cursor: "pointer",
+            cursor: "pointer",
                 fontSize: "12px",
-              }}
-            >
+          }}
+        >
               Teacher
-            </button>
+        </button>
           </p>
         )}
       </div>
@@ -1146,21 +1174,21 @@ export default function App() {
             {saveStatus === "done" && "Saved!"}
             {saveStatus === "error" && "Save failed — try again"}
           </button>
-          <button
-            onClick={() =>
+        <button
+          onClick={() =>
               (window.location.href = `mailto:YOUR_EMAIL@gmail.com?subject=SAT Results${studentId ? ` - ${studentId}` : ""}&body=${encodeURIComponent(JSON.stringify({ studentId: studentId || "Anonymous", answers }, null, 2))}`)
-            }
-            style={{
-              padding: "20px",
+          }
+          style={{
+            padding: "20px",
               background: "#1565c0",
-              color: "white",
-              border: "none",
-              borderRadius: "10px",
-              cursor: "pointer",
-            }}
-          >
+            color: "white",
+            border: "none",
+            borderRadius: "10px",
+            cursor: "pointer",
+          }}
+        >
             Email results to teacher
-          </button>
+        </button>
         </div>
       </div>
     );
@@ -1264,24 +1292,24 @@ export default function App() {
             </div>
           ) : (
             q?.options?.map((opt: string) => (
-              <button
-                key={opt}
-                onClick={() => setAnswers({ ...answers, [q.id]: opt.charAt(0) })}
-                style={{
-                  display: "block",
-                  width: "100%",
-                  textAlign: "left",
-                  padding: "15px",
-                  margin: "10px 0",
-                  cursor: "pointer",
-                  border: "1px solid #ccc",
-                  borderRadius: "8px",
-                  background:
-                    answers[q.id] === opt.charAt(0) ? "#e8f0fe" : "white",
-                }}
-              >
-                {opt}
-              </button>
+            <button
+              key={opt}
+              onClick={() => setAnswers({ ...answers, [q.id]: opt.charAt(0) })}
+              style={{
+                display: "block",
+                width: "100%",
+                textAlign: "left",
+                padding: "15px",
+                margin: "10px 0",
+                cursor: "pointer",
+                border: "1px solid #ccc",
+                borderRadius: "8px",
+                background:
+                  answers[q.id] === opt.charAt(0) ? "#e8f0fe" : "white",
+              }}
+            >
+              {opt}
+            </button>
             ))
           )}
         </div>
@@ -1289,10 +1317,30 @@ export default function App() {
       <div
         style={{
           padding: "20px",
-          textAlign: "right",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
           borderTop: "1px solid #ccc",
         }}
       >
+        {canGoBack ? (
+          <button
+            onClick={handleBack}
+            style={{
+              padding: "15px 40px",
+              background: "white",
+              color: "black",
+              fontSize: "16px",
+              border: "1px solid #ccc",
+              borderRadius: "8px",
+              cursor: "pointer",
+            }}
+          >
+            Back
+          </button>
+        ) : (
+          <span />
+        )}
         <button
           onClick={handleNext}
           style={{
